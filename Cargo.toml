@@ -1,0 +1,32 @@
+[package]
+name = "rust-book-minigrep"
+version = "0.1.0"
+authors = ["Gokhan Simsek <g.simsek@paralect.com>"]
+edition = "2018"
+
+# Ref:
+# From Rust Programming Language
+# by Steve Klabnik and Carol Nichols (Covers Rust 2018) - 2019
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+
+## -------------------------------------------------
+
+[profile.release]
+opt-level = 'z'     # Optimize for size.
+lto = true          # Enable Link Time Optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations.
+panic = 'abort'     # Abort on panic
+
+[profile.bench]
+debug = true
+
+[profile.dev]
+opt-level = 0
+debug = true
+split-debuginfo = "unpacked" # Requires rustc 1.51
+lto = false
+incremental = true

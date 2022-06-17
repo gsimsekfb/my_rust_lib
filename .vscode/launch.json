@@ -5,6 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "main.rs",
+            "type": "lldb",
+            "request": "launch",
+            "cargo": {
+                "args": ["build"],
+            },
+            "args": [],
+            // "env":{"NODE_ENV": "test"},
+            "cwd": "${workspaceFolder}"
+        },
+        {
             "type": "lldb",
             "request": "launch",
             "name": "Debug unit tests in library 'rust-book-minigrep'",

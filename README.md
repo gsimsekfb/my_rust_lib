@@ -6,8 +6,9 @@ minigrep example program from the book
 See `src/main.rs` for usage
 
 ### What's in this repo?  
-- Organization of main.rs, lib.rs and tests
+- Organization of main.rs, lib.rs and unit tests
 - Working with command line arguments
+- Working with environment variables
 - Debug `.vscode/launch.json` template
-- `.cargo/config.toml` sample, including fastest linkers, useful for big projects
-- Read, search string from a file
+- `.cargo/config.toml` sample, including fastest linkers, more useful for big codebases
+- Read from file, find lines that contains a string

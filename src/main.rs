@@ -9,7 +9,7 @@ mod cacher;
 
 fn main() {
 
-    // 1) ----------------------------------------------------
+    // 1) Minigrep ---------------------------------------------
     // // Create Config from args(filename and query)
     // let args: Vec<String> = std::env::args().collect();
 	// println!("args: {:?}", args);
@@ -24,13 +24,14 @@ fn main() {
     //     std::process::exit(1);
     // }
 
-    // 2) ----------------------------------------------------
+    // 2) Cacher -----------------------------------------------
 
-    let mut expensive_fn = cacher::Cacher::new(|num| {
+    let mut expensive_fn = cacher::Cacher::new(|num: u32| {
         // std::thread::sleep(std::time::Duration::from_secs(2));
         num*num
     });
-    println!("--- res for 12: {:?}", expensive_fn.result(12));
-    println!("--- res for 12: {:?}", expensive_fn.result(12));
-    println!("--- res for 8: {:?}", expensive_fn.result(8));
+    println!("--- res for 12: {:?}", expensive_fn.result(12)); // calculate
+    println!("--- res for 12: {:?}", expensive_fn.result(12)); // get cashed res.
+    println!("--- res for 8: {:?}", expensive_fn.result(8)); // calcualate
+    println!("--- res for 8: {:?}", expensive_fn.result(8)); // get cached res.
 }

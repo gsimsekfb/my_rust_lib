@@ -1,23 +1,32 @@
 use std::collections::HashMap;
 
-pub struct Cacher<T>
-    where T: Fn(u32) -> u32 
+// todos: 
+// - yml for macos
+// - Key and Val are same types. Either combine them into one type or 
+//   make Val different type.
+
+pub struct Cacher<T, Key, Val>
+    where T: Fn(Key) -> Val, 
+          Key: std::cmp::Eq + std::hash::Hash + Copy + std::fmt::Display,
+          Val: std::cmp::Eq + std::hash::Hash + Copy + std::fmt::Display
 {
     calculation: T, // calc. fn
-    results: HashMap<u32, u32>,
+    results: HashMap<Key, Val>,
 }
 
-impl<T> Cacher<T>
-    where T: Fn(u32) -> u32
+impl<T, Key, Val> Cacher<T, Key, Val>
+    where T: Fn(Key) -> Val, 
+          Key: std::cmp::Eq + std::hash::Hash + Copy + std::fmt::Display,
+          Val: std::cmp::Eq + std::hash::Hash + Copy + std::fmt::Display
 {
-    pub fn new(calculation: T) -> Cacher<T> {
+    pub fn new(calculation: T) -> Cacher<T, Key, Val> {
         Cacher {
             calculation,
-            results: HashMap::<u32, u32>::new(),
+            results: HashMap::<Key, Val>::new(),
         }
     }
 
-    pub fn result(&mut self, arg: u32) -> u32 {
+    pub fn result(&mut self, arg: Key) -> Val {
         if self.results.contains_key(&arg) {
             println!("Cacher: getting cashed result for {}...", arg);
             *self.results.get(&arg).unwrap()
@@ -36,9 +45,9 @@ impl<T> Cacher<T>
 
 #[test]
 fn call_with_different_resultss() {
-    let mut c = Cacher::new(|a| a);
-    let v1 = c.result(1);
-    let v2 = c.result(2);
+    let mut cacher = Cacher::new(|a| a);
+    let v1 = cacher.result(1);
+    let v2 = cacher.result(2);
     assert_eq!(v1, 1);
     assert_eq!(v2, 2);
 }

@@ -9,6 +9,8 @@ See `src/main.rs` for usage
 - Organization of main.rs, lib.rs and unit tests
 - Working with command line arguments
 - Working with environment variables
-- Debug `.vscode/launch.json` template
-- `.cargo/config.toml` sample, including fastest linkers, more useful for big codebases
+- Simple Cacher struct
+- Examples of using closures
+- Debugging, `.vscode/launch.json` template
+- `.cargo/config.toml` sample, including fastest linkers, very&more useful for big codebases
 - Read from file, find lines that contains a string

@@ -1,6 +1,12 @@
+// Disables warnings in crate level
+#![allow(dead_code)]
+#![allow(unused_imports)]
+#![allow(unused_variables)]
+
 use rust_book_minigrep::{Config, run_search};
 
 mod cacher;
+mod closure;
 
 // Usage:
 // cargo r cC test.txt
@@ -26,12 +32,15 @@ fn main() {
 
     // 2) Cacher -----------------------------------------------
 
-    let mut expensive_fn = cacher::Cacher::new(|num: u32| {
-        // std::thread::sleep(std::time::Duration::from_secs(2));
-        num*num
-    });
-    println!("--- res for 12: {:?}", expensive_fn.result(12)); // calculate
-    println!("--- res for 12: {:?}", expensive_fn.result(12)); // get cashed res.
-    println!("--- res for 8: {:?}", expensive_fn.result(8)); // calcualate
-    println!("--- res for 8: {:?}", expensive_fn.result(8)); // get cached res.
+    // let mut expensive_fn = cacher::Cacher::new(|num: u32| {
+    //     // std::thread::sleep(std::time::Duration::from_secs(2));
+    //     num*num
+    // });
+    // println!("--- res for 12: {:?}", expensive_fn.result(12)); // calculate
+    // println!("--- res for 12: {:?}", expensive_fn.result(12)); // get cashed res.
+    // println!("--- res for 8: {:?}", expensive_fn.result(8)); // calcualate
+    // println!("--- res for 8: {:?}", expensive_fn.result(8)); // get cached res.
+
+    // 3) Closure ----------------------------------------------
+    closure::examples();
 }

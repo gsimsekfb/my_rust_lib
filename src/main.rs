@@ -7,6 +7,8 @@ use rust_book_minigrep::{Config, run_search};
 
 mod cacher;
 mod closure;
+mod type_;
+mod iterators;
 
 // Usage:
 // cargo r cC test.txt

@@ -56,6 +56,13 @@ pub fn search_case_sensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str>
     res
 }
 
+// or
+pub fn __search_case_sensitive<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    contents.lines() // make iter
+        .filter(|line| line.contains(query)) // operation
+        .collect()  // make collection
+}
+
 pub fn search_case_insensitive<'a>(
     query: &str, contents: &'a str
 ) -> Vec<&'a str> {

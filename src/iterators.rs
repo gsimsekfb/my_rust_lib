@@ -84,3 +84,18 @@ fn iter_our_iter_next() {
     assert_eq!(counter.next(), Some(5));
     assert_eq!(counter.next(), None);
 }
+
+/// next() and match
+// args: cmd line args
+pub fn new(mut args: std::env::Args) -> Result<u32, &'static str> {
+    args.next(); // exec. name
+    let query = match args.next() {
+        Some(arg) => arg,
+        None => return Err("Didn't get a query string"),
+    };
+    let filename = match args.next() {
+        Some(arg) => arg,
+        None => return Err("Didn't get a file name"),
+    };
+    Ok(42)
+}

@@ -11,6 +11,7 @@ mod doc_test;
 mod error_handling;
 mod iterators;
 mod type_;
+mod re_export;
 
 // Usage:
 // cargo r cC test.txt

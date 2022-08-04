@@ -1,4 +1,4 @@
-// How to test this file? 
+// How to test this file: 
 // Run: cargo t iter
 
 // Simple, dummy representation of Iterator trait

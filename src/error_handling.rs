@@ -1,18 +1,16 @@
-/// Equivalent error handlings with panic (w/o propagating to caller)
+/// 3 equivalent error handling examples which panics (w/o propagating to caller)
 
 // Using expect
 // #[test] // Uncomment to see the panic
-fn panic_1() {
+fn ex_1() {
     let xx: Result<u32, &str> = Err("emergency failure");
     let _yy = xx.expect("Testing expect"); 
         // panics with `Testing expect: emergency failure`
 }
 
-// -- same as `expect("...")`:
-
-// Using match
+// Using match - same as `expect("...")` in ex_1:
 // #[test] // Uncomment to see the panic
-fn panic_2() {
+fn ex_2() {
     let xx: Result<u32, &str> = Err("emergency failure");
 
     // panics with `Testing expect: emergency failure`
@@ -22,11 +20,9 @@ fn panic_2() {
     };
 }
 
-// -- same as an empty expect `expect("")`:
-
-// Using unwrap
+// Using unwrap - same as using an empty expect `expect("")` in ex_1:
 // #[test] // Uncomment to see the panic
-fn panic_3() {
+fn ex_3() {
     let xx: Result<u32, &str> = Err("emergency failure");
     let _yy = xx.unwrap(); 
         // panics with `: emergency failure`

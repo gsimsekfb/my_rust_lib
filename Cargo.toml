@@ -13,6 +13,12 @@ edition = "2018"
 [dependencies]
 
 
+[workspace]
+members = [
+  "adder",
+  "add-one",
+]
+
 ## -------------------------------------------------
 
 [profile.release]

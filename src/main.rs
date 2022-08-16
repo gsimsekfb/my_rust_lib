@@ -12,6 +12,7 @@ mod error_handling;
 mod iterators;
 mod type_;
 mod re_export;
+mod smart_ptrs;
 
 // Usage:
 // cargo r cC test.txt

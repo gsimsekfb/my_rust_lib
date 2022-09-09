@@ -1,0 +1,100 @@
+rust-book-minigrep v0.1.0 (/Users/gsimsek/code/rust/rust-book-minigrep)
+└── plotters v0.3.3
+    ├── chrono v0.4.22
+    │   ├── iana-time-zone v0.1.47
+    │   │   └── core-foundation-sys v0.8.3
+    │   ├── num-integer v0.1.45
+    │   │   └── num-traits v0.2.15
+    │   │       [build-dependencies]
+    │   │       └── autocfg v1.1.0
+    │   │   [build-dependencies]
+    │   │   └── autocfg v1.1.0
+    │   ├── num-traits v0.2.15 (*)
+    │   └── time v0.1.44
+    │       └── libc v0.2.132
+    ├── font-kit v0.11.0
+    │   ├── bitflags v1.3.2
+    │   ├── byteorder v1.4.3
+    │   ├── core-foundation v0.9.3
+    │   │   ├── core-foundation-sys v0.8.3
+    │   │   └── libc v0.2.132
+    │   ├── core-graphics v0.22.3
+    │   │   ├── bitflags v1.3.2
+    │   │   ├── core-foundation v0.9.3 (*)
+    │   │   ├── core-graphics-types v0.1.1
+    │   │   │   ├── bitflags v1.3.2
+    │   │   │   ├── core-foundation v0.9.3 (*)
+    │   │   │   ├── foreign-types v0.3.2
+    │   │   │   │   └── foreign-types-shared v0.1.1
+    │   │   │   └── libc v0.2.132
+    │   │   ├── foreign-types v0.3.2 (*)
+    │   │   └── libc v0.2.132
+    │   ├── core-text v19.2.0
+    │   │   ├── core-foundation v0.9.3 (*)
+    │   │   ├── core-graphics v0.22.3 (*)
+    │   │   ├── foreign-types v0.3.2 (*)
+    │   │   └── libc v0.2.132
+    │   ├── dirs-next v2.0.0
+    │   │   ├── cfg-if v1.0.0
+    │   │   └── dirs-sys-next v0.1.2
+    │   │       └── libc v0.2.132
+    │   ├── float-ord v0.2.0
+    │   ├── lazy_static v1.4.0
+    │   ├── libc v0.2.132
+    │   ├── log v0.4.17
+    │   │   └── cfg-if v1.0.0
+    │   ├── pathfinder_geometry v0.5.1
+    │   │   ├── log v0.4.17 (*)
+    │   │   └── pathfinder_simd v0.5.1
+    │   │       [build-dependencies]
+    │   │       └── rustc_version v0.3.3
+    │   │           └── semver v0.11.0
+    │   │               └── semver-parser v0.10.2
+    │   │                   └── pest v2.3.0
+    │   │                       ├── thiserror v1.0.34
+    │   │                       │   └── thiserror-impl v1.0.34 (proc-macro)
+    │   │                       │       ├── proc-macro2 v1.0.43
+    │   │                       │       │   └── unicode-ident v1.0.3
+    │   │                       │       ├── quote v1.0.21
+    │   │                       │       │   └── proc-macro2 v1.0.43 (*)
+    │   │                       │       └── syn v1.0.99
+    │   │                       │           ├── proc-macro2 v1.0.43 (*)
+    │   │                       │           ├── quote v1.0.21 (*)
+    │   │                       │           └── unicode-ident v1.0.3
+    │   │                       └── ucd-trie v0.1.5
+    │   ├── pathfinder_simd v0.5.1 (*)
+    │   └── walkdir v2.3.2
+    │       └── same-file v1.0.6
+    ├── image v0.24.3
+    │   ├── bytemuck v1.12.1
+    │   ├── byteorder v1.4.3
+    │   ├── color_quant v1.1.0
+    │   ├── jpeg-decoder v0.2.6
+    │   ├── num-rational v0.4.1
+    │   │   ├── num-integer v0.1.45 (*)
+    │   │   └── num-traits v0.2.15 (*)
+    │   │   [build-dependencies]
+    │   │   └── autocfg v1.1.0
+    │   ├── num-traits v0.2.15 (*)
+    │   └── png v0.17.6
+    │       ├── bitflags v1.3.2
+    │       ├── crc32fast v1.3.2
+    │       │   └── cfg-if v1.0.0
+    │       ├── flate2 v1.0.24
+    │       │   ├── crc32fast v1.3.2 (*)
+    │       │   └── miniz_oxide v0.5.4
+    │       │       └── adler v1.0.2
+    │       └── miniz_oxide v0.5.4 (*)
+    ├── lazy_static v1.4.0
+    ├── num-traits v0.2.15 (*)
+    ├── pathfinder_geometry v0.5.1 (*)
+    ├── plotters-backend v0.3.4
+    ├── plotters-bitmap v0.3.2
+    │   ├── gif v0.11.4
+    │   │   ├── color_quant v1.1.0
+    │   │   └── weezl v0.1.7
+    │   ├── image v0.24.3 (*)
+    │   └── plotters-backend v0.3.4
+    ├── plotters-svg v0.3.3
+    │   └── plotters-backend v0.3.4
+    └── ttf-parser v0.15.2

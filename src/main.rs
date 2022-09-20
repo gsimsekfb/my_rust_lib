@@ -13,6 +13,7 @@ mod iterators;
 mod type_;
 mod re_export;
 mod smart_ptrs;
+mod drop_aka_dtor;
 
 // Usage:
 // cargo r cC test.txt

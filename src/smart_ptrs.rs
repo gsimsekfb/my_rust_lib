@@ -75,11 +75,30 @@ fn hello(name: &str) {
 
 /// Implicit Deref Coercions
 #[test]
-fn ex3_deref_coerc() {
+fn ex2_deref_coerc() {
   let ss = MyBox::new(String::from("aaa"));
   // Rust turns &MyBox<String> into &String by calling deref. 
   // Rust calls deref again to turn the &String into &str
   hello(&ss); // with auto deref coerc.
     // same as:
     hello(&(*ss)[..]); // // w/o auto deref coerc.
+}
+
+// -------------------------------------------------------
+
+// 3. Rc, ref counted ptr aka shared ptr
+enum List2 {
+  Cons(i32, Rc<List2>),
+  Nil,
+}
+use std::rc::Rc;
+
+#[test]
+fn ex3_rc_ref_counted_ptr() {
+  use List2::{Cons, Nil};
+  let a = Rc::new(Cons(5, Rc::new(Cons(10, Rc::new(Nil)))));
+  // Two lists, b and c, sharing ownership of a third list, a
+  // See https://carols10cents.github.io/book/ch15-04-rc.html#using-rct-to-share-data
+  let b = Cons(3, Rc::clone(&a));
+  let c = Cons(4, Rc::clone(&a));
 }

@@ -6,8 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-add-one = { path = "../add-one" }
+add-one-lib = { path = "../add-one-lib" }
 rand = "0.3.14"
 
 [dev-dependencies]
-add-one = { path = "../add-one", features = ["use-foo"] }
+add-one-lib = { path = "../add-one-lib", features = ["use-foo"] }

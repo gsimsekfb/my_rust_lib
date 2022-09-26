@@ -15,11 +15,8 @@ edition = "2018"
 [workspace]
 members = [
   "adder",
-  "add-one",
+  "add-one-lib",
 ]
-
-[features]
-use-foo = [] # feature of add-one package
 
 ## -------------------------------------------------
 

@@ -139,7 +139,7 @@ impl Messenger for MockMessenger {
 
 // interior mutability
 #[test]
-fn ex4_refcell() {
+fn ex4_refcell_interior_mutability() {
   let msgr = MockMessenger::new();
   msgr.send("abc");
   assert!(msgr.sent_messages.borrow().len() == 1);

@@ -76,7 +76,7 @@ pub fn search_case_insensitive<'a>(
 }
 
 #[cfg(test)]
-mod tests {
+mod str_search {
     use super::*;
     #[test]
     fn case_sensitive() {

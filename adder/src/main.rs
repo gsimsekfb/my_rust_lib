@@ -1,6 +1,6 @@
 fn main() {
     let num = 10;
-    println!("{} plus one: {}!", num, add_one::add_one(num));
+    println!("{} plus one: {}!", num, add_one_lib::add_one(num));
 }
 
 // Sol-1
@@ -11,7 +11,10 @@ fn main() {
 // Sol-2
 // Use feature - see #usefoo
 
-#[test]
-pub fn test_add_one() {
-    assert!(add_one::foo::foofn() == 42);
+#[cfg(test)]
+pub mod adder {
+    #[test]
+    pub fn test_add_one() {
+        assert!(add_one_lib::foo::foofn() == 42);
+    }
 }

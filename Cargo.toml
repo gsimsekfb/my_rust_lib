@@ -12,12 +12,14 @@ edition = "2018"
 
 [dependencies]
 
-
 [workspace]
 members = [
   "adder",
   "add-one",
 ]
+
+[features]
+use-foo = [] # feature of add-one package
 
 ## -------------------------------------------------
 

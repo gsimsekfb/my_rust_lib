@@ -1,9 +1,19 @@
+
+
+// #usefoo - enable this line when this feature is enabled 
+//           (can be enabled by client Cargo.toml or compiler flag)
+#[cfg(feature = "use-foo")]
+pub mod foo;
+
+#[cfg(test)]
+pub mod foo;
+
 pub fn add_one(x: i32) -> i32 {
     x + 1
 }
 
 #[cfg(test)]
-mod add_one {
+pub mod add_one_mod {
     use crate::add_one;
 
     #[test]

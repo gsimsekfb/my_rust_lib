@@ -1,5 +1,5 @@
 
-// 1.a Example recursive type using Box
+// 1.a Example recursive type using Box<T> (== C++ unique_ptr<const T>)
 enum List {
   Cons(i32, Box<List>),
   Nil,
@@ -40,7 +40,6 @@ fn ex1_usage_of_list() {
     Box::new(Cons(2,
       Box::new(Cons(3,
         Box::new(Nil))))));
-  // assert_eq!(*xx, 42);
 }
 
 // -------------------------------------------------------
@@ -86,12 +85,12 @@ fn ex2_deref_coerc() {
 
 // -------------------------------------------------------
 
-// 3. Rc, ref counted ptr aka shared ptr
+// 3. Rc<T>, ref counted ptr (== C++ shared_ptr<const T>)
 enum List2 {
   Cons(i32, Rc<List2>),
   Nil,
 }
-use std::rc::Rc;
+use std::{cell::RefCell, rc::Rc};
 
 #[test]
 fn ex3_rc_ref_counted_ptr() {
@@ -101,4 +100,47 @@ fn ex3_rc_ref_counted_ptr() {
   // See https://carols10cents.github.io/book/ch15-04-rc.html#using-rct-to-share-data
   let b = Cons(3, Rc::clone(&a));
   let c = Cons(4, Rc::clone(&a));
+    // b[3, rc] 
+    //       \_ a [5, ..]
+    //       /
+    // c[4, rc]
+    // a has 2 ref count, b and c both have 1
+}
+
+// -------------------------------------------------------
+
+// 4. RefCell<T> - interior mutability at runtime
+//                 (disabling compile time borrow rules)
+pub trait Messenger {
+  fn send(&self, msg: &str);
+}
+
+struct MockMessenger {
+  // sent_messages: Vec<String>, // 1 
+  sent_messages: RefCell<Vec<String>>, // 2
+}
+
+impl MockMessenger {
+  fn new() -> Self {
+    // Self { sent_messages: vec![] } // 1
+    Self { sent_messages: RefCell::new(vec![]) } // 2
+  }
+}
+
+impl Messenger for MockMessenger {
+  fn send(&self, message: &str) {
+    // self.sent_messages.push(String::from(message)); // 1
+      // Comp. Err: `self` is a `&` reference, so the data it refers to cannot
+      //  be borrowed as mutable
+    self.sent_messages.borrow_mut().push(String::from(message)); // 2
+      // mutating sent_messages which is immutable at compile time 
+  }
+}
+
+// interior mutability
+#[test]
+fn ex4_refcell() {
+  let msgr = MockMessenger::new();
+  msgr.send("abc");
+  assert!(msgr.sent_messages.borrow().len() == 1);
 }

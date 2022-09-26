@@ -8,3 +8,6 @@ edition = "2021"
 [dependencies]
 add-one = { path = "../add-one" }
 rand = "0.3.14"
+
+[dev-dependencies]
+add-one = { path = "../add-one", features = ["use-foo"] }

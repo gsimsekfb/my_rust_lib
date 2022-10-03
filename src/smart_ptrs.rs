@@ -113,6 +113,7 @@ fn ex3_rc_ref_counted_ptr() {
 //                 (disabling compile time borrow rules)
 pub trait Messenger {
   fn send(&self, msg: &str);
+  fn bad_send(&self, msg: &str);
 }
 
 struct MockMessenger {
@@ -135,12 +136,29 @@ impl Messenger for MockMessenger {
     self.sent_messages.borrow_mut().push(String::from(message)); // 2
       // mutating sent_messages which is immutable at compile time 
   }
+
+  fn bad_send(&self, message: &str) {
+      let mut one_borrow = self.sent_messages.borrow_mut();
+      let mut two_borrow = self.sent_messages.borrow_mut();
+        // runtime err: thread 'smart_ptrs::ex4_2_refcell_bad_interior_mutability' 
+        // panicked at 'already borrowed:        
+      one_borrow.push(String::from(message));
+      two_borrow.push(String::from(message));
+    }  
 }
 
 // interior mutability
 #[test]
-fn ex4_refcell_interior_mutability() {
+fn ex4_1_refcell_interior_mutability() {
   let msgr = MockMessenger::new();
   msgr.send("abc");
+  assert!(msgr.sent_messages.borrow().len() == 1);
+}
+
+#[test] #[should_panic(expected = "already borrowed")]
+// or just: #[should_panic]
+fn ex4_2_refcell_bad_interior_mutability() {
+  let msgr = MockMessenger::new();
+  msgr.bad_send("bad"); // runtime err: see "fn bad_send()"
   assert!(msgr.sent_messages.borrow().len() == 1);
 }

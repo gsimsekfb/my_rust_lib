@@ -24,3 +24,4 @@ jobs:
       run: cargo build --all-targets # --verbose      
     - name: Run all tests
       run: cargo test --all # --verbose
+           # cargo t --all -- --nocapture

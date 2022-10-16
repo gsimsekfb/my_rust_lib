@@ -20,10 +20,10 @@ fn ex1_spawn_thread_no_join() {
   }
 
   // st.join().unwrap();
-  // No join hence not waiting for Spawned thread
-  // to finish its task. Main thread will print 
-  // 5 times, but spawned is not guaranteed to 
-  // print 10 times.
+    // No join hence not waiting for Spawned thread
+    // to finish its task. Main thread will print 
+    // 5 times, but spawned is not guaranteed to 
+    // print 10 times.
 }
 
 // -------------------------------------------------------
@@ -45,11 +45,6 @@ fn ex2_spawn_thread_w_join() {
   }
 
   st.join().unwrap(); // Wait until st finishes
-
-  // No join hence not waiting for Spawned thread
-  // to finish its task. Main thread will print 
-  // 5 times, but spawned is not guaranteed to 
-  // print 10 times.
 }
 
 // -------------------------------------------------------
@@ -160,4 +155,41 @@ fn ex4_c_multi_producer() {
         // --- Rx got: tx1-ww
         // --- Rx got: tx2-d
   }
+}
+
+// -------------------------------------------------------
+
+// 5. Using Mutex
+
+use std::sync::{Mutex, Arc};
+
+#[test]
+fn ex5_1_mutex_usage() {
+  let m = Mutex::new(5);
+  {
+    let mut num = m.lock().unwrap();
+    *num = 6;
+    assert_eq!(*num, 6);
+  }
+}
+
+// Let’s try to share a value between multiple threads using Mutex<T>. We’ll
+// spin up 10 threads and have them each increment a counter value by 1, so the
+// counter goes from 0 to 10.
+#[test]
+fn ex5_2_mutex_share_multi_thread() {
+  let counter = Arc::new(Mutex::new(0));
+  let mut threads = vec![];
+  for _ in 0..10 {
+    let counter = Arc::clone(&counter);    
+    let thread = thread::spawn(move || {
+      let mut num = counter.lock().unwrap();
+      *num += 1;
+    });
+    threads.push(thread);
+  }
+  for thread in threads {
+    thread.join().unwrap();
+  }
+  assert_eq!(*counter.lock().unwrap(), 10);
 }

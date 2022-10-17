@@ -10,7 +10,7 @@ mod re_export;
 mod smart_ptrs;
 mod drop_aka_dtor;
 mod concurrency;
-
+mod averaged_collection;
 
 // ----------- todo: move to search_str.rs
 

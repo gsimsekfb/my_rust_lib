@@ -3,32 +3,35 @@
 #![allow(unused_imports)]
 #![allow(unused_variables)]
 
-use rust_book_minigrep::{Config, run_search};
+mod mini_grep;
+use mini_grep::{SearchConfig, run_search};
 
 mod cacher;
 mod closure;
 
-// Usage:
-// cargo r cC test.txt
-// CASE_INSENSITIVE=1 cargo r cC test.txt
-// cargo t
-
 fn main() {
 
     // 1) Minigrep ---------------------------------------------
-    // // Create Config from args(filename and query)
-    // let args: Vec<String> = std::env::args().collect();
-	// println!("args: {:?}", args);
-    // let config = Config::new(&args).unwrap_or_else(|err| {
-    //     eprintln!("Problem parsing arguments: {}", err);
-    //     std::process::exit(1);
-    // });
+    // Usage:
+        // cargo r search-str file.txt
+        // cargo r cC test.txt
+        // CASE_INSENSITIVE=1 cargo r cC test.txt
+        //   Windows: cmd /c "set CASE_INSENSITIVE=1 && cargo r cC test.txt"          
+        // cargo t
 
-    // // Run search
-    // if let Err(e) = run_search(config) {
-    //     eprintln!("Application error: {}", e);
-    //     std::process::exit(1);
-    // }
+    // Create Config from args (get filename and search-str )
+    let args: Vec<String> = std::env::args().collect();
+	println!("args: {:?}", args);
+    let config = SearchConfig::new(&args).unwrap_or_else(|err| {
+        eprintln!("Problem parsing arguments: {}", err);
+        std::process::exit(1);
+    });
+
+    // Run search
+    if let Err(e) = run_search(config) {
+        eprintln!("Application error: {}", e);
+        std::process::exit(1);
+    }
 
     // 2) Cacher -----------------------------------------------
 
@@ -42,5 +45,5 @@ fn main() {
     // println!("--- res for 8: {:?}", expensive_fn.result(8)); // get cached res.
 
     // 3) Closure ----------------------------------------------
-    closure::examples();
+    // closure::examples();
 }

@@ -1,7 +1,6 @@
 use std::collections::HashMap;
 
 // todos: 
-// - yml for macos
 // - Key and Val are same types. Either combine them into one type or 
 //   make Val different type.
 
@@ -44,7 +43,7 @@ impl<T, Key, Val> Cacher<T, Key, Val>
 }
 
 #[test]
-fn call_with_different_resultss() {
+fn call_with_different_results() {
     let mut cacher = Cacher::new(|a| a);
     let v1 = cacher.result(1);
     let v2 = cacher.result(2);

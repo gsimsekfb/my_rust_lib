@@ -29,10 +29,10 @@ pub fn run_search(config: SearchConfig) -> Result<(), Box<dyn std::error::Error>
       // or
       // .expect("Something went wrong reading the file");
 
-  println!("\n{}:\n------------------\n{}\n", &config.filename, contents);
+  println!("\n{}:\n------\n{}\n", &config.filename, contents);
 
   print!("Searching for \"{}\" ", config.query);
-  println!("in file <{}> (case-insensitive:{}):\n------------------", 
+  println!("in file <{}> (case-insensitive:{}):\n------", 
       config.filename, config.case_insensitive);
 
   let result = if config.case_insensitive {

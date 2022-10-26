@@ -42,8 +42,7 @@ impl<T, Key, Val> Cacher<T, Key, Val>
     }
 }
 
-#[test]
-fn call_with_different_results() {
+#[test] fn call_with_different_results() {
     let mut cacher = Cacher::new(|a| a);
     let v1 = cacher.result(1);
     let v2 = cacher.result(2);

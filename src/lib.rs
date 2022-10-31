@@ -15,3 +15,4 @@ mod concurrency;
 mod averaged_collection;
 mod traits;
 mod trait_object_vs_struct_obj;
+mod traits_associated_type_vs_generics;

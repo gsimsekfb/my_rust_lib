@@ -2,7 +2,7 @@ pub trait Draw {
   fn draw(&self);
 }
 
-// Struct that uses trait objects - aka DYNAMIC dispatch - 
+// 1.a. Struct that uses trait objects - aka DYNAMIC dispatch - 
 // allows for MULTIPLE concrete types to fill in for the trait 
 // object at RUNTIME
 pub struct Screen {
@@ -27,6 +27,7 @@ impl Screen {
     // compiler from choosing to inline a method’s code, which in turn prevents
     // some optimizations. However, we did get extra flexibility in the code
 
+// 1.b. Static Dispatch
 // --------------------------------------------------------------------
 // For comparison: Static Dispatch
 // Struct that uses a generic type parameter with trait bounds. 
@@ -56,6 +57,7 @@ impl<T> Screen_Static_Dispatch<T> where T: Draw {
 // -------------------------------------------------------------------
 
 
+// 1.a. DYNAMIC dispatch ...continues...
 pub struct Button {
   pub width: u32,
   pub height: u32,

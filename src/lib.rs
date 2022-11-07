@@ -18,3 +18,4 @@ mod traits;
 mod trait_object_vs_struct_obj;
 mod traits_associated_type_vs_generics;
 mod trait_default_type_parameter;
+mod trait_same_name_fn_call;

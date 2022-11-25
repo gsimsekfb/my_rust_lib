@@ -1,4 +1,29 @@
+// 1. Return closure
+//
+// 1.a. Error
+// fn returns_closure() -> Fn(i32) -> i32 {
+//     |x| x + 1
+// }
+    // 1 | fn returns_closure() -> Fn(i32) -> i32 {
+    //     | ^^^^^^^^^^^^^^ `std::ops::Fn(i32) -> i32 +
+    //     'static` does not have a constant size known at compile-time
+    //     |
+    //     = help: the trait `std::marker::Sized` is not implemented for
+    //     `std::ops::Fn(i32) -> i32 + 'static`
+    //     = note: the return type of a function must have a statically known size
+//
+// 1.b. OK
+fn returns_closure() -> Box<dyn Fn(i32) -> i32> {
+    Box::new(|x| x + 1)
+}
 
+#[test] fn ex1() {
+    assert_eq!(5, returns_closure()(4));
+}
+
+// ------------------------------------
+
+// 2.
 pub fn examples() {
     let color = String::from("green");
 

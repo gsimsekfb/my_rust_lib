@@ -21,3 +21,4 @@ mod traits_default_type_parameter;
 mod traits_same_name_fn_call;
 mod traits_supertraits;
 mod newtype_pattern;
+mod never_type_never_returns;

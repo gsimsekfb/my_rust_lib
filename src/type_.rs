@@ -1,5 +1,6 @@
 
 
+// 1.
 // Simple, dummy representation of Iterator trait
 pub trait Iterator {
     type Item;  // The type of the elements being iterated over
@@ -15,4 +16,15 @@ fn foo() {
   assert_eq!(v1_iter.next(), Some(&1));
 
   let xx = v1_iter.next();     // Option<&i32>
+}
+
+
+// 2. 
+// Creating Type Synonyms with Type Aliases
+type Kilometers = i32;
+
+#[test] fn ex_2() {
+    let x: i32 = 3;
+    let y: Kilometers = 2;
+    assert_eq!(x+y, 5);
 }

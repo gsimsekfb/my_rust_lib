@@ -29,7 +29,7 @@ impl Add for Point {
     );
 }
 
-// 1.b. Overriding "default type parameter"
+// 1.b. Overriding "default type parameter" also newtype pattern
 #[derive(Debug, PartialEq)] struct Millimeters(u32);
 #[derive(Debug, PartialEq)] struct Meters(u32);
 

@@ -20,4 +20,6 @@ impl fmt::Display for Wrapper {
     let wrapper = Wrapper(vec![String::from("a"), String::from("b")]);
     // println!("w = {}", wrapper);
     assert_eq!(wrapper.to_string(), "[a, b]")
+        // Trait ToString::to_string() is automatically implemented for any type
+        // which implements the [`Display`] trait    
 }

@@ -19,7 +19,12 @@ members = [
   "config/global-constants", # testing
 ]
 
+[workspace.dependencies]
+aptos-global-constants = { path = "config/global-constants" }
+
+
 ## -------------------------------------------------
+
 
 [profile.release]
 opt-level = 'z'     # Optimize for size.

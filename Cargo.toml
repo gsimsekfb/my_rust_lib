@@ -16,6 +16,7 @@ edition = "2018"
 members = [
   "adder",
   "add-one-lib",
+  "config/global-constants", # testing
 ]
 
 ## -------------------------------------------------

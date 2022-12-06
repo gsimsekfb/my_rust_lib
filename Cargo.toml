@@ -17,10 +17,11 @@ members = [
   "adder",
   "add-one-lib",
   "config/global-constants", # testing
+  "web-server-multi-threaded",
 ]
 
-[workspace.dependencies]
-aptos-global-constants = { path = "config/global-constants" }
+# [workspace.dependencies]
+# aptos-global-constants = { path = "config/global-constants" }
 
 
 ## -------------------------------------------------

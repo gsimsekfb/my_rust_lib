@@ -10,13 +10,39 @@ use std::{
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
+    println!("---1.a th id: {:?}",std::thread::current().id());
+
+    // // c. Multi threaded using pool
+    // let pool = web_server::ThreadPool::new(4);
+
     for stream in listener.incoming() {
         let stream = stream.unwrap();
-        handle_connection(stream);
+        // a. Single threaded
+        // handle_connection(stream);
+
+        // b. Multi threaded not using pool
+        // create a new thread, then run the code in the closure in new thread
+        println!("---1.b th id: {:?}",std::thread::current().id());
+        std::thread::spawn(|| {
+            println!("---2.a th id: {:?}",std::thread::current().id());
+            handle_connection(stream);
+        });
+            // problem: this will eventually overwhelm the system because 
+            // you’d be making new threads without any limit.
+
+        // // c. todo
+        // // c. Multi threaded using pool
+        // println!("---1.b th id: {:?}",std::thread::current().id());
+        // pool.execute(|| {
+        //     println!("---2.a th id: {:?}",std::thread::current().id());
+        //     handle_connection(stream);
+        // });
     }
 }
 
 fn handle_connection(mut stream: TcpStream) {
+    println!("---2.b th id: {:?}",std::thread::current().id());
+
     // // HTTP request
     // let buf_reader = BufReader::new(&mut stream);
     // let http_request: Vec<_> = buf_reader

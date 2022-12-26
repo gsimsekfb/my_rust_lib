@@ -1,0 +1,12 @@
+[package]
+name = "web-server-async"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+futures = "0.3"
+
+# allows us to write an asynchronous main function.
+[dependencies.async-std]
+version = "1.6"
+features = ["attributes"]

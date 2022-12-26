@@ -11,14 +11,26 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+futures = "0.3"
+reqwest = { version = "0.11" }
 
 [workspace]
 members = [
-  "adder",
-  "add-one-lib",
-  "config/global-constants", # testing
-  "web-server-multi-threaded",
+  "src/adder",
+  "src/add-one-lib",
+  "src/web-server-multi-threaded",
+  "src/web-server-async-and-parallel",
 ]
+
+# # All workspace members should inherit these keys for package declarations.
+# [workspace.package]
+# authors = ["Aptos Labs <opensource@aptoslabs.com>"]
+# edition = "2021"
+# homepage = "https://aptoslabs.com"
+# license = "Apache-2.0"
+# publish = false
+# repository = "https://github.com/aptos-labs/aptos-core"
+# rust-version = "1.64"
 
 # [workspace.dependencies]
 # aptos-global-constants = { path = "config/global-constants" }

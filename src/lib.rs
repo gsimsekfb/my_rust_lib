@@ -5,6 +5,7 @@
 
 // mod doc_test; 
   // todo: failed to resolve: use of undeclared crate or module `doc_test`
+mod async_;
 mod averaged_collection;
 mod concurrency;
 mod drop_aka_dtor;

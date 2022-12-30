@@ -12,12 +12,23 @@
   if let Some(x) = res {
       println!("{}", x);
   }
-  
+
   // c. Irrefutable since it is always true/matches
   // if let x = 5 {
   //     println!("{}", x);
   // }
       // warning: irrefutable `if let` pattern
+
+  // d. let else - since rust 1.66
+  let x = match res {
+    Some(x) => x,
+    None => return,
+  };  
+  println!("--- x {:?}",x);
+  let res: Option<i32> = None; // comment to see diff.
+  // Match above, can be written:
+  let Some(x) = res else { return };
+  println!("--- x {:?}", x);      
 }
 
 

@@ -23,6 +23,12 @@ members = [
   "src/web-server-async-and-parallel",
 ]
 
+# New sytnax: since rust 1.64
+# https://doc.rust-lang.org/nightly/cargo/reference/workspaces.html
+[workspace.dependencies]
+rand = "0.3.14"
+add-one-lib = { path = "src/add-one-lib" }
+
 # # All workspace members should inherit these keys for package declarations.
 # [workspace.package]
 # authors = ["Aptos Labs <opensource@aptoslabs.com>"]

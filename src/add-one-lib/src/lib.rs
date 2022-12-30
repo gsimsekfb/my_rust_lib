@@ -27,3 +27,11 @@ pub mod add_one_lib {
         assert_eq!(add_one(4), 5);
     }
 }
+
+extern crate rand;
+use rand::Rng;
+pub fn foo_unused_fn() -> i32 {
+    let mut rng = rand::thread_rng();
+    let y: i32 = rng.gen(); // generates between 0 and 1
+    y
+}

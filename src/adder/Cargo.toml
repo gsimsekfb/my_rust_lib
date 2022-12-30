@@ -6,8 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-add-one-lib = { path = "../add-one-lib" }
-rand = "0.3.14"
+# add-one-lib = { path = "../add-one-lib" }
+# New sytnax: since rust 1.64
+add-one-lib  = { workspace = true }
 
 [dev-dependencies]
 add-one-lib = { path = "../add-one-lib", features = ["use-foo"] }

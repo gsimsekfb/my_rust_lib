@@ -3,7 +3,7 @@
 @REM Add C:\Aliases to your path (so any files in it will be found every time)
 @REM Create a .bat file in C:\Aliases for each of the aliases you want
 @REM e.g.
-@REM The content of C:\Aliases\tp:
+@REM The content of C:\Aliases\tp.bat :
 
 @echo off
 echo.

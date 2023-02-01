@@ -19,6 +19,7 @@ tokio = { version = "1.23.0", features = ["full"] }
 members = [
   "src/adder",
   "src/add-one-lib",
+  "src/clap-cmd-line-parser",
   "src/web-server-multi-threaded",
   "src/web-server-async-and-parallel",
 ]
@@ -28,6 +29,7 @@ members = [
 [workspace.dependencies]
 rand = "0.3.14"
 add-one-lib = { path = "src/add-one-lib" }
+clap = "4.0.32"
 
 # # All workspace members should inherit these keys for package declarations.
 # [workspace.package]
@@ -58,6 +60,6 @@ debug = true
 [profile.dev]
 opt-level = 0
 debug = true
-split-debuginfo = "unpacked" # Requires rustc 1.51
+# split-debuginfo = "unpacked" # Requires macOS ?
 lto = false
 incremental = true

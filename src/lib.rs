@@ -8,6 +8,7 @@
 mod async_;
 mod averaged_collection;
 mod concurrency;
+mod const_fn;
 mod drop_aka_dtor;
 mod error_handling;
 mod func_ptr;

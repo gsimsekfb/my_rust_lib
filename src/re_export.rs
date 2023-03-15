@@ -9,8 +9,7 @@ pub mod utils {
 pub use kinds::KK; // KK re-exported
 pub use utils::UU; // UU re-exported
 
-#[test]
-fn ex1() {
+#[test] fn ex1() {
   assert_eq!(kinds::KK, utils::UU); // w/o reexporting
   assert_eq!(KK, UU);               // w/  reexporting
 }

@@ -16,8 +16,8 @@ version = "0.1.0"
 
 [dependencies]
 # rand = "0.3.14"
-# New sytnax: since rust 1.64
-rand = { workspace = true }
+# New workspace sytnax: since rust 1.64
+rand_alias = { workspace = true }
 
 # #usefoo
 [features]

@@ -27,7 +27,8 @@ members = [
 # New sytnax: since rust 1.64
 # https://doc.rust-lang.org/nightly/cargo/reference/workspaces.html
 [workspace.dependencies]
-rand = "0.3.14"
+# Using aliased dependency import syntax
+rand_alias = { package = "rand", version = "0.3.14" }
 add-one-lib = { path = "src/add-one-lib" }
 clap = "4.0.32"
 

@@ -28,10 +28,10 @@ pub mod add_one_lib {
     }
 }
 
-extern crate rand;
-use rand::Rng;
+extern crate rand_alias;
+use rand_alias::Rng;
 pub fn foo_unused_fn() -> i32 {
-    let mut rng = rand::thread_rng();
+    let mut rng = rand_alias::thread_rng();
     let y: i32 = rng.gen(); // generates between 0 and 1
     y
 }

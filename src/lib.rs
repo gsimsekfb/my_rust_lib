@@ -13,6 +13,7 @@ mod const_fn;
 mod drop_aka_dtor;
 mod error_handling;
 mod func_ptr;
+mod int_overflow;
 mod iterators;
 mod match_;
 mod mini_grep;

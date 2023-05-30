@@ -8,6 +8,7 @@
 mod async_;
 mod averaged_collection;
 mod cfg;
+mod compile_vs_runtime_read_env_and_file;
 mod concurrency;
 mod const_fn;
 mod drop_aka_dtor;

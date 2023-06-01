@@ -23,6 +23,7 @@ mod never_type_never_returns;
 mod newtype_pattern;
 mod re_export;
 mod smart_ptrs;
+mod string_concat;
 mod temp;
 mod type_;
 mod traits;

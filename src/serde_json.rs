@@ -1,3 +1,7 @@
+// From book
+// Rust in Action 1st Edition by Tim McNamara - 2021
+// Ch 7, pg 215
+
 use bincode::serialize as to_bincode;       // <1>
 use serde_cbor::to_vec as to_cbor;          // <1>
 use serde_json::to_string as to_json;       // <1>

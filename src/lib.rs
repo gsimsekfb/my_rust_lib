@@ -22,6 +22,7 @@ mod mini_grep;
 mod never_type_never_returns;
 mod newtype_pattern;
 mod re_export;
+mod serde_json;
 mod smart_ptrs;
 mod string_concat;
 mod temp;

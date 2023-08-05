@@ -1,10 +1,10 @@
-// From book
+// Slightly modified version from book:
 // Rust in Action 1st Edition by Tim McNamara - 2021
 // Ch 7, pg 215
 
-use bincode::serialize as to_bincode;       // <1>
-use serde_cbor::to_vec as to_cbor;          // <1>
-use serde_json::to_string as to_json;       // <1>
+use bincode::serialize as to_bincode;
+use serde_cbor::to_vec as to_cbor;
+use serde_json::to_string as to_json;
 use serde_derive::{Serialize};
 
 // Instructs the serde_derive crate to write the necessary code to carry out

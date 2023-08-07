@@ -1,17 +1,39 @@
-/// 3 equivalent error handling examples which panics (w/o propagating to caller)
-/// https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html
 
-// Using expect
-// #[test] // Uncomment to see the panic
-fn ex_1() {
+//// A. Return multi-type error with Box<dyn Error>
+use std::error::Error;
+use std::net::Ipv6Addr;
+
+fn foo() -> Result<(), Box<dyn Error>> {
+    let ff = std::fs::File::open("ttt.txt")?; // Err(Os)
+    let ip = "abc".parse::<Ipv6Addr>()?; // Err(AddrParseError(Ipv6))
+    Ok(())
+}
+
+#[test]
+fn ex_a_1_return_multi_type_error() {
+    let res = foo();
+    println!("--- res: {:?}", res);
+        // --- res: Err(Os { 
+        //    code: 2, kind: NotFound, message: "No such file or directory" })
+        // --- res: Err(AddrParseError(Ipv6))
+}
+
+//// B. 3 equivalent error handling when panicking (w/o propagating to caller)
+//// https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html
+
+// Using expect - SUGGESTED OPTION
+#[test] 
+#[should_panic] // Comment to see the panic
+fn ex_b_1() {
     let xx: Result<u32, &str> = Err("emergency failure");
     let _yy = xx.expect("Error xyz happened"); 
         // panics with `Error xyz happened`: emergency failure`
 }
 
 // Using match - same as `expect("...")` in ex_1:
-// #[test] // Uncomment to see the panic
-fn ex_2() {
+#[test]
+#[should_panic] // Comment to see the panic
+fn ex_b_2() {
     let xx: Result<u32, &str> = Err("emergency failure");
     // panics with `Testing expect: emergency failure`
     let _yy = match xx {
@@ -21,8 +43,9 @@ fn ex_2() {
 }
 
 // Using unwrap - same as using an empty expect `expect("")` in ex_1:
-// #[test] // Uncomment to see the panic
-fn ex_3() {
+#[test]
+#[should_panic] // Comment to see the panic
+fn ex_b_3() {
     let xx: Result<u32, &str> = Err("emergency failure");
     let _yy = xx.unwrap(); 
         // panics with `: emergency failure`

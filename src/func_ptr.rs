@@ -43,8 +43,8 @@ assert_eq!(res, ["1", "2", "3"]);
 
 #[derive(Debug, PartialEq)]
 enum Status {
-Value(u32),
-Stop,
+  Value(u32),
+  Stop,
 }
 // Without PartialEq:
 // error[E0369]: binary operation `==` cannot be applied to type `Vec<Status>`

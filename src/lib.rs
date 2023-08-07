@@ -13,6 +13,7 @@ mod compile_vs_runtime_read_env_and_file;
 mod concurrency;
 mod const_fn;
 mod drop_aka_dtor;
+mod r#enum;
 mod error_handling;
 mod func_ptr;
 mod int_overflow;

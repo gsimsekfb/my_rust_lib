@@ -1,8 +1,12 @@
 
-//// A. Return multi-type error with Box<dyn Error>
+//// A. Returning multi-type error
+
+/// A.1. Return multi-type error with Box<dyn Error>
 use std::error::Error;
 use std::net::Ipv6Addr;
 
+// CON: We lost the type info by using Box<dyn Error> - aka type erasure
+// See A.2 for better solution
 fn foo() -> Result<(), Box<dyn Error>> {
     let ff = std::fs::File::open("ttt.txt")?; // Err(Os)
     let ip = "abc".parse::<Ipv6Addr>()?; // Err(AddrParseError(Ipv6))
@@ -18,7 +22,54 @@ fn ex_a_1_return_multi_type_error() {
         // --- res: Err(AddrParseError(Ipv6))
 }
 
-//// B. 3 equivalent error handling when panicking (w/o propagating to caller)
+/// A.2. Return multi-type error with MyError (suggested solution) 
+///      to retain type safety
+
+#[derive(Debug)]
+enum MyError {
+    IO(std::io::Error),
+    Parsing(std::net::AddrParseError),
+}
+
+impl std::error::Error for MyError { }
+
+impl std::fmt::Display for MyError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", self) // Implement Display in terms of Debug
+    }
+}
+
+impl From<std::io::Error> for MyError {
+    fn from(error: std::io::Error) -> Self {
+        MyError::IO(error)
+    }
+}
+
+impl From<std::net::AddrParseError> for MyError {
+    fn from(error: std::net::AddrParseError) -> Self {
+        MyError::Parsing(error)
+    }
+}
+
+fn foo2() -> Result<(), MyError> {
+    let _file = std::fs::File::open("tt.txt")?;
+    let _ip = "abc".parse::<std::net::Ipv6Addr>()?;
+    // Or use `map_err` if we don't want to impl From trait
+    // let _file = std::fs::File::open("tt.txt").map_err(MyError::IO)?;
+    // let _ip = "abc".parse::<std::net::Ipv6Addr>().map_err(MyError::Parsing)?;    
+    Ok(())
+}
+
+#[test]
+fn ex_a_2_return_multi_type_error() {
+    let res2 = foo2();
+    println!("--- res2: {:?}", res2);
+        // --- res: Err(Os { 
+        //    code: 2, kind: NotFound, message: "No such file or directory" })
+        // --- res: Err(AddrParseError(Ipv6))
+}
+
+//// B. Three equivalent error handling when panicking (w/o propagating to caller)
 //// https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html
 
 // Using expect - SUGGESTED OPTION

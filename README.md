@@ -1,11 +1,52 @@
-# rust-book-minigrep
+# rust-my-templates
 
-minigrep example program from the book  
-"Rust Programming Language  by Steve Klabnik and Carol Nichols (Covers Rust 2018) - 2019"  
+This is an educational repo with ready to use examples/explanations of features/keywords of Rust.  
+```
+src/
+- async_.rs
+- averaged_collection.rs
+- cacher.rs
+- clap-cmd-line-parser
+- closure.rs
+- compile_vs_runtime_read_env_and_file.rs
+- concurrency.rs
+- const_fn.rs
+- ctor_chain.rs
+- doc_test.rs
+- drop_aka_dtor.rs
+- dynamically_sized_types.rs
+- enum.rs
+- error_handling.rs
+- func_ptr.rs
+- int_overflow.rs
+- interior_mutability.rs
+- terators.rs
+- match_.rs
+- never_type_never_returns.rs
+- newtype_pattern.rs
+- re_export.rs
+- serde_json.rs
+- smart_ptrs.rs
+- string_concat.rs
+- trait_object_vs_struct_obj.rs
+- traits.rs
+- traits_associated_type_vs_generics.rs
+- traits_default_type_parameter.rs
+- traits_same_name_fn_call.rs
+- traits_supertraits.rs
+- type_.rs
+- utils.rs
+- web-server-async-and-parallel
+- web-server-multi-threaded
+```
 
-See `src/main.rs` for usage
+Sources:  
+- Rust Programming Language  by Steve Klabnik and Carol Nichols (Covers Rust 2018) - 2019
+- Rust_in_Action_McNamara_Tim - 2021
+- Rust for Rustaceans Idiomatic Programming for Experienced Developers - 2021 - by Jon Gjengset
 
-### What's in this repo?  
+
+### What's more in this repo?  
 - Organization of main.rs, lib.rs and unit tests
 - Working with command line arguments
 - Working with environment variables

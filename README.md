@@ -1,6 +1,6 @@
 # rust-my-templates
 
-This is an educational repo with ready to use examples/explanations of features/keywords of Rust and best practices.  
+This repo is for my personal education and use with ready to use examples/explanations of features/keywords of Rust and best practices.  
 ```
 src/
 - async_.rs

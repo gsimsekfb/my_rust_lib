@@ -6,11 +6,11 @@ This repo is for my personal education and use with ready to use examples/explan
 > [async_.rs](src/async_.rs)  
 > [averaged_collection.rs](src/averaged_collection.rs)  
 > [cacher.rs](src/cacher.rs)  
-> [clap-cmd-line-parser.rs](src/clap-cmd-line-parser.rs)  
+> [clap-cmd-line-parser](src/clap-cmd-line-parser)  
 > [compile_vs_runtime_read_env_and_file.rs](src/compile_vs_runtime_read_env_and_file.rs)  
 > [concurrency.rs](src/concurrency.rs)  
 > [const_fn.rs](src/const_fn.rs)  
-> [ctor_chain.rs](src/ctor_chain.rs)  
+> [constructor_chain.rs](src/ctor_chain.rs)  
 > [doc_test.rs](src/doc_test.rs)  
 > [drop_aka_dtor.rs](src/drop_aka_dtor.rs)  
 > [dynamically_sized_types.rs](src/dynamically_sized_types.rs)  
@@ -33,8 +33,8 @@ This repo is for my personal education and use with ready to use examples/explan
 > [traits_same_name_fn_call.rs](src/traits_same_name_fn_call.rs)  
 > [traits_supertraits.rs](src/traits_supertraits.rs)  
 > [type_.rs](src/type_.rs)  
-> [web-server-async-and-parallel.rs](src/web-server-async-and-parallel.rs)  
-> [web-server-multi-threaded.rs](src/web-server-multi-threaded.rs)  
+> [web-server-async-and-parallel](src/web-server-async-and-parallel)  
+> [web-server-multi-threaded](src/web-server-multi-threaded)  
 
 
 Sources:  

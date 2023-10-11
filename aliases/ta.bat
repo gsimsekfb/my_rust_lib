@@ -1,4 +1,4 @@
-@REM Usage: tp cacher
+@REM Usage: ta
 @REM Usage: dir C:\Aliases  // Hint: We created this folder
 @REM https://stackoverflow.com/questions/20530996/aliases-in-windows-command-prompt
 @REM Create a folder called C:\Aliases
@@ -9,4 +9,4 @@
 
 @echo off
 echo.
-cargo t -- %1 --nocapture
+cargo test --all

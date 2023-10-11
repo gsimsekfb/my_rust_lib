@@ -1,4 +1,21 @@
 
+//// Rust groups errors into two major categories: recoverable and unrecoverable
+//// 1. Recoverable error
+//// such as a file not found error, we most likely just want to report the 
+//// problem to the user and retry the operation. 
+//// 2. Unrecoverable errors:
+//// are always symptoms of bugs, like trying to access a location beyond 
+//// the end of an array, and so we want to immediately stop the program.
+//// Src: https://doc.rust-lang.org/book/ch09-00-error-handling.html
+////
+//// gs2022: 
+//// So, in summary, ideally (in production code), we want to recover/handle 
+//// or return that error/result to caller (and not use panic or exit or expect 
+//// or unwrap at all - they are all the same in the sense they stop the program)
+//// for recoverable errors. For unrecoverable, we should exit/panic.
+
+// -----------------------------------------
+
 //// A. Returning multi-type error
 
 /// A.1. Return multi-type error with Box<dyn Error>
@@ -101,19 +118,3 @@ fn ex_b_3() {
     let _yy = xx.unwrap(); 
         // panics with `: emergency failure`
 }
-
-//// ---------
- 
-//// Rust groups errors into two major categories: recoverable and unrecoverable 
-//// errors. For a recoverable error, such as a file not found error, 
-//// we most likely just want to report the problem to the user and retry the 
-//// operation. Unrecoverable errors are always symptoms of bugs, like trying 
-//// to access a location beyond the end of an array, and so we want to 
-//// immediately stop the program.
-//// Src: https://doc.rust-lang.org/book/ch09-00-error-handling.html
-
-//// gs2022: 
-//// So, in summary, ideally (in production code), we want to recover/handle 
-//// or return that error/result to caller (and not use panic or exit or expect 
-//// or unwrap at all - they are all the same in the sense they stop the program)
-//// for recoverable errors.

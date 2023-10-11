@@ -8,7 +8,7 @@
 //// the end of an array, and so we want to immediately stop the program.
 //// 
 //// Use Result<T, E> for recoverable errors. 
-//// Use the *panic! for unrecoverable errors. 
+//// Use the panic! for unrecoverable errors. 
 //// (panic: macro that stops program execution)
 //// Src: https://doc.rust-lang.org/book/ch09-00-error-handling.html
 ////

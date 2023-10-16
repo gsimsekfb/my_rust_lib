@@ -3,9 +3,11 @@
 This repo is for my personal education and use with ready to use examples/explanations of features/keywords of Rust and best practices.  
 
 Important tools:   
-> clippy:        https://github.com/rust-lang/rust-clippy  
+> clippy the linter: https://github.com/rust-lang/rust-clippy  
 > rust-analyzer: https://github.com/rust-lang/rust-analyzer  
-
+> sccache for faster builds (see setup and how to use under section "docs" below)  
+> vscode debugger (see setup and examples under section "docs" below)  
+  
 [docs/](docs)  
 > [faster_builds_with_linker_config.md](docs/faster_builds_with_linker_config.md)   
 > [faster_builds_with_sccache.md](docs/faster_builds_with_sccache.md)  

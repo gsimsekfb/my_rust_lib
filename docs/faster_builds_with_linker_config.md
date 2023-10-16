@@ -1,12 +1,7 @@
 
-[1. Faster incremental builds (6s instead of 40s)](#1)  
-[2. Faster clean builds with 'sccache' (3min instead of 7min)](#2)
-
-------------------------------
-
 <a name="1"/>
 
-## 1. Faster incremental builds (6s instead of 40s)
+## Faster incremental builds (6s instead of 40s)
 
 Here are some configs and experiment results for Ubuntu and macOS faster build times.  
 Hint: Search for "FASTEST"
@@ -121,42 +116,4 @@ root cargo.toml
 # disable debug symbols for all packages except this one
 debug = false
 ```
-
-<a name="2"/>   
-
-## 2. Faster clean builds with 'sccache' (3min instead of 7min)
-
-see also: (Improve-Rust-compile-times-with-sccache.md)
-
-Measure your build time first without 'sccache':  
-
-```
-// Clean build of `tower` takes around 7min
-cargo clean 
-cargo b -p tower 
-```
-
-Setup  
-```
-cargo install sccache
-echo "export RUSTC_WRAPPER=sccache" >> ~/.bashrc
-source ~/.bashrc
-
-// macos 
-echo -e "\nexport RUSTC_WRAPPER=sccache--" >> ~/.bash_profile
-source ~/.bash_profile  
-```
-
-Use `sccache`  
-```
-// Ignore this build - caching here
-cargo clean 
-cargo b -p tower 
-
-// Now, this takes `3min` instead of `7min` - Incredible!
-cargo clean 
-cargo b -p tower 
-
-```
-
 

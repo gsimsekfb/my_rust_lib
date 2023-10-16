@@ -22,7 +22,7 @@ This repo is for my personal education and use with ready to use examples/explan
 > [iterators.rs](src/iterators.rs)  
 > [match_.rs](src/match_.rs)  
 > [never_type_never_returns.rs](src/never_type_never_returns.rs)  
-> [newtype_pattern.rs](src/newtype_pattern.rs)  
+> [newtype_pattern.rs](src/newtype_pattern.rs)
 > [re_export.rs](src/re_export.rs)  
 > [serde_json.rs](src/serde_json.rs)  
 > [smart_ptrs.rs](src/smart_ptrs.rs)  
@@ -33,6 +33,8 @@ This repo is for my personal education and use with ready to use examples/explan
 > [traits_same_name_fn_call.rs](src/traits_same_name_fn_call.rs)  
 > [traits_supertraits.rs](src/traits_supertraits.rs)  
 > [type_.rs](src/type_.rs)  
+> [unit_integration_tests.rs](src/unit_integration_tests.rs)  
+> [unit_test.rs](src/unit_test.rs)  
 > [web-server-async-and-parallel](src/web-server-async-and-parallel)  
 > [web-server-multi-threaded](src/web-server-multi-threaded)  
 

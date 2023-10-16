@@ -16,7 +16,7 @@ mod drop_aka_dtor;
 mod r#enum;
 mod error_handling;
 mod func_ptr;
-mod unit;
+mod unit_test;
 mod unit_integration_tests;
 mod int_overflow;
 mod interior_mutability;

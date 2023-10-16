@@ -2,6 +2,11 @@
 
 This repo is for my personal education and use with ready to use examples/explanations of features/keywords of Rust and best practices.  
 
+[docs/](docs)  
+> [faster_builds_with_linker_config.md](/docs/faster_builds_with_linker_config.md)   
+> [faster_builds_with_sccache.md](/docs/faster_builds_with_sccache.md)  
+> [how_to_debug_rust.md](/docs/how_to_debug_rust.md)  
+
 [src/](src)  
 > [async_.rs](src/async_.rs)  
 > [averaged_collection.rs](src/averaged_collection.rs)  

@@ -2,19 +2,22 @@
 
 This repo is for my personal use with tips, tools, ready to use examples/explanations of features/keywords of Rust and best practices.  
 
-Important tools & tips:
-> Try to use latest Rust -> https://github.com/rust-lang/rust/releases  
+#### Important tools & tips:
+> Use latest Rust -> https://github.com/rust-lang/rust/releases  
 > Use [clippy the linter](https://github.com/rust-lang/rust-clippy)  
 > Use [rust-analyzer](https://github.com/rust-lang/rust-analyzer)  
-> Use sccache for faster builds (see setup and how to use under section "docs" below)  
-> Use vscode debugger (see setup and examples under section "docs" below)  
-  
-[docs/](docs)  
+> Use `sccache` for faster builds (see setup and how to use in section "docs" below)  
+> Use `.cargo/config.toml` (see `faster_builds_with_linker_config` in section "docs" below)  
+> Use `vscode debugger` (see setup and examples in section "docs" below)  
+
+#### [best-practice-tips/](best-practices)  
+
+#### [docs/](docs)  
 > [faster_builds_with_linker_config.md](docs/faster_builds_with_linker_config.md)   
 > [faster_builds_with_sccache.md](docs/faster_builds_with_sccache.md)  
 > [how_to_debug_rust.md](docs/how_to_debug_rust.md)  
 
-[src/](src)  
+#### [src/](src)  
 > [async_.rs](src/async_.rs)  
 > [averaged_collection.rs](src/averaged_collection.rs)  
 > [cacher.rs](src/cacher.rs)  
@@ -51,13 +54,13 @@ Important tools & tips:
 > [web-server-multi-threaded](src/web-server-multi-threaded)  
 
 
-Sources:  
+#### Sources:  
 - Rust Programming Language  by Steve Klabnik and Carol Nichols (Covers Rust 2018) - 2019
 - Rust_in_Action_McNamara_Tim - 2021
 - Rust for Rustaceans Idiomatic Programming for Experienced Developers - 2021 - by Jon Gjengset
 
 
-### What's more in this repo?  
+#### What's more in this repo?  
 - Organization of main.rs, lib.rs and unit tests
 - Working with command line arguments
 - Working with environment variables

@@ -4,10 +4,10 @@ This repo is for my personal use with tips, tools, ready to use examples/explana
 
 Important tools & tips:
 > Try to use latest Rust -> https://github.com/rust-lang/rust/releases  
-> [clippy the linter](https://github.com/rust-lang/rust-clippy)  
-> [rust-analyzer](https://github.com/rust-lang/rust-analyzer)  
-> sccache for faster builds (see setup and how to use under section "docs" below)  
-> vscode debugger (see setup and examples under section "docs" below)  
+> Use [clippy the linter](https://github.com/rust-lang/rust-clippy)  
+> Use [rust-analyzer](https://github.com/rust-lang/rust-analyzer)  
+> Use sccache for faster builds (see setup and how to use under section "docs" below)  
+> Use vscode debugger (see setup and examples under section "docs" below)  
   
 [docs/](docs)  
 > [faster_builds_with_linker_config.md](docs/faster_builds_with_linker_config.md)   

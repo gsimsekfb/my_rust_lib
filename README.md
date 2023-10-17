@@ -1,6 +1,6 @@
 # rust-my-templates
 
-This repo is for my personal education and use with ready to use examples/explanations of features/keywords of Rust and best practices.  
+This repo is for my personal use with tips, tools, ready to use examples/explanations of features/keywords of Rust and best practices.  
 
 Important tools & tips:
 > Try to use latest Rust -> https://github.com/rust-lang/rust/releases  

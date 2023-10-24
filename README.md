@@ -4,10 +4,10 @@ This repo is for my personal use with tips, tools, ready to use examples/explana
 
 #### Important tools & tips:
 > Use latest Rust -> https://github.com/rust-lang/rust/releases  
-> Use [clippy - the Rust linter](https://github.com/rust-lang/rust-clippy) (how to use in CI: [clippy.yml](.github/workflows/clippy.yml))  
+> Use [clippy - the Rust linter](https://github.com/rust-lang/rust-clippy) (also use it in CI: [clippy.yml](.github/workflows/clippy.yml))  
 > Use [rust-analyzer](https://github.com/rust-lang/rust-analyzer)  
-> Use [integration_tests](src/unit_integration_tests.rs) (how to use in CI: [integration_tests.yml](.github/workflows/integration_tests.yml))   
-> Use [unit_test](src/unit_test.rs) - (how to use in CI: [unit_tests.yml](.github/workflows/unit_tests.yml))   
+> Use [integration_tests](src/unit_integration_tests.rs) (also use it in CI: [integration_tests.yml](.github/workflows/integration_tests.yml))   
+> Use [unit_test](src/unit_test.rs) (also use it in CI: [unit_tests.yml](.github/workflows/unit_tests.yml))   
 > Use `sccache` for faster builds (see setup and how to use in section "docs" below)  
 > Use `.cargo/config.toml` (see `faster_builds_with_linker_config` in section "docs" below)  
 > Use `vscode debugger` (see setup and examples in section "docs" below)  

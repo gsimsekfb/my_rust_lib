@@ -34,7 +34,7 @@ This repo is for my personal use with tips, tools, ready to use examples/explana
 > [func_ptr.rs](src/func_ptr.rs)  
 > [int_overflow.rs](src/int_overflow.rs)  
 > [interior_mutability.rs](src/interior_mutability.rs)  
-> [iterators.rs](src/iterators.rs)  
+> [iterators_aka_algorithms.rs](src/iterators_aka_algorithms.rs)  
 > [match_.rs](src/match_.rs)  
 > [never_type_never_returns.rs](src/never_type_never_returns.rs)  
 > [newtype_pattern.rs](src/newtype_pattern.rs)

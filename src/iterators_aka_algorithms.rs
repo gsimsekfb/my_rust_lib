@@ -49,6 +49,20 @@ pub fn foo() {
     assert_eq!(v2, vec![2, 4]);
 }
 
+// mixing: filter/take/map/sum
+// sum the squares of the first five even items 
+#[test] fn iter_sum_squares_of_first_two_even_items() {
+    let v1: Vec<i32> = vec![1, 2, 3, 4, 5, 6];
+    let even_sum_squares: i32 = v1
+        .iter()
+        .filter(|x| *x % 2 == 0)
+        .take(2)
+        .map(|x| x * x)
+        .sum();
+        // 2*2 + 4*4 = 20
+    assert_eq!(even_sum_squares, 20);
+}
+
 #[test] fn iter_chain() {
     let a1 = vec![1, 2];
     let a2 = vec![4, 5];

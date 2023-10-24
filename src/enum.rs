@@ -1,4 +1,6 @@
 
+
+// 1. Simple example
 #[derive(Copy, Clone)]
 enum Foo {
     One = 1,
@@ -21,4 +23,28 @@ enum Foo {
         } ,
         _ => todo!()
     }         
+}
+
+// 2. impl enum also kind of inheritance
+// src: https://www.lurklurk.org/effective-rust/use-types-2.html
+enum Shape {
+    Rectangle { width: f64, height: f64 },
+    Circle { radius: f64 },
+}
+
+impl Shape {
+    pub fn area(&self) -> f64 {
+        match self {
+            Shape::Rectangle { width, height } => width * height,
+            Shape::Circle { radius } => std::f64::consts::PI * radius * radius,
+        }
+    }
+}
+
+#[test] fn ex3_impl_enum_also_kind_of_inheritance() {
+    let rec = Shape::Rectangle { width: 4.0, height: 3.0};
+    assert_eq!(rec.area(), 12.0);
+
+    let cir = Shape::Circle { radius: 3.0};
+    assert_eq!(cir.area(), 28.274333882308138);
 }

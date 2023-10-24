@@ -16,7 +16,7 @@ pub trait Iterator {
 
 // next
 pub fn foo() {
-    let v1 = vec![1, 2, 3]; // Vec<i32, Global>
+    let v1 = [1, 2, 3]; // Vec<i32, Global>
     let mut v1_iter = v1.iter(); // Iter<i32>
     assert_eq!(v1_iter.next(), Some(&1));
     let xx = v1_iter.next(); // Option<&i32>

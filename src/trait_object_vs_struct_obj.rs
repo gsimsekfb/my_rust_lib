@@ -28,7 +28,7 @@ impl Post {
   }
 
   pub fn content(&self) -> &str {
-      self.state.as_ref().unwrap().content(&self)
+      self.state.as_ref().unwrap().content(self)
   }
 
   pub fn request_review(&mut self) {
@@ -104,7 +104,7 @@ impl State for Published {
 
 pub struct Post_ { content: String }
 impl Post_ {
-  pub fn new() -> DraftPost {
+  pub fn new_draft_post() -> DraftPost {
       DraftPost { content: "".to_string() }
   }
   pub fn content(&self) -> &str { &self.content }
@@ -128,7 +128,7 @@ impl PendingReviewPost {
 }
 
 #[test] fn ex2() {
-  let mut draft_post = Post_::new();
+  let mut draft_post = Post_::new_draft_post();
   draft_post.add_text("abc");
   let pending_review_post = draft_post.request_review();
   let approved_post = pending_review_post.approve();

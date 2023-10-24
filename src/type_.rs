@@ -11,6 +11,7 @@ pub trait Iterator {
 
 // Simple usage of iterators
 fn foo() {
+  #[allow(clippy::useless_vec)]
   let v1 = vec![1, 2, 3];      // Vec<i32, Global>
   let mut v1_iter = v1.iter(); // Iter<i32>
   assert_eq!(v1_iter.next(), Some(&1));

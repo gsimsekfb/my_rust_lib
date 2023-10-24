@@ -94,6 +94,7 @@ pub fn examples() {
     // 4. move capture
     //
     // `Vec` has non-copy semantics.
+    #[allow(clippy::useless_vec)]
     let vec = vec![1, 2, 3];
 
     let contains = move |needle| vec.contains(needle); // move is unnecessary here

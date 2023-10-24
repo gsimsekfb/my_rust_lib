@@ -28,6 +28,7 @@ impl<Function, Key, Val> Cacher<Function, Key, Val>
     pub fn result_for(&mut self, arg: Key) -> Val {
         // better to use: self.results.entry(k).or_insert(v);
         // this is for version with prints:
+        #[allow(clippy::map_entry)]
         if self.results.contains_key(&arg) {
             let val = *self.results.get(&arg).unwrap();
             println!("Cacher: cashed result for {}: {}", arg, val);

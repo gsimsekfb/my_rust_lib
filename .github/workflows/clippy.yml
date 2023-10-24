@@ -14,5 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3 
+    - name: a
+      run: rustup component add clippy --toolchain 1.72.1-x86_64-unknown-linux-gnu
     - name: Run clippy
       run: cargo clippy

@@ -36,6 +36,7 @@ fn main() {
             eprintln!("Application error: {}", e);
             std::process::exit(1);
         }
+        return;
     } else { println!("HINT: Try \"cargo r cC test.txt\""); }
 
     // 2) Cacher -----------------------------------------------

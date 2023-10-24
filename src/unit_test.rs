@@ -15,7 +15,7 @@ pub fn add_one(x: i32) -> i32 {
     x + add_const()
 }
 
-#[cfg(test)]
+#[cfg(test)] // the code only gets built in test configurations
 mod unit_tests {
     use super::*;
 

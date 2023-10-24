@@ -20,7 +20,7 @@ mod unit_test;
 mod unit_integration_tests;
 mod int_overflow;
 mod interior_mutability;
-mod iterators;
+mod iterators_aka_algorithms;
 mod match_;
 mod mini_grep;
 mod multi_threading_par_iter;

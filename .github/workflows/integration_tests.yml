@@ -13,6 +13,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3 
+    - uses: actions/checkout@v3
+    - name: Install lld linker for faster build times
+      run: sudo apt -y install lld    
     - name: Run integration tests
       run: cargo t integ

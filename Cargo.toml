@@ -31,6 +31,10 @@ members = [
   "src/web-server-async-and-parallel",
 ]
 
+## examples/hello.rs works with `cargo r --example hello` without this section
+# [[example]]
+# name = "hello"
+
 # New sytnax: since rust 1.64
 # https://doc.rust-lang.org/nightly/cargo/reference/workspaces.html
 [workspace.dependencies]

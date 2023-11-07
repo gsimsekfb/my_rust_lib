@@ -19,7 +19,8 @@ This repo is for my personal use with tips, tools, ready to use examples/explana
 > [faster_builds_with_sccache.md](docs/faster_builds_with_sccache.md)  
 > [how_to_debug_rust.md](docs/how_to_debug_rust.md)  
 
-#### [examples/hello.rs](examples/hello.rs)  
+#### [examples/](examples)  
+> [hello.rs](examples/hello.rs)  
 
 #### [src/](src)  
 > [async_.rs](src/async_.rs)  

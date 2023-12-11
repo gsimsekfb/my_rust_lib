@@ -60,8 +60,10 @@ This repo is for my personal use with tips, tools, ready to use examples/explana
 
 
 #### Sources:  
-- Rust Programming Language  by Steve Klabnik and Carol Nichols (Covers Rust 2018) - 2019
-- Rust_in_Action_McNamara_Tim - 2021
+- [Rust Programming Language Book by Steve Klabnik](https://doc.rust-lang.org/book/)
+- [Rust in Action – 2021 by Tim McNamara](https://www.amazon.ca/Rust-in-Action/dp/1617294551)
+- [Effective Rust - 35 Specific Ways to Improve Your Rust Code by David Drysdale](https://www.lurklurk.org/effective-rust/)
+- [Rust API Guidelines](https://rust-lang.github.io/api-guidelines/about.html)
 - Rust for Rustaceans Idiomatic Programming for Experienced Developers - 2021 - by Jon Gjengset
 
 

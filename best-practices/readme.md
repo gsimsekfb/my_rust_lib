@@ -1,18 +1,19 @@
-### x.Use `usize` for return type of size of collections fn.
-  > standard collections return their size as a usize (from .len()), so collection indexing means that usize values are quite common – which is obviously fine from a capacity perspective, as there can't be more items in an in-memory collection than there are memory addresses on the syste  
-  > Src: https://www.lurklurk.org/effective-rust/use-types.html  
-
 ###  3.1. Use the type system to express your data structures  
-https://www.lurklurk.org/effective-rust/use-types.html  
-- always encode the result of an operation that might fail as a Result<T, E>  
+Src: https://www.lurklurk.org/effective-rust/use-types.html  
+
+// a. always encode the result of an operation that might fail as a Result<T, E>  
 ```
     pub fn find_user(username: &str) -> Result<UserId, std::io::Error> {
         let f = std::fs::File::open("/etc/passwd")?;
     }
 ```
 
+// b. Use `usize` for return type of size of collections fn.
+  > standard collections return their size as a usize (from .len()), so collection indexing means that usize values are quite common – which is obviously fine from a capacity perspective, as there can't be more items in an in-memory collection than there are memory addresses on the syste  
+
+
 ### 3.3. Avoid matching Option and Result  
-https://www.lurklurk.org/effective-rust/transform.html  
+Src: https://www.lurklurk.org/effective-rust/transform.html  
 
 // a. When to use `if let` instead of match:  
 ```

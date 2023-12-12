@@ -2,7 +2,7 @@
 name = "rust-book-minigrep"
 version = "0.1.0"
 authors = ["Gokhan Simsek <g.simsek@paralect.com>"]
-edition = "2018"
+edition = "2021"
 
 # Ref:
 # From Rust Programming Language

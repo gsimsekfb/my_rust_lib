@@ -12,7 +12,7 @@ Src: https://www.lurklurk.org/effective-rust/use-types.html
   > standard collections return their size as a usize (from .len()), so collection indexing means that usize values are quite common – which is obviously fine from a capacity perspective, as there can't be more items in an in-memory collection than there are memory addresses on the syste  
 
 
-### 3.3. Avoid matching Option and Result  
+### 3.3. When to avoid matching Option and Result  
 Src: https://www.lurklurk.org/effective-rust/transform.html  
 
 // a. When to use `if let` instead of match:  

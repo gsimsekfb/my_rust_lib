@@ -1,3 +1,4 @@
+
 ###  3.1. Use the type system to express your data structures  
 Src: https://www.lurklurk.org/effective-rust/use-types.html  
 
@@ -72,4 +73,9 @@ For this situation, an if let expression is one line shorter and, more important
     // From standard trait (Item 5), then the compiler will 'automatically' perform 
     // the conversion without the need for a call to .map_err()
 ```
+
+###  3.4 Prefer idiomatic Error variants 
+
+// a.  
+Consider using David Tolnay's `anyhow` crate for error handling in applications.  
     

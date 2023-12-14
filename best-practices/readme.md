@@ -78,4 +78,9 @@ For this situation, an if let expression is one line shorter and, more important
 
 // a.  
 Consider using David Tolnay's `anyhow` crate for error handling in applications.  
-    
+
+
+// b. Libraries versus Applications  
+Code that's written for a library can't predict the environment in which the code is used, so it's preferable to emit concrete, detailed error information, and leave the caller to figure out how to use that information. This leans towards the enum-style nested errors described previously (and also avoids a dependency on anyhow in the public API of the library.  
+
+

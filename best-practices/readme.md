@@ -1,4 +1,68 @@
 
+### 3.6. Understand type conversions
+https://www.lurklurk.org/effective-rust/casts.html 
+
+Rust type conversions fall into three categories:
+```
+manual:         user-defined type conversions provided by implementing the From and Into traits
+semi-automatic: explicit casts between values using the as keyword
+automatic:      implicit coercion into a new type.
+```
+
+For consistency and safety you should prefer `from / into` conversions to `as` casts, unless you understand and need the precise casting semantics (e.g for C interoperability). 
+https://doc.rust-lang.org/reference/expressions/operator-expr.html#semantics
+
+#### a) Manual conversions
+```
+#[derive(Debug, PartialEq)]
+struct GreaterThanZero(i32);
+
+// From std lib:
+pub trait TryFrom_<T>: Sized {
+    /// The type returned in the event of a conversion error.
+    type Error;
+
+    /// Performs the conversion.
+    fn try_from(value: T) -> Result<Self, Self::Error>;
+}
+
+// Our impl
+impl TryFrom<i32> for GreaterThanZero {
+    type Error = &'static str;
+
+    fn try_from(val: i32) -> Result<Self, Self::Error> {
+        if val <= 0 {
+            return Err("GreaterThanZero only accepts values greater than zero!")
+        }
+        Ok(GreaterThanZero(val))
+    }
+}
+
+#[test] 
+fn ex_1() {
+    let gg = GreaterThanZero::try_from(42);
+    assert_eq!(gg.unwrap(), GreaterThanZero(42));
+    let gg = GreaterThanZero::try_from(-33);
+    assert_eq!(gg, Err("GreaterThanZero only accepts values greater than zero!"));
+}
+```
+
+#### b) Casts
+https://doc.rust-lang.org/reference/expressions/operator-expr.html#semantics
+```
+let x: u32 = 9;
+let y = x as u64;
+```
+
+#### c) Automatic conversions - coercions 
+https://doc.rust-lang.org/reference/type-coercions.html
+
+Most of the coercions involve silent conversions of pointer and reference types in ways that are sensible and convenient for the programmer, such as:
+- converting a mutable reference to a non-mutable references (so you can use a &mut T as the argument to a function that takes a &T)
+- converting a reference to a raw pointer (this isn't unsafe – the unsafety happens at the point where you're foolish enough to use a raw pointer)
+- converting a closure that happens not to capture any variables into a bare function pointer (Item 2)
+- converting an array to a slice
+
 ###  3.5 Familiarize yourself with standard traits
 https://www.lurklurk.org/effective-rust/std-traits.html  
 

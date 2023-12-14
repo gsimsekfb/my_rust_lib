@@ -1,4 +1,30 @@
 
+###  3.5 Familiarize yourself with standard traits
+https://www.lurklurk.org/effective-rust/std-traits.html  
+
+- Clone: Items of this type can make a copy of themselves when asked.  
+- Copy: If the compiler makes a bit-for-bit copy of this item's memory representation, the result is a valid new item.  
+- Default: It's possible to make new instances of this type with sensible default values.  
+- PartialEq: There's a partial equivalence relation for items of this type – any two items can be definitively compared, but it may not always be true that x==x.  
+- Eq: There's an equivalence relation for items of this type: any two items can be definitively compared, and it is always true that x==x.  
+- PartialOrd: Some items of this type can be compared and ordered.  
+- Ord: All items of this type can be compared and ordered.  
+- Hash: Items of this type can produce a stable hash of their contents when asked.  
+- Debug: Items of this type can be displayed to programmers.  
+- Display: Items of this type can be displayed to users.
+
+Other (non-deriveable) standard traits are covered in other Items, and so are not included here. These include:
+
+- Fn, FnOnce and FnMut: Items implementing this trait represent closures that can be invoked. See Item 2.
+- Error: Items implementing this trait represent error information that can be displayed to users or programmers, and which may hold nested sub-error information. See Item 4.
+- Drop: Items implementing this trait perform processing when they are destroyed, which is essential for RAII patterns. See Item 11.
+- From and TryFrom: Items implementing this trait can be automatically created from items of some other type, but with a possibility of failure in the latter case. See Item 6.
+- Deref and DerefMut: Items implementing this trait are pointer-like objects that can be dereferenced to get access to an inner item. See Item 9.
+- Iterator and friends: Items implementing this trait represent collections that can be iterated over. See Item 10.
+- Send: Items implementing this trait are safe to transfer between multiple threads. See Item 17.
+- Sync: Items implementing this trait are safe to be referenced by multiple threads. See Item 17. 
+
+
 ###  3.1. Use the type system to express your data structures  
 Src: https://www.lurklurk.org/effective-rust/use-types.html  
 
@@ -82,5 +108,7 @@ Consider using David Tolnay's `anyhow` crate for error handling in applications.
 
 // b. Libraries versus Applications  
 Code that's written for a library can't predict the environment in which the code is used, so it's preferable to emit concrete, detailed error information, and leave the caller to figure out how to use that information. This leans towards the enum-style nested errors described previously (and also avoids a dependency on anyhow in the public API of the library.  
+
+
 
 

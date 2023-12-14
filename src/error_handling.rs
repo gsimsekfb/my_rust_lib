@@ -18,6 +18,10 @@
 //// or unwrap at all - they are all the same in the sense they stop the program)
 //// for recoverable errors. For unrecoverable, we should exit/panic.
 
+// Good srcs:
+// https://doc.rust-lang.org/book/ch09-00-error-handling.html
+// https://www.lurklurk.org/effective-rust/errors.html
+
 // -----------------------------------------
 
 //// A. Returning multi-type error
@@ -121,4 +125,58 @@ fn ex_b_3() {
     let xx: Result<u32, &str> = Err("emergency failure");
     let _yy = xx.unwrap(); 
         // panics with `: emergency failure`
+}
+
+
+
+//// C. How to implement MyError a String wrapper, convertible to String, and 
+//// implements Error trait
+
+// a. String in Result<i32, String> doesn't implement Error, which we'd prefer 
+// so that other areas of code can work with it
+pub fn find_user_a(username: &str) -> Result<i32, String> {
+    let _file = std::fs::File::open("/etc/passwd")
+        .map_err(|e| format!("Failed to open password file: {:?}", e))?;
+    Ok(42)
+}
+// So, we use newtype pattern 
+// (It's not possible to impl Error for String, because neither the trait 
+//  nor the type belong to us - the so-called orphan rule)
+//       |
+//       v
+#[derive(Debug)]
+pub struct MyError_(String);
+impl std::error::Error for MyError_ {}
+
+// Error trait requires Debug + Display traits
+impl std::fmt::Display for MyError_ {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+// b. We want this to work: String to MyError_ auto conversion
+pub fn find_user_b(username: &str) -> Result<i32, MyError_> {
+    let _file = std::fs::File::open("/etc/aaa")
+        .map_err(|e| format!("Failed to open file: {:?}", e))?;
+    Ok(42)
+}
+// error:
+// the trait `From<std::string::String>` is not implemented for `temp::MyError_`
+//       |
+//       v
+impl From<std::string::String> for MyError_ {
+    fn from(value: String) -> Self {
+        Self(value)
+    }
+}
+
+#[test]
+fn ex_c_1() {
+    let res = find_user_b("aaa");
+    println!("-- res: {:?}", res);
+    // -- res: Err(MyError_("Failed to open file: 
+    // Os { code: 2, kind: NotFound, message: \"No such file or directory\" }"))
+
+    assert_eq!(res.is_err(), true);
 }

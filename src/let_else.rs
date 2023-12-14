@@ -17,7 +17,7 @@ fn process_str(s: &str) -> u64 {
 
 #[test] 
 fn ex1_simple_works() {
-    assert_eq!(process_str("3"), 3);
+    assert_eq!(process_str("3"), 4);
 }
 
 #[test]

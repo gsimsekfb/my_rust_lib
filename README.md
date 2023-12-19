@@ -7,7 +7,7 @@ This repo is for my personal use with tips, tools, ready to use examples/explana
 > Use [clippy - the Rust linter](https://github.com/rust-lang/rust-clippy) (also use it in CI: [clippy.yml](.github/workflows/clippy.yml))  
 > Use [rust-analyzer](https://github.com/rust-lang/rust-analyzer)  
 > Use [integration_tests](src/unit_integration_tests.rs) (also use it in CI: [integration_tests.yml](.github/workflows/integration_tests.yml))   
-> Use [unit_test](src/unit_test.rs) (also use it in CI: [unit_tests.yml](.github/workflows/unit_tests.yml))   
+> Use [unit_test](src/unit_tested_file.rs) (also use it in CI: [unit_tests.yml](.github/workflows/unit_tests.yml))   
 > Use `sccache` for faster builds (see setup and how to use in section "docs" below)  
 > Use [.cargo/config.toml](.cargo/config.toml) (see `faster_builds_with_linker_config` in section "docs" below)  
 > Use `vscode debugger` (see setup and examples in section "docs" below)  
@@ -57,7 +57,7 @@ This repo is for my personal use with tips, tools, ready to use examples/explana
 > [traits_supertraits.rs](src/traits_supertraits.rs)  
 > [type_.rs](src/type_.rs)  
 > [unit_integration_tests.rs](src/unit_integration_tests.rs)  
-> [unit_test.rs](src/unit_test.rs)  
+> [unit_tested_file.rs](src/unit_tested_file.rs)  
 > [web-server-async-and-parallel](src/web-server-async-and-parallel)  
 > [web-server-multi-threaded](src/web-server-multi-threaded)  
 

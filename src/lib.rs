@@ -29,7 +29,7 @@ mod re_export;
 mod serde_json;
 mod smart_ptrs;
 mod string_concat;
-mod unit_test;
+mod unit_tested_file;
 mod unit_integration_tests;
 mod temp;
 mod type_;

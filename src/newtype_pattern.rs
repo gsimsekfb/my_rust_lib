@@ -7,7 +7,12 @@ use std::fmt;
 // around this restriction using the newtype pattern, which involves creating
 // a new type in a tuple struct.
 
-// Creating a Wrapper type around Vec<String> to implement Display
+// Src: 
+// https://www.lurklurk.org/effective-rust/newtype.html
+
+
+// Ex.1 - Creating a Wrapper type around Vec<String> to implement Display
+//        aka bypassing the orphan rule
 struct Wrapper(Vec<String>);
 
 impl fmt::Display for Wrapper {
@@ -16,10 +21,36 @@ impl fmt::Display for Wrapper {
     }
 }
 
-#[test] fn ex_1() {
+#[test] 
+fn ex_1() {
     let wrapper = Wrapper(vec![String::from("a"), String::from("b")]);
     // println!("w = {}", wrapper);
     assert_eq!(wrapper.to_string(), "[a, b]")
         // Trait ToString::to_string() is automatically implemented for any type
         // which implements the [`Display`] trait    
+}
+
+
+
+// Ex.2 - Use explicitly named types instead of lang. types when needed
+//        Both for readability and type safety.
+
+mod foo {
+    pub struct Seconds(pub i32);
+
+    // e.g.
+    // Use Seconds
+    pub fn to_seconds() -> Seconds {
+        Seconds(42)
+    }
+    // instead of i32 
+    pub fn to_seconds_() -> i32 {
+        66
+    }
+}
+
+#[test]
+fn ex_2() {
+    assert_eq!(foo::to_seconds().0, 42);
+    assert_eq!(foo::to_seconds_(), 66);
 }

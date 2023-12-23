@@ -63,8 +63,12 @@ struct Point { x: i32, y: i32 }
 #[test] fn ex_4_a() {
   let p = Point { x: 0, y: 7 };
   let Point { x: a, y: b } = p;
-  assert_eq!(0, a);
-  assert_eq!(7, b);
+  assert_eq!(a, 0);
+  assert_eq!(b, 7);
+  // or simpler
+  let Point { x, y } = p;
+  assert_eq!(x, 0);
+  assert_eq!(y, 7);
 
   match p {
       Point { x, y: 0 } => println!("x is any, y is 0"),

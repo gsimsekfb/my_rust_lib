@@ -1,5 +1,18 @@
 
-### 3.6. Understand type conversions
+## **Table of Contents:**  
+- [Pinned: Production code checks](#0)
+- [Understand type conversions](#a)
+- [Familiarize yourself with standard traits](#b)
+
+-----------------------------------------------
+
+<a name="0"></a>  
+### Production code checks    
+- Prefer `expect` rather than `unwrap` and give more context about why the operation is expected to always succeed.  
+Src: https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#shortcuts-for-panic-on-error-unwrap-and-expect    
+
+<a name="a"></a>  
+### Understand type conversions
 https://www.lurklurk.org/effective-rust/casts.html 
 
 Rust type conversions fall into three categories:
@@ -63,7 +76,8 @@ Most of the coercions involve silent conversions of pointer and reference types 
 - converting a closure that happens not to capture any variables into a bare function pointer (Item 2)
 - converting an array to a slice
 
-###  3.5 Familiarize yourself with standard traits
+<a name="b"></a>  
+### Familiarize yourself with standard traits
 https://www.lurklurk.org/effective-rust/std-traits.html  
 
 Derivable traits: 

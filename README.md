@@ -4,7 +4,7 @@ This repo is for my personal use with tips, tools, ready to use examples/explana
 
 #### Important tools & tips:
 > Use latest Rust & read release notes -> https://github.com/rust-lang/rust/releases    
-> Use latest edition -> https://doc.rust-lang.org/edition-guide  
+> Use & study latest edition -> https://doc.rust-lang.org/edition-guide  
 > Use `cargo check` to speed up the development process (`cargo check` performs compilation checks without generating machine code)  
 > Use [clippy - the Rust linter](https://github.com/rust-lang/rust-clippy) (also use it in CI: [clippy.yml](.github/workflows/clippy.yml))  
 > Use [rust-analyzer](https://github.com/rust-lang/rust-analyzer)  

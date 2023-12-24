@@ -3,6 +3,7 @@
 - [Pinned: Production code checks](#0)
 - [Understand type conversions](#a)
 - [Familiarize yourself with standard traits](#b)
+- todo: add more 
 
 -----------------------------------------------
 

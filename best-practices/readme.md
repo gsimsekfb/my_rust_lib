@@ -13,20 +13,22 @@ Src: https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#
 
 <a name="a"></a>  
 ### Understand type conversions
-https://www.lurklurk.org/effective-rust/casts.html 
+
+Src: https://www.lurklurk.org/effective-rust/casts.html   
 
 Rust type conversions fall into three categories:
-```
-manual:         user-defined type conversions provided by implementing the From and Into traits
-semi-automatic: explicit casts between values using the as keyword
+```rust
+manual:         user-defined type conversions provided by implementing the From and `Into` traits
+semi-automatic: explicit casts between values using the `as` keyword
 automatic:      implicit coercion into a new type.
 ```
 
 For consistency and safety you should prefer `from / into` conversions to `as` casts, unless you understand and need the precise casting semantics (e.g for C interoperability). 
-https://doc.rust-lang.org/reference/expressions/operator-expr.html#semantics
+https://doc.rust-lang.org/reference/expressions/operator-expr.html#semantics  
+
 
 #### a) Manual conversions
-```
+```rust
 #[derive(Debug, PartialEq)]
 struct GreaterThanZero(i32);
 
@@ -62,7 +64,7 @@ fn ex_1() {
 
 #### b) Casts
 https://doc.rust-lang.org/reference/expressions/operator-expr.html#semantics
-```
+```rust
 let x: u32 = 9;
 let y = x as u64;
 ```
@@ -108,7 +110,7 @@ Other (non-deriveable) standard traits are covered in other Items, and so are no
 Src: https://www.lurklurk.org/effective-rust/use-types.html  
 
 // a. always encode the result of an operation that might fail as a Result<T, E>  
-```
+```rust
     pub fn find_user(username: &str) -> Result<UserId, std::io::Error> {
         let f = std::fs::File::open("/etc/passwd")?;
     }
@@ -122,7 +124,7 @@ Src: https://www.lurklurk.org/effective-rust/use-types.html
 Src: https://www.lurklurk.org/effective-rust/transform.html  
 
 // a. When to use `if let` instead of match:  
-```
+```rust
     struct S {
         field: Option<i32>,
     }
@@ -136,14 +138,14 @@ Src: https://www.lurklurk.org/effective-rust/transform.html
 
 For this situation, an if let expression is one line shorter and, more importantly, clearer:   
     
-```
+```rust
     if let Some(i) = &s.field {
         println!("field is {}", i);
     }
 ```
 
 // b. When to use ? instead of match      
-```
+```rust
     pub fn find_user(username: &str) -> Result<UserId, std::io::Error> {
         let f = match std::fs::File::open("/etc/passwd") {
             Ok(f) => f,
@@ -157,7 +159,7 @@ For this situation, an if let expression is one line shorter and, more important
 ```
 
 // c. Error mapping  
-```
+```rust
     pub fn find_user(username: &str) -> Result<UserId, String> {
         let f = match std::fs::File::open("/etc/passwd") {
             Ok(f) => f,

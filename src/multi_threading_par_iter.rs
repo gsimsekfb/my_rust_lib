@@ -42,7 +42,7 @@ fn single_thread_exec(arr: &mut [i32]) {
 
     assert_eq!(32,32);
 }
-//// Lesson: Parallel exec. is more meaningful when we have bigger arrays
+//// Important: Parallel exec. is more meaningful when we have bigger arrays/tasks
 //// StdOut:
 // (1) Arr size: 5_000
 //   (a) Parallel exec: 636 us

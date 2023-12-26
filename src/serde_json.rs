@@ -8,7 +8,7 @@ use serde_json::to_string as to_json;
 use serde_derive::{Serialize};
 
 // Instructs the serde_derive crate to write the necessary code to carry out
-// the conversion from an in-memory City to on-disk City
+// the conversion from an in-memory City obj. to on-disk City obj.
 #[derive(Serialize)]
 struct City {
     name: String,

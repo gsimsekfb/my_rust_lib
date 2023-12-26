@@ -1,5 +1,13 @@
 /// 1. Refutability
-// Refutable: able to be proven false
+// Irrefutable: int x = 42; // x always have value, never false
+// Refutable: able to be proven false 
+// e.g. Option<T> can be have value or not
+// pub enum Option<T> {
+//     /// No value.
+//     None,
+//     /// Some value of type `T`.
+//     Some(#[stable(feature = "rust1", since = "1.0.0")] T),
+// }
 
 #[test] fn ex_1() {
   let res = Some(42);

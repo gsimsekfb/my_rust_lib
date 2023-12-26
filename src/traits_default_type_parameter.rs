@@ -1,6 +1,6 @@
 use std::ops::Add;
 
-// Original Add trait
+// Original Add trait from std
 pub trait Add_<Rhs = Self> { // <Rhs = Self>: default type parameter
     type Output;
     fn add(self, rhs: Rhs) -> Self::Output;

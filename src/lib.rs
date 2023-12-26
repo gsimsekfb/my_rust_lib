@@ -39,6 +39,7 @@ mod trait_object_vs_struct_obj;
 mod traits;
 mod traits_associated_type_vs_generics;
 mod traits_default_type_parameter;
+mod traits_return_impl; // todo: incomplete
 mod traits_same_name_fn_call;
 mod traits_supertraits;
 mod utils;

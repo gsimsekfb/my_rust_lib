@@ -11,11 +11,12 @@ fn process_str(s: &str) -> u64 {
         return 42
     }
     let count = res.unwrap();
+
     // ... do_something_with(count)
     count + 1
 }
 
-#[test] 
+#[test]
 fn ex1_simple_works() {
     assert_eq!(process_str("3"), 4);
 }

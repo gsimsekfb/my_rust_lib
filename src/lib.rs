@@ -34,9 +34,10 @@ mod unit_integration_tests;
 mod temp;
 mod type_;
 mod trait_simple_vs_enum;
-mod trait_when_to_use_dyn_dispatch;
-mod trait_object_vs_struct_obj;
+mod traits_when_to_use_dyn_dispatch;
+mod traits_object_vs_struct_obj;
 mod traits;
+mod traits_associated_constants;
 mod traits_associated_type_vs_generics;
 mod traits_default_type_parameter;
 mod traits_return_impl; // todo: incomplete

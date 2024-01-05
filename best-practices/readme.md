@@ -1,6 +1,7 @@
 
 ## **Table of Contents:**  
 - [Pinned: Production code checks](#0)
+- [Using static or const](#a99)
 - [Understand type conversions](#a)
 - [Familiarize yourself with standard traits](#b)
 - todo: add more 
@@ -10,7 +11,15 @@
 <a name="0"></a>  
 ### Production code checks    
 - Prefer `expect` rather than `unwrap` and give more context about why the operation is expected to always succeed.  
-Src: https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#shortcuts-for-panic-on-error-unwrap-and-expect    
+Src: https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#shortcuts-for-panic-on-error-unwrap-and-expect
+
+<a name="a99"></a>  
+### Using static or const
+Constants should, in general, be preferred over statics unless one of the following are true:  
+- Large amounts of data are being stored
+- The single-address property of statics is required.
+- Interior mutability is required.  
+Src: https://doc.rust-lang.org/stable/reference/items/static-items.html#using-statics-or-consts     
 
 <a name="a"></a>  
 ### Understand type conversions

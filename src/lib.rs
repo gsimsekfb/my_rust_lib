@@ -44,3 +44,6 @@ mod traits_return_impl; // todo: incomplete
 mod traits_same_name_fn_call;
 mod traits_supertraits;
 mod utils;
+
+// re-exports
+use crate::utils::print_type_of;

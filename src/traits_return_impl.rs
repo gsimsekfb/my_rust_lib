@@ -30,6 +30,7 @@ fn get_closure_() -> impl Fn(i32) -> i32 {
 #[test] 
 fn ex1() {
     let xx = foo();
+    crate::print_type_of(&xx); // i32
     let yy = foo_();
     // assert_eq!(xx, 5); // todo
 }

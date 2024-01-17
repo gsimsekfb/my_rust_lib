@@ -6,8 +6,7 @@
 //
 // Sol:
 // Until this issue is solved https://github.com/rust-lang/cargo/issues/8379,
-// using this small hack: 
-// 
+// using this small hack:
 // Make some test modules available for "use-foo" feature
 // #usefoo - enable this line when this feature is enabled 
 //           (can be enabled by client's Cargo.toml or compiler flag)

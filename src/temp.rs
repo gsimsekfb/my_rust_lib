@@ -1,6 +1,6 @@
 // Template - copy and change this:
 //
-// #[test] 
+// #[test]
 // fn ex1_ww() {
-//     assert_eq!(32,32);
+//     assert_eq!(32, 32);
 // }

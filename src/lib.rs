@@ -15,6 +15,7 @@ mod concurrency;
 mod const_fn;
 mod drop_aka_dtor;
 mod r#enum;
+mod env_logger;
 mod error_handling;
 mod func_ptr;
 mod int_overflow;

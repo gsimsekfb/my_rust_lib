@@ -1,6 +1,7 @@
 
 ## **Table of Contents:**  
 - [Pinned: Production code checks](#0)
+- [Use cargo --timings to see build times per package](#a98)
 - [Using static or const](#a99)
 - [Understand type conversions](#a)
 - [Familiarize yourself with standard traits](#b)
@@ -9,9 +10,15 @@
 -----------------------------------------------
 
 <a name="0"></a>  
-### Production code checks    
+### Pinned: Production code checks    
 - Prefer `expect` rather than `unwrap` and give more context about why the operation is expected to always succeed.  
 Src: https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#shortcuts-for-panic-on-error-unwrap-and-expect
+
+<a name="a98"></a>  
+### Use cargo --timings to see build times per package  
+`cargo b --timings`   
+https://doc.rust-lang.org/cargo/reference/timings.html    
+See [cargo-timings/cargo-timing-20240122T062905Z.html](../cargo-timings/cargo-timing-20240122T062905Z.html)    
 
 <a name="a99"></a>  
 ### Using static or const

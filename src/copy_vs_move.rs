@@ -1,5 +1,5 @@
 #[test]
-fn ex1_ww() {
+fn ex1() {
     // a. copy
     let x = 5;
     let y = x; // !! copied, not moved

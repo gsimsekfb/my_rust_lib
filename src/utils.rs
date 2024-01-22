@@ -4,6 +4,6 @@ pub fn pp<T: std::fmt::Display>(num: T) -> String {
        .collect::<std::result::Result<Vec<&str>, _>>().unwrap().join("_")
 }
 
-pub fn print_type_of<T>(_: &T) {
-    println!("--- type of: {}", std::any::type_name::<T>())
+pub fn print_type_of<T>(name: &str, _: &T) {
+    println!("--- type of {}: {}", name, std::any::type_name::<T>())
 }

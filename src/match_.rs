@@ -31,7 +31,7 @@
   let x = match res {
     Some(x) => x,
     None => return,
-  };  
+  };
   println!("--- x {:?}",x);
   let res: Option<i32> = None; // comment to see diff.
   // Match above, can be written:

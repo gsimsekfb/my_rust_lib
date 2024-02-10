@@ -1,0 +1,14 @@
+---dataLayer:  {
+  id: '',
+  name: '',
+  startDate: '2021-01-01',
+  endDate: '2029-12-01',
+  base: true,
+  readOnly: false
+}
+---c3: 5.922ms
+---nodes.size:  148
+---c4121: 0.100ms
+---exit calculatePositions
+---c4121: 134ms
+---c4121: 0.40ms

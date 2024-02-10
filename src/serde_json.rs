@@ -2,6 +2,9 @@
 // Rust in Action 1st Edition by Tim McNamara - 2021
 // Ch 7, pg 215
 
+// Also see:
+// https://github.com/serde-rs/json
+
 use bincode::serialize as to_bincode;
 use serde_cbor::to_vec as to_cbor;
 use serde_json::to_string as to_json;
@@ -66,6 +69,9 @@ bincode (as UTF-8):
 
 
 // 2. json to obj
+
+// Also see:
+// https://github.com/serde-rs/json
 
 use serde_derive::Deserialize;
 

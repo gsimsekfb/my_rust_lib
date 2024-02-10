@@ -17,7 +17,7 @@ struct City {
     longitude: f64,
 }
 
-// 1. 
+// 1. Obj to json
 #[test] fn ex1_to_json() {
     let calabar = City {
         name: String::from("Calabar"),
@@ -63,3 +63,65 @@ cbor (as UTF-8):
 bincode (as UTF-8):
 "\u{7}\0\0\0\0\0\0\0Calabar�+\u{7}\0\0\0\0\0������\u{13}@)\\���� @
 */
+
+
+// 2. json to obj
+
+use serde_derive::Deserialize;
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+struct Person {
+    first_name: String,
+    last_name: String,
+    age: u8,
+    address: Address,
+    phone_numbers: Vec<String>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+struct Address {
+    street: String,
+    city: String,
+    country: String,
+}
+
+#[test] fn ex2_from_json() {
+    let json = r#"{
+        "FirstName": "John",
+        "LastName": "Doe",
+        "Age": 43,
+        "Address": {
+            "Street": "Downing Street 10",
+            "City": "London",
+            "Country": "Great Britain"
+        },
+        "PhoneNumbers": [
+            "+44 1234567",
+            "+44 2345678"
+        ]
+    }"#;
+
+    let person: Person = serde_json::from_str(json).expect("Invalid JSON");
+    println!("{:#?}", person);
+        /* 
+        Person {
+            first_name: "John",
+            last_name: "Doe",
+            age: 43,
+            address: Address {
+                street: "Downing Street 10",
+                city: "London",
+                country: "Great Britain",
+            },
+            phone_numbers: [
+                "+44 1234567",
+                "+44 2345678",
+            ],
+        }
+        */    
+
+    assert_eq!(person.first_name, "John");
+    assert_eq!(person.age, 43);
+}

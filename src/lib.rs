@@ -2,6 +2,7 @@
 #![allow(unused_imports)]
 #![allow(unused_variables)]
 #![allow(non_camel_case_types)]
+#![allow(clippy::four_forward_slashes)]
 
 // mod doc_test; 
   // todo: failed to resolve: use of undeclared crate or module `doc_test`

@@ -9,6 +9,7 @@ fn fibonacci(n: u64) -> u64 {
 }
 
 fn criterion_benchmark(c: &mut Criterion) {
+    // remove black_box for fns w/o params 
     c.bench_function("fib 20", |b| b.iter(|| fibonacci(black_box(20))));
 }
 

@@ -14,6 +14,13 @@ pub trait Iterator {
 
 /// Simple uses of iterators
 
+// INFO:
+// -----------------------------------------------------
+// iter()      iterates over the items by reference
+// into_iter() iterates over the items, moving them into the new scope
+// iter_mut()  iterates over the items, giving a mutable reference to each item
+
+
 // next
 pub fn foo() {
     let v1 = [1, 2, 3]; // Vec<i32, Global>

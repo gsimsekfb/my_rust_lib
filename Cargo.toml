@@ -67,13 +67,11 @@ foo = [] # feature has no explicit dependencies
 
 
 [profile.release]
-opt-level = 'z'     # Optimize for size.
+opt-level = 3     # Optimize for speed
+# opt-level = 'z'     # Optimize for size
 lto = true          # Enable Link Time Optimization
 codegen-units = 1   # Reduce number of codegen units to increase optimizations.
 panic = 'abort'     # Abort on panic
-
-[profile.bench]
-debug = true
 
 [profile.dev]
 opt-level = 0

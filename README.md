@@ -3,18 +3,18 @@
 This repo is for my personal use with tips, tools, ready to use examples/explanations of features/keywords of Rust and best practices.  
 
 #### Important tools & tips:
-> - Use latest Rust & read release notes -> https://github.com/rust-lang/rust/releases  
-> - Follow surveys, be aware of latest trends -> e.g. https://www.jetbrains.com/lp/devecosystem-2023/rust/  
-> - Use & study latest edition -> https://doc.rust-lang.org/edition-guide  
-> Use `cargo check` to speed up the development process (`cargo check` performs compilation checks without generating machine code)  
-> Use [clippy - the Rust linter](https://github.com/rust-lang/rust-clippy) (also use it in CI: [clippy.yml](.github/workflows/clippy.yml))  
-> Use [rust-analyzer](https://github.com/rust-lang/rust-analyzer)  
-> Use [integration_tests](src/unit_integration_tests.rs) (also use it in CI: [integration_tests.yml](.github/workflows/integration_tests.yml))   
-> Use [unit_test](src/unit_tested_file.rs) (also use it in CI: [unit_tests.yml](.github/workflows/unit_tests.yml))   
-> Use `sccache` for faster builds (see setup and how to use in section "docs" below)  
-> Use [.cargo/config.toml](.cargo/config.toml) (see `faster_builds_with_linker_config` in section "docs" below)  
-> Use debugger (see vscode debugger setup, examples in section "docs" below) or use `RUST_BACKTRACE=1 cargo run ...`  
-> Use `cargo tree` - displays the dependency graph  
+> . Use latest Rust & read release notes -> https://github.com/rust-lang/rust/releases  
+> . Follow surveys/latest trends -> e.g. https://www.jetbrains.com/lp/devecosystem-2023/rust/  
+> . Use & study latest edition -> https://doc.rust-lang.org/edition-guide  
+> . Use `cargo check` to speed up the development (`cargo check` performs compilation checks without generating machine code)  
+> . Use [clippy - the Rust linter](https://github.com/rust-lang/rust-clippy) (also use it in CI: [clippy.yml](.github/workflows/clippy.yml))  
+> . Use [rust-analyzer](https://github.com/rust-lang/rust-analyzer)  
+> . Use [integration_tests](src/unit_integration_tests.rs) (also use it in CI: [integration_tests.yml](.github/workflows/integration_tests.yml))   
+> . Use [unit_test](src/unit_tested_file.rs) (also use it in CI: [unit_tests.yml](.github/workflows/unit_tests.yml))   
+> . Use `sccache` for faster builds (see setup and how to use in section "docs" below)  
+> . Use [.cargo/config.toml](.cargo/config.toml) (see `faster_builds_with_linker_config` in section "docs" below)  
+> . Use debugger (see vscode debugger setup, examples in section "docs" below) or use `RUST_BACKTRACE=1 cargo run ...`  
+> . Use `cargo tree` - displays the dependency graph  
 
 #### [best-practice-tips/](best-practices)  
 

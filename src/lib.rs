@@ -6,6 +6,10 @@
 
 // mod doc_test; 
   // todo: failed to resolve: use of undeclared crate or module `doc_test`
+
+#[cfg(test)]
+mod integration_tests;
+
 mod async_;
 mod averaged_collection;
 mod cfg;

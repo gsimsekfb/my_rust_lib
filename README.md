@@ -1,3 +1,8 @@
+![Integ_Tests](https://github.com/simsekgokhan/my_rust_templates/actions/workflows/run_all_tests.yml/badge.svg)
+![Clippy](https://github.com/simsekgokhan/my_rust_templates/actions/workflows/clippy.yml/badge.svg)
+![integration_tests](https://github.com/simsekgokhan/my_rust_templates/actions/workflows/integration_tests.yml/badge.svg)
+![unit_tests](https://github.com/simsekgokhan/my_rust_templates/actions/workflows/unit_tests.yml/badge.svg)
+
 # rust-my-templates
 
 This repo is for my personal use with tips, tools, ready to use examples/explanations of features/keywords of Rust and best practices.  

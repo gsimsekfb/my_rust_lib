@@ -33,6 +33,7 @@ mod mini_grep;
 mod multi_threading_par_iter;
 mod never_type_never_returns;
 mod newtype_pattern;
+mod option;
 mod re_export;
 mod serde_json;
 mod smart_ptrs;

@@ -13,6 +13,11 @@ mod closure;
 
 fn main() {
 
+    // 0) Use runtime env. vars. See [env] in Cargo.toml
+    let xx: i32 = env!("XX").parse().unwrap();
+	println!("xx: {:?}", xx);   // 42
+
+
     // 1) Minigrep ---------------------------------------------
     // Usage:
         // cargo r search-str file.txt

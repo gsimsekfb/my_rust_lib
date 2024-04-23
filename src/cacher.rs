@@ -34,7 +34,7 @@ impl<Function, Key, Val> Cacher<Function, Key, Val>
             println!("Cacher: cashed result for {}: {}", arg, val);
             val
         } else {
-            println!("Cacher: calculating for {}...", arg);
+            println!("Cacher: calculating for {} . . .", arg);
             let val = (self.function)(arg);
             self.results.insert(arg, val);
             val

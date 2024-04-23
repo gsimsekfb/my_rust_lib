@@ -45,7 +45,7 @@ E.g. two debug configs for `tower` package with and without using `cargo`:
 ```
 
 #### Step-3
-`File -> Preferences -> Settings` type `Allow setting breakpoints...`
+`File -> Preferences -> Settings` type `Allow setting breakpoints. . .`
 
 Tick this checkbox:  
 `<> Allow setting breakpoints in any file`

@@ -57,7 +57,7 @@ impl<T> Screen_Static_Dispatch<T> where T: Draw {
 // -------------------------------------------------------------------
 
 
-// 1.a. DYNAMIC dispatch ...continues...
+// 1.a. DYNAMIC dispatch . . .continues. . .
 pub struct Button {
   pub width: u32,
   pub height: u32,

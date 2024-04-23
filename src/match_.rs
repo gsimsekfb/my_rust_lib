@@ -52,7 +52,7 @@
 }
 
 
-/// 3. Matching Ranges of Values with the ... Syntax
+/// 3. Matching Ranges of Values with the . . . Syntax
 #[test] fn ex_3() {
   let x = 5;
   match x {

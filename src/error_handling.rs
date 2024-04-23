@@ -106,7 +106,7 @@ fn ex_b_1() {
         // panics with `Error xyz happened`: emergency failure`
 }
 
-// Using match - same as `expect("...")` in ex_1:
+// Using match - same as `expect(". . .")` in ex_1:
 #[test]
 #[should_panic] // Comment to see the panic
 fn ex_b_2() {

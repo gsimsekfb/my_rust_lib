@@ -1,7 +1,7 @@
 
 // 0. String from String and &strs
 // Note:
-//    String = String + &str + &str etc..
+//    String = String + &str + &str etc.
 //                ^
 //     first arg must be String
 #[test] fn ex_0_string_from_strings_and_strs() {

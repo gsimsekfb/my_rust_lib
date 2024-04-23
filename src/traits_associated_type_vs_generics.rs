@@ -16,7 +16,7 @@ pub trait Iterator {
     // concrete type
 
     fn next(&mut self) -> Option<Self::Item>;
-    // ...
+    // . . .
 }
 
 // Creating Our Own Iterator
@@ -40,7 +40,7 @@ impl Iterator for Counter {
 // // Creating Our Own Iterator - 2
 // impl Iterator for Counter {
 //     type Item = String;
-//     // ...
+//     // . . .
 // }
 
 #[test] fn iter_our_iter_next() {

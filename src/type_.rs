@@ -6,7 +6,7 @@ pub trait Iterator {
     type Item;  // The type of the elements being iterated over
 
     fn next(&mut self) -> Option<Self::Item>;
-    // ...
+    // . . .
 }
 
 // Simple usage of iterators

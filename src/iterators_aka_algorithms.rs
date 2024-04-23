@@ -7,7 +7,7 @@
 pub trait Iterator {
     type Item; // The type of the elements being iterated over aka type placeholder
     fn next(&mut self) -> Option<Self::Item>;
-    // ...
+    // . . .
 }
 
 // =======

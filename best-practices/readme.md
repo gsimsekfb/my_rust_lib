@@ -184,13 +184,13 @@ For this situation, an if let expression is one line shorter and, more important
                 return Err(format!("Failed to open password file: {:?}", e))
             }
         };
-        // ...
+        // . . .
     }
 
     pub fn find_user(username: &str) -> Result<UserId, String> {
         let f = std::fs::File::open("/etc/passwd")
             .map_err(|e| format!("Failed to open password file: {:?}", e))?;
-        // ...
+        // . . .
     }
     // Better still, even map_err may not be necessary – if the outer error type 
     // can be created from the inner error type via an implementation of the 

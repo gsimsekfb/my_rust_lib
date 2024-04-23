@@ -27,7 +27,7 @@ fn process_str(s: &str) -> u64 {
     }
     let count = res.unwrap();
 
-    // ... do_something_with(count)
+    // . . . do_something_with(count)
     count + 1
 }
 

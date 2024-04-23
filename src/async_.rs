@@ -68,9 +68,9 @@ async fn foo() -> u8 { 5 }
 
 
 // 3. async await basic example
-async fn learn_song() { for i in 1..=3 { println!("--- learning song... {}", i); } }
+async fn learn_song() { for i in 1..=3 { println!("--- learning song. . . {}", i); } }
 
-async fn sing() { for i in 1..=3 { println!("--- singing... {}", i); } }
+async fn sing() { for i in 1..=3 { println!("--- singing. . . {}", i); } }
 
 // 3.a. await - wait/block one future
 async fn learn_and_sing() {
@@ -83,7 +83,7 @@ async fn learn_and_sing() {
 }
 
 async fn dance() {
-    for i in 1..=3 { println!("--- dancing... {}", i); }
+    for i in 1..=3 { println!("--- dancing. . . {}", i); }
 }
 
 // 3.b. join - wait/block multiple futures concurrently
@@ -112,8 +112,8 @@ async fn async_main() {
 // 3.c. try_join - use it for futures which return Result
 use futures::try_join;
 
-async fn get_book() -> Result<i32, String> { /* ... */ Ok(42) }
-async fn get_music() -> Result<i32, String> { /* ... */ Ok(43) }
+async fn get_book() -> Result<i32, String> { /* . . . */ Ok(42) }
+async fn get_music() -> Result<i32, String> { /* . . . */ Ok(43) }
 
 async fn get_book_and_music() -> Result<(i32, i32), String> {
     let book_fut = get_book();

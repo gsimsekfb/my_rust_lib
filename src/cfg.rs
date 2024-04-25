@@ -25,6 +25,8 @@ const XX : i32 = 44;
 
 // Will fail with 
 // cargo t cfg_all --features "foo aa"
+// More:
+// https://doc.rust-lang.org/reference/conditional-compilation.html#conditional-compilation
 #[test] fn ex_3_cfg_all() {
     #[cfg(all(feature= "foo", feature= "aa"))]
     assert_eq!(42, 43);

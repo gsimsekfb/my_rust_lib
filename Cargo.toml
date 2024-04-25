@@ -55,6 +55,7 @@ clap = "4.0.32"
 # Using features (aka conditional compilation with cfg)
 [features]
 foo = [] # feature has no explicit dependencies
+aa = [] # feature has no explicit dependencies
 
 # Todo: how to use them?
 # Compile time env. vars

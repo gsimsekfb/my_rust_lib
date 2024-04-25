@@ -13,6 +13,7 @@ const XX : i32 = 44;
 #[test] fn ex_1_should_fail_with_foo() {
     assert_eq!(XX, 44);
 }
+
 // Using: if cfg!(feature = "foo")
 #[test] fn ex_2_using_if_cfg_and_should_fail_with_foo() {
     if cfg!(feature = "foo") {
@@ -20,4 +21,11 @@ const XX : i32 = 44;
     } else {
         assert_eq!(42, 42);
     }
+}
+
+// Will fail with 
+// cargo t cfg_all --features "foo aa"
+#[test] fn ex_3_cfg_all() {
+    #[cfg(all(feature= "foo", feature= "aa"))]
+    assert_eq!(42, 43);
 }

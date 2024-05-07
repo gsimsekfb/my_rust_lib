@@ -10,6 +10,7 @@
 #[cfg(test)]
 mod integration_tests;
 
+pub mod maze_1d; // pub because we this from examples
 mod async_;
 mod averaged_collection;
 mod cfg;

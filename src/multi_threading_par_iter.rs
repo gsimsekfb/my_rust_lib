@@ -1,5 +1,44 @@
-use rayon::prelude::*;
+use rayon::{prelude::*, vec};
 use crate::utils::pp;
+use std::collections::HashSet;
+use std::sync::Mutex;
+
+#[test] fn ex1_adv_modify_ext_data() {
+    const ARR_SIZE: usize = 10_000;
+    // a. Modifying external data in parallel w/ Mutex
+    // let arr = [1,2,4,3];
+    let arr: [usize; ARR_SIZE] = core::array::from_fn(|i| i + 1);
+    let vv: Mutex<Vec<_>> = Mutex::new(vec![]);
+    let now = std::time::Instant::now();
+    arr.par_iter().for_each(|item| {
+        let mut vv = vv.lock().unwrap(); // MutexGuard<T>
+        vv.push(item * 10);
+    });
+    println!("(a.1) {:.2?}", now.elapsed());
+    let vv = vv.into_inner().unwrap();  // T
+        // !!! vv will be unordered
+    // Sort and compare unordered vectors
+    let now = std::time::Instant::now();
+    let vv: HashSet<_> = vv.into_iter().collect();
+    let ww: [usize; ARR_SIZE] = core::array::from_fn(|i| (i+1) * 10);
+    let ww: HashSet<_> = ww.into_iter().collect();
+    assert_eq!(vv, ww);
+    println!("(a.2) {:.2?}", now.elapsed());
+    // or
+    let now = std::time::Instant::now();
+    use assert_unordered::assert_eq_unordered;
+    assert_eq_unordered!(vv, ww);
+    println!("(a.3) {:.2?}", now.elapsed());
+
+    // b. Same op. w/o using Mutex - we have error
+    // error[E0596]: cannot borrow `vv` as mutable, 
+    // as it is a captured variable in a `Fn` closure
+    // let mut vv: Vec<String> = vec![];
+    // [1,2,3].par_iter().for_each(|item| {
+    //     vv.push(item.to_string());
+    // });
+    // println!("vv {:?}", vv);
+}
 
 fn parallel_exec(arr: &mut [i32]) {
     let start_time = chrono::Utc::now().time();
@@ -17,7 +56,7 @@ fn single_thread_exec(arr: &mut [i32]) {
     println!("  (b) Single thread: {} us", pp(diff));
 }
 
-#[test] fn ex1() {
+#[test] fn ex2_simple() {
     const SIZE_S: usize = 5_000;
     println!("(1) Arr size: {}", pp(SIZE_S));
     let mut small_arr: [i32; SIZE_S] = [100; SIZE_S];

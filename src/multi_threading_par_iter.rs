@@ -3,32 +3,67 @@ use crate::utils::pp;
 use std::collections::HashSet;
 use std::sync::Mutex;
 
-#[test] fn ex1_adv_modify_ext_data() {
+unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
+    ::core::slice::from_raw_parts(
+        (p as *const T) as *const u8,
+        ::core::mem::size_of::<T>(),
+    )
+}
+
+// Skip to ex2 for simple example
+#[test] fn ex1_advanced_modify_ext_data() {
     const ARR_SIZE: usize = 10_000;
+    // const ARR_SIZE: usize = 3;
+    println!("ARRAY_SIZE: {ARR_SIZE}");
     // a. Modifying external data in parallel w/ Mutex
-    // let arr = [1,2,4,3];
+    // arr = [1,2,4,3 etc];
     let arr: [usize; ARR_SIZE] = core::array::from_fn(|i| i + 1);
-    let vv: Mutex<Vec<_>> = Mutex::new(vec![]);
+    let vec: Mutex<Vec<_>> = Mutex::new(vec![]);
     let now = std::time::Instant::now();
     arr.par_iter().for_each(|item| {
-        let mut vv = vv.lock().unwrap(); // MutexGuard<T>
-        vv.push(item * 10);
+        let mut v = vec.lock().unwrap(); // MutexGuard<T>
+        v.push(item * 10);
     });
-    println!("(a.1) {:.2?}", now.elapsed());
-    let vv = vv.into_inner().unwrap();  // T
-        // !!! vv will be unordered
-    // Sort and compare unordered vectors
+    println!("(a.1) Fill vec in par: {:.2?}", now.elapsed());
+    let vec = vec.into_inner().unwrap();  // T
+    // println!("vec: {:?}", vec); // [10, 20, 30] or [30, 10, 20] etc
+        // !!! problem: vec will be unordered
+
+    // a.extra: Sort and compare unordered vectors
+    let arr: [usize; ARR_SIZE] = core::array::from_fn(|i| (i+1) * 10);
     let now = std::time::Instant::now();
-    let vv: HashSet<_> = vv.into_iter().collect();
-    let ww: [usize; ARR_SIZE] = core::array::from_fn(|i| (i+1) * 10);
-    let ww: HashSet<_> = ww.into_iter().collect();
-    assert_eq!(vv, ww);
-    println!("(a.2) {:.2?}", now.elapsed());
+    let vec_sorted: HashSet<_> = vec.iter().collect();
+    // todo: cannot call non-const fn `std::array::from_fn
+    // const ARR: [usize; ARR_SIZE] = core::array::from_fn(|i| (i+1) * 10);
+    let arr_sorted: HashSet<_> = arr.iter().collect();
+    assert_eq!(vec_sorted, arr_sorted);
+    println!("(a.2) sort & compare using HashSet: {:.2?}", now.elapsed());
+
     // or
     let now = std::time::Instant::now();
     use assert_unordered::assert_eq_unordered;
-    assert_eq_unordered!(vv, ww);
-    println!("(a.3) {:.2?}", now.elapsed());
+    assert_eq_unordered!(
+        TryInto::<[usize;ARR_SIZE]>::try_into(vec).unwrap(), arr
+    );
+    println!("(a.3) Using assert_eq_unordered!(): {:.2?}", now.elapsed());
+
+    // or ... 
+    // arr = [1,2,4,3 etc];
+    let mut arr1: [usize; ARR_SIZE] = core::array::from_fn(|i| i + 1);
+    let mut arr2: [usize; ARR_SIZE] = core::array::from_fn(|i| i + 1);
+    arr2.reverse();
+    let now = std::time::Instant::now();
+    arr1.sort();
+    arr2.sort();
+    let arr1_bytes: &[u8] = unsafe { any_as_u8_slice(&arr1) };
+    let arr2_bytes: &[u8] = unsafe { any_as_u8_slice(&arr2) };
+    assert_eq!(arr1_bytes, arr2_bytes);
+    println!("(a.4) sort & compare bytes {:.2?}", now.elapsed());
+        // ARRAY_SIZE: 10000
+        // (a.1) Fill vec in par: 5.99ms
+        // (a.2) sort & compare using HashSet: 10.30ms
+        // (a.3) Using assert_eq_unordered!(): 253.97ms
+        // (a.4) sort and compare bytes 175.89µs
 
     // b. Same op. w/o using Mutex - we have error
     // error[E0596]: cannot borrow `vv` as mutable, 

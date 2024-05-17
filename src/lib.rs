@@ -23,6 +23,7 @@ mod default;
 mod drop_aka_dtor;
 mod r#enum;
 mod env_logger;
+mod env_vars;
 mod error_handling;
 mod file_sum_time_logs;
 mod func_ptr;

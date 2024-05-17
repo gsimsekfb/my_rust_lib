@@ -97,3 +97,12 @@ pub fn foo() {
     let flattened = data.into_iter().flatten().collect::<Vec<u8>>();
     assert_eq!(flattened, &[1, 2, 3, 4]);
 }
+
+#[test]
+fn iter_zip() {
+    let vars = vec!["b", "a"];
+    let vals = vec![2, 1];
+    use std::collections::BTreeMap;
+    let args: BTreeMap<_,_> = vars.iter().zip(vals.iter()).collect();
+    assert_eq!(args, BTreeMap::from([(&"a", &1), (&"b", &2)]));
+}

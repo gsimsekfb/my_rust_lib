@@ -29,7 +29,7 @@ pub fn foo() {
     let xx = v1_iter.next(); // Option<&i32>
 }
 
-// reduce
+// sum (reduce)
 #[test] fn iter_sum() {
     let v1 = vec![1, 2, 3]; // Vec<i32, Global>
     let v1_iter = v1.iter(); // Iter<i32>
@@ -105,4 +105,47 @@ fn iter_zip() {
     use std::collections::BTreeMap;
     let args: BTreeMap<_,_> = vars.iter().zip(vals.iter()).collect();
     assert_eq!(args, BTreeMap::from([(&"a", &1), (&"b", &2)]));
+}
+
+
+#[derive(Debug, PartialEq)]
+struct Foo { x: i32 } 
+
+#[test]
+fn iter_stop_at_error_return_result() {
+    // 1. Stop iteration at error w/ collect() and return Result
+    let arr = [ Foo { x: 2 }, Foo { x: -2 }, Foo { x: 6 } ];
+    let mut itr_cnt = 0;
+    let res = arr.iter().map(|f| {
+        itr_cnt += 1;
+        if f.x < 0 { return Err("negative elem") } // some breaking condition
+        else { Ok(f) }
+    }).collect::<Result<Vec<&Foo>, _>>();
+    assert_eq!(itr_cnt, 2); // not 3
+    assert_eq!(res, Err("negative elem"));
+    // Non-err case: same code, only change is all elems of arr are positive
+    let arr = [ Foo { x: 2 }, Foo { x: 2 }, Foo { x: 6 } ];
+    let res = arr.iter().map(|f| {
+        if f.x < 0 { return Err("negative elem") } // some breaking condition
+        else { Ok(f) }
+    }).collect::<Result<Vec<&Foo>, _>>();
+    assert_eq!(res.unwrap().len(), 3);
+
+    // 2. Stop iteration at error w/ sum() and return Result
+    let arr = [ Foo { x: 2 }, Foo { x: -2 }, Foo { x: 6 } ];
+    let mut itr_cnt = 0;
+    let res = arr.iter().map(|f| {
+        itr_cnt += 1;
+        if f.x < 0 { return Err("negative element") } 
+        else { Ok(f.x) }
+    }).sum::<Result<i32, _>>();
+    assert_eq!(itr_cnt, 2); // not 3
+    assert_eq!(res, Err("negative element"));
+    // Non-err case: same code, only change all elems of arr are positive
+    let arr = [ Foo { x: 2 }, Foo { x: 2 }, Foo { x: 6 } ];
+    let res = arr.iter().map(|f| {
+        if f.x < 0 { return Err("negative element") } 
+        else { Ok(f.x) }
+    }).sum::<Result<i32, _>>();
+    assert_eq!(res, Ok(10));
 }

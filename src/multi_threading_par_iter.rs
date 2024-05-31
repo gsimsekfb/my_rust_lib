@@ -17,20 +17,33 @@ unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
     println!("ARRAY_SIZE: {ARR_SIZE}");
     // a. Modifying external data in parallel w/ Mutex
     // arr = [1,2,4,3 etc];
-    let arr: [usize; ARR_SIZE] = core::array::from_fn(|i| i + 1);
+    let arr: [usize; ARR_SIZE] = core::array::from_fn(|e| e + 1);
     let vec: Mutex<Vec<_>> = Mutex::new(vec![]);
     let now = std::time::Instant::now();
     arr.par_iter().for_each(|item| {
         let mut v = vec.lock().unwrap(); // MutexGuard<T>
         v.push(item * 10);
     });
-    println!("(a.1) Fill vec in par: {:.2?}", now.elapsed());
-    let vec = vec.into_inner().unwrap();  // T
-    // println!("vec: {:?}", vec); // [10, 20, 30] or [30, 10, 20] etc
-        // !!! problem: vec will be unordered
+    println!("(a.1) Fill vec in par w/ mutex: {:.2?}", now.elapsed());
+    let mut vec = vec.into_inner().unwrap();  // T
+    // !!! vec will be unordered, to assert we have to sort it
+    // vec: [10, 20, 30] or [30, 10, 20] etc
+    vec.sort();
+    assert_eq!(vec, core::array::from_fn::<_, ARR_SIZE, _>(|e| (e+1)*10));
 
-    // a.extra: Sort and compare unordered vectors
-    let arr: [usize; ARR_SIZE] = core::array::from_fn(|i| (i+1) * 10);
+    // a.extra Create external data in parallel w/o Mutex
+    // arr = [1,2,4,3 etc];
+    let arr: [usize; ARR_SIZE] = core::array::from_fn(|e| e + 1);
+    let now = std::time::Instant::now();
+    let mut vec: Vec<_> = arr.par_iter().map(|e| e * 10).collect();
+    println!("(a.1) Fill vec in par w/o mutex: {:.2?}", now.elapsed());
+    // !!! vec will be unordered, to assert we have to sort it
+    // vec: [10, 20, 30] or [30, 10, 20] etc
+    vec.sort();
+    assert_eq!(vec, core::array::from_fn::<_, ARR_SIZE, _>(|e| (e+1)*10));
+    
+    // a.extra: Sort and compare 2 unordered vectors
+    let arr: [usize; ARR_SIZE] = core::array::from_fn(|e| (e+1) * 10);
     let now = std::time::Instant::now();
     let vec_sorted: HashSet<_> = vec.iter().collect();
     // todo: cannot call non-const fn `std::array::from_fn

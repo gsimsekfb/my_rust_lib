@@ -14,6 +14,7 @@ pub mod maze_1d; // pub because we this from examples
 mod array_slice_unpack;
 mod async_;
 mod averaged_collection;
+mod break_;
 mod cfg;
 mod copy_vs_move;
 mod ctor_chain;

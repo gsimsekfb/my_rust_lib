@@ -33,6 +33,7 @@ mod int_overflow;
 mod interior_mutability;
 mod iterators_aka_algorithms;
 mod let_else;
+mod loop_multi;
 mod match_;
 mod mini_grep;
 mod multi_threading_par_iter;

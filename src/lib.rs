@@ -37,6 +37,7 @@ mod loop_multi;
 mod match_;
 mod mini_grep;
 mod multi_threading_par_iter;
+mod r#mut;
 mod never_type_never_returns;
 mod newtype_pattern;
 mod option;

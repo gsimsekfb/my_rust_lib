@@ -38,6 +38,7 @@ harness = false
 members = [
   "src/adder",
   "src/add-one-lib",
+  "src/algo-data",
   "src/clap-cmd-line-parser",
   "src/web-server-multi-threaded",
   "src/web-server-async-and-parallel",

@@ -10,6 +10,11 @@ use tree::{new_node, new_node_leaf, Node};
 // https://www.geeksforgeeks.org/find-the-maximum-depth-or-height-of-a-tree/
 // https://medium.com/go-rust/rust-day-10-lc-maximum-depth-of-binary-tree-872b39537716
 
+
+// Time Complexity: O(N)
+// Auxiliary Space: O(N)
+
+
 // 2nd attempt
 pub fn max_height_2(node: &Option<Box<Node>>) -> usize {
     match node {

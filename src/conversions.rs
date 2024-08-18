@@ -12,6 +12,7 @@ String  -> Vec<u8> | s.into_bytes()
 &[u8]   -> Vec<u8> | String::from_utf8(s).unwrap(), but **
 Vec<u8> -> &str    | &s if possible* else s.as_slice()
 Vec<u8> -> String  | std::str::from_utf8(&s).unwrap(), but **
+                     or String::from_utf8_lossy(&s)
 Vec<u8> -> &[u8]   | String::from_utf8(s).unwrap(), but **
 
 * target should have explicit type (i.e., checker can't infer that)

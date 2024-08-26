@@ -8,3 +8,8 @@ mod tree;
 mod tree_1_max_height;
 mod tree_print;
 
+mod array_two_sum;
+
+mod bit_count_set_bits;
+
+mod matrix_set_bits_at_row_column;

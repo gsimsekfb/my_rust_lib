@@ -28,23 +28,24 @@ enum Foo {
 // 2. impl enum also kind of inheritance
 // src: https://www.lurklurk.org/effective-rust/use-types-2.html
 enum Shape {
-    Rectangle { width: f64, height: f64 },
-    Circle { radius: f64 },
+    Rect { w: f64, h: f64 },
+    Circ { r: f64 },
 }
 
 impl Shape {
     pub fn area(&self) -> f64 {
         match self {
-            Shape::Rectangle { width, height } => width * height,
-            Shape::Circle { radius } => std::f64::consts::PI * radius * radius,
+            Self::Rect { w, h } => w * h,
+            Self::Circ { r } => std::f64::consts::PI * r * r,
         }
     }
 }
 
 #[test] fn ex3_impl_enum_also_kind_of_inheritance() {
-    let rec = Shape::Rectangle { width: 4.0, height: 3.0};
+    let rec = Shape::Rect { w: 4.0, h: 3.0};
     assert_eq!(rec.area(), 12.0);
 
-    let cir = Shape::Circle { radius: 3.0};
+    let cir = Shape::Circ { r: 3.0};
     assert_eq!(cir.area(), 28.274333882308138);
 }
+

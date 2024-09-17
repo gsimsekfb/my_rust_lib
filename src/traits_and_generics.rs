@@ -1,6 +1,6 @@
 
 // Topics:
-// my / builtin (traits, types, generics), structs, ctor, trait as param
+// my / builtin (traits, structs, generics), ctor, trait as ctor param
 
 
 // todo

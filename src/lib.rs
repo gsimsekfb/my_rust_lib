@@ -54,7 +54,7 @@ mod temp;
 mod type_;
 mod traits_and_generics;
 mod trait_simple_vs_enum;
-mod trait_vs_enum_in_vec;
+mod trait_vs_enum_polymorphism;
 mod traits_when_to_use_dyn_dispatch;
 mod traits_object_vs_struct_obj;
 mod traits;

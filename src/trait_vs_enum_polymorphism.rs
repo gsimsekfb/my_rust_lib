@@ -1,5 +1,23 @@
-// 1. Polymorphism with trait
-//    New types and trait are decoupled/independent
+
+// Polymorphism using trait vs enum
+
+// 1. Polymorphism with trait - New types and trait are decoupled
+// Impl trait Shape with fn area -> i32
+// Impl Shape for Square {x} and Rect {w,h} structs
+// Test:
+// Create vector of Shape traits - one square, one rect
+// Print type of vec[0]
+
+// 2. Polymorphism with enum - Types and enum are bound together
+// Impl enum Shape_ with Square {x} and Rect {w,h} 
+// Impl Shape_ fn area -> i32 
+// Test:
+// Create vector of Shape_ enums - one square, one rect
+// Print type of vec[0]
+
+// ----------------------------------------------------------------
+
+// 1
 trait Shape { fn area(&self) -> i32; }
 
 struct Square { x: i32 }
@@ -12,8 +30,9 @@ impl Shape for Rect {
     fn area(&self) -> i32 { self.w * self.h }
 }
 
-// 2. Polymorphism with enum
-//    Types and enum are bound together
+// ----------------------------------------------------------------
+
+// 2
 enum Shape_{
     Square { x: i32 },
     Rect { w: i32, h: i32},
@@ -30,7 +49,7 @@ impl Shape_ {
 
 #[test]
 fn ex1() {
-    // 1. trait
+    // 1. trait version
     let s1: Box<dyn Shape> = Box::new(Square {x: 4});
     let vec_of_traits = vec![
         s1, 
@@ -40,7 +59,7 @@ fn ex1() {
         // alloc::boxed::Box<dyn rust_book_minigrep::temp::Shape>
     println!("-- {}", vec_of_traits[0].area());
 
-    // 2. enum
+    // 2. enum version
     let vec_of_enums = vec![Shape_::Square { x: 8 }];
     crate::print_type_of("vec_of_enums[0]", &vec_of_enums[0]);
         // rust_book_minigrep::temp::Shape_

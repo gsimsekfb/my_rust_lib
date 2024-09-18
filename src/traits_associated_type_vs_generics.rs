@@ -128,7 +128,7 @@ impl GenIter<u32> for Counter {
 // Test:
 // Test all fns
 
-// Non-generic
+// Iter
 fn dummy(c: &impl Iter) -> bool { // 222: Cleaner, no need to specify Item
     c.value_not_zero()
 }
@@ -136,8 +136,11 @@ fn first_next<T: Iter<Item = u32>>(c: &mut T) -> u32 {
     c.next().unwrap()
 }
 
-// Generic
-fn dummy_(c: &impl GenIter<u32>) -> bool { // 222: We always need to provide T
+// GenIter
+fn dummy_a<U>(c: &impl GenIter<U>) -> bool { // 222: We always need to provide T
+    c.value_not_zero()
+}
+fn dummy_b(c: &impl GenIter<u32>) -> bool { // 222: We always need to provide T
     c.value_not_zero()
 }
 fn first_next_<T: GenIter<u32>>(c: &mut T) -> u32 {
@@ -148,7 +151,8 @@ fn first_next_<T: GenIter<u32>>(c: &mut T) -> u32 {
 #[test] fn usage() {
     let c = Counter::new();
     assert_eq!(dummy(&c), false);
-    assert_eq!(dummy_(&c), false);
+    assert_eq!(dummy_a(&c), false);
+    assert_eq!(dummy_b(&c), false);
 
     let mut c = Counter::new();
     assert_eq!(first_next(&mut c), 1);

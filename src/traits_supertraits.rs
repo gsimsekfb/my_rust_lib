@@ -1,31 +1,41 @@
-// Using Supertraits to Require One Trait’s Functionality Within Another Trait
-trait OutlinePrint: std::fmt::Display {
-    fn outline_print(&self) -> String {
-        let input = self.to_string();
-            // Because we’ve specified that OutlinePrint requires Display trait, 
-            // we can use the to_string function which must be 
-            // implemented for any type that implements Display
-        let len = input.len();
-        let stars = "*".repeat(len);
-        let res = format!("{} {} {}", stars, input, stars);
-        println!("{}", res);
-        res
-    }
-}
+// Supertraits: Require a trait in another trait
+
+// struct Point x,y i32
+// trait MyDisplay which requires Display trait, with fn my_print returns
+// string with def. impl.
+// Impl MyDisplay for Point - use ToString::to_string and our custom impl
+// Hint: ToString trait is automatically impl'ed for any type impls Display trait
+// Impl Display for Point
+// Test:
+// With a Point obj, use Display, ToString and MyDisplay traits
 
 struct Point { x: i32, y: i32 }
 
-impl std::fmt::Display for Point {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "({}, {})", self.x, self.y)
+// Super trait: Any type implements this Trait must implement Display first
+trait MyDisplay: std::fmt::Display {
+    fn my_print(&self) -> String { "MyDisplay".to_string() }
+}
+
+impl MyDisplay for Point {
+    fn my_print(&self) -> String {
+        // ToString trait is automatically impl'ed for any type impls Display trait
+        self.to_string() // which actually uses Display::fmt impl for Point
+        // or using our impl
+        // self.x.to_string() + ":" + &self.y.to_string()
     }
 }
 
-impl OutlinePrint for Point {}
+impl std::fmt::Display for Point {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({},{})", self.x, self.y)
+    }
+}
 
 #[test] fn ex1() {
-    let point = Point { x: 3, y: 5};
-    println!("p1: {}", point); // p1: (3, 5)
-    let str = point.outline_print(); // ****** (3, 5) ******
-    assert_eq!(str, "****** (3, 5) ******");
+    let p = Point { x: 1, y: 2 };
+    assert_eq!( format!("{}", p), "(1,2)" ); // using std::fmt::Display impl
+        // Using format!() without impl Display is error:
+        // error[E0277]: `Point` doesn't implement `std::fmt::Display`
+    assert_eq!(p.to_string(), "(1,2)");
+    assert_eq!(p.my_print(), "(1,2)");
 }

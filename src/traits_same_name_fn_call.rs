@@ -14,7 +14,7 @@
 // From a human obj, call these fly fns
 
 // 1. 
-trait Pilot { fn fly(&self) -> &str { "Pilot.fly" } } // todo: how to call this
+trait Pilot { fn fly(&self) -> &str { "Pilot.fly" } } // todo: can we call this?
 trait Wizard { fn fly(&self) -> &str; }
 
 struct Human;

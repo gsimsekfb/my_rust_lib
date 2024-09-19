@@ -16,6 +16,9 @@
 // GenericCat<T> - Generic struct with data member type T "name"
 //
 // Impl MyIntoString, MyInto<String>, MyInto<T> for Cat
+// For comparison impl Cat::name_() - member fn that returns ref to name
+// For comparison impl GenericCat::name_() - member fn that returns ref to name
+
 // Impl MyIntoString   for GenericCat<String> and GenericCat<T>
 // Impl MyInto<String> for GenericCat<String> and GenericCat<T>
 // Impl MyInto<T>      for GenericCat<String> and GenericCat<T> - not trivial
@@ -40,11 +43,14 @@ trait MyInto<T> {
 struct Cat { name: String }
 struct GenericCat<T> { name: T }
 
-
 // ========= impl my traits for Cat =======
 
 impl MyIntoString for Cat {
     fn into_str(&self)-> String { self.name.clone() + "-MyIntoString" }
+}
+// For comparison: impl Cat is almost the same as impl a trait
+impl Cat {
+    fn name_(&self) -> &String { &self.name }
 }
 
 // Only one of these 2 can exist at a time
@@ -64,6 +70,10 @@ impl MyInto<String> for Cat {
 // }
 impl<T: Clone> MyIntoString for GenericCat<T> where String: From<T> {
     fn into_str(&self)-> String { self.name.clone().into() }
+}
+// For comparison: impl struct is almost the same as impl a trait
+impl<T> GenericCat<T> {
+    fn name_(&self) -> &T { &self.name }
 }
 
 // Only one of these 4 can exist at a time

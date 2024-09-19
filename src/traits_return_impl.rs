@@ -1,4 +1,5 @@
 
+// https://doc.rust-lang.org/rust-by-example/trait/impl_trait.html#as-a-return-type
 // https://blog.rust-lang.org/2018/05/10/Rust-1.26.html#impl-trait
 
 // Returning -> impl Trait

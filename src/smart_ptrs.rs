@@ -46,26 +46,29 @@ fn ex1_usage_of_list() {
 
 // 2. Deref Trait 
 struct MyBox<T>(T);
-
-impl<T> MyBox<T> {
-  fn new(x: T) -> MyBox<T> {
-    MyBox(x)
-  }
-}
+impl<T> MyBox<T> { fn val(&self)  -> &T   { &self.0   } }
+impl<T> MyBox<T> { fn new(val: T) -> Self { Self(val) } }
 
 impl<T> std::ops::Deref for MyBox<T> {
   type Target = T;
-  fn deref(&self) -> &T {
-    &self.0
-  }
+  fn deref(&self) -> &Self::Target { &self.0 }
 }
 
 #[test]
 fn ex2_deref() {
-  let x = 5;
-  let y = MyBox::new(x);
-  assert_eq!(5, x);
-  assert_eq!(5, *y); // *y is actually *(y.deref())
+  let p = MyBox::new(42);
+  assert_eq!(p.val(), &42);
+  assert_eq!(*p, 42); // why *p is not &i32? because *p is actually *(p.deref())
+
+  let p = MyBox("ab".to_string());
+  // let val = *p;
+      // error[E0507]: cannot move out of dereference of `MyBox<String>`
+      // ^^ move occurs because value has type `String`, which does not
+      // implement the `Copy` trait
+  let val = &*p;  // &String
+  assert_eq!(val, "ab");
+  let val = (*p).clone(); // String
+  assert_eq!(val, "ab");
 }
 
 fn hello(name: &str) {

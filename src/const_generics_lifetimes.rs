@@ -54,17 +54,23 @@ impl<const N: usize> Foo<N> {
     assert_eq!(Foo::<4>::PWD, 40);
 }
 
+
 /// 3 
 /// w/ trait
-trait MyTrait { type Item; }
-impl<const N: usize> MyTrait for Foo<N> {
+trait MyTrait<const R: usize> {
+    type Item;
+    fn r(&self) -> usize;
+}
+impl<const N: usize, const R: usize> MyTrait<R> for Foo<N> {
     type Item = [i32; N];
+    fn r(&self) -> usize { R }
 }
 
-// todo
 #[test] fn ex_3() {
-    // assert_eq!(sum(&[1,2]), 3);
+    let foo = Foo([1,2]);
+    assert_eq!(<Foo<2> as MyTrait<4>>::r(&foo), 4);
 }
+
 
 /// 4
 /// restrictions

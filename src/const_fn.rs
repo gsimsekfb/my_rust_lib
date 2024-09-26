@@ -13,8 +13,8 @@ const fn add_one(n: usize) -> usize {
 
 #[test] fn ex1() {
     const BAR: usize = add_one(5);  // constants context
-    let array = [0_u8; add_one(2)]; // constants context
-
     assert_eq!(BAR, 6);
+
+    let array = [0_u8; add_one(2)]; // constants context
     assert_eq!(array, [0,0,0]);
 }

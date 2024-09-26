@@ -40,7 +40,7 @@ fn ex_1() {
         // println!("err");
         // help: try a diverging expression, e.g. `return` or `panic!()`
     };
-    assert_eq!(x, 42); // !! x is still valid here // todo: use assert
+    assert_eq!(x, 42); // !! x is still in scope here
 }
 
 /// 2. Multiple Patterns

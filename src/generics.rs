@@ -1,6 +1,9 @@
 //// Generics
 
 
+// x 
+// Generic traits - see in traits_and_generics.rs
+
 // 1
 // Generic fn
 struct Gen<T> { val: T }

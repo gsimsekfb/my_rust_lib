@@ -9,7 +9,7 @@
 // -------------------------------------------------------------------
 
 
-// 1. fn that accepts array, slice, vec
+// 1. fn that accepts array, slice, vec of Strings
 fn find_strs(strs: &[String], find_str: &str) -> Vec<String> {
     let mut res = vec![];
     strs.iter().for_each(|s|

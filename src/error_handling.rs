@@ -13,10 +13,11 @@
 //// Src: https://doc.rust-lang.org/book/ch09-00-error-handling.html
 ////
 //// gs2022: 
-//// So, in summary, ideally (in production code), we want to recover/handle 
+//// So, in summary, ideally (in production code), for recoverable errors, 
+//// we want to recover/handle 
 //// or return that error/result to caller (and not use panic or exit or expect 
 //// or unwrap at all - they are all the same in the sense they stop the program)
-//// for recoverable errors. For unrecoverable, we should exit/panic.
+//// For unrecoverable, we should exit/panic.
 
 // Good srcs:
 // https://doc.rust-lang.org/book/ch09-00-error-handling.html

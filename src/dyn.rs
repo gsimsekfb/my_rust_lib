@@ -63,10 +63,7 @@ fn get_wii_or_foo_box(a: bool) -> Box<dyn MyTrait> {
 #[test] fn ex_1_b() {
 
     // i. Box<dyn Trait>
-    let vec: Vec<Box<dyn MyTrait>> = vec![
-        Box::new(Foo {}),
-        Box::new(Wii {}) 
-    ];
+    let vec: Vec<Box<dyn MyTrait>> = vec![ Box::new(Foo {}), Box::new(Wii {}) ];
     // Error w/o Box 
     // error[E0277]: the size for values of type `dyn MyTrait` cannot be known
     // at compilation time

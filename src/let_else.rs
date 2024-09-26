@@ -10,7 +10,7 @@ use std::str::FromStr;
     };
     // now:
     let Some(x) = res else { return };
-    assert_eq!(x, 42);
+    assert_eq!(x, 42); // !! x is in scope here
 }
 
 // ex-2
@@ -27,6 +27,7 @@ fn process_str(s: &str) -> u64 {
     }
     let count = res.unwrap();
 
+    // !! count is still in scope here
     // . . . do_something_with(count)
     count + 1
 }

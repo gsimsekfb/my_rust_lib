@@ -1,13 +1,8 @@
 
-
-
-
 // - Every trait is a dynamically sized type we can refer to by
 //   using the name of the trait
 
 
-
-//// traits_dst_sized.rs
 //// Dynamically sized types and the Sized trait
 //// https://doc.rust-lang.org/book/ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait
 

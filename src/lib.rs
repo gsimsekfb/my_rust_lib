@@ -24,6 +24,7 @@ mod compile_vs_runtime_read_env_and_file;
 mod concurrency;
 mod const_fn;
 mod conversions;
+mod dag_directed_acyclic_graph;
 mod default;
 mod drop_aka_dtor;
 mod r#dyn;

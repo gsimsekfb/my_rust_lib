@@ -11,8 +11,15 @@
 
 <a name="0"></a>  
 ### Pinned: Production code checks    
-- Prefer `expect` rather than `unwrap` and give more context about why the operation is expected to always succeed.  
+- prefer `expect` rather than `unwrap` and give more context about why the operation is expected to always succeed.  
 Src: https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html#shortcuts-for-panic-on-error-unwrap-and-expect
+- run clippy
+- try to handle errors instead of using unwraps/expects
+- try to handle Results
+- check subtracts for overflow
+- cargo format
+- test: think edge cases
+- test: use different inputs 
 
 <a name="a98"></a>  
 ### Use cargo --timings to see build times per package  

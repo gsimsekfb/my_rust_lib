@@ -57,7 +57,7 @@ fn ex2_accept_str_string_like() {
     let suffix = "b";
     let res = "ab";
 
-    // accepts &String, String and &str
+    // accepts &String, String and &str (slice)
     assert_eq!(add_suffix(&s1, suffix), res);
     assert_eq!(add_suffix(s1, suffix), res);
     assert_eq!(add_suffix(s2, suffix), res);

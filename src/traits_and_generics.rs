@@ -1,7 +1,8 @@
 
+// interview
+
 // Topics:
 // my / builtin (traits, structs, generics), ctor, trait as ctor param
-
 
 // todo
 #![allow(clippy::wrong_self_convention)]

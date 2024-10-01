@@ -1,8 +1,6 @@
 
 #[cfg(feature = "foo")]
 const XX : i32 = 22;
-#[cfg(feature = "abc")]
-const XX : i32 = 33;
 #[cfg(not(feature = "foo"))]
 const XX : i32 = 44;
 

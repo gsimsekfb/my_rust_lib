@@ -1,4 +1,4 @@
-use tree::{new_node, new_node_leaf, Node};
+use crate::tree::{new_node, new_node_leaf, Node};
 
 // Prob:
 // Find the Maximum Depth or Height of given Binary Tree

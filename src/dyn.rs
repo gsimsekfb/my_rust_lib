@@ -25,8 +25,8 @@
 // --------------------------------------------------------------------------
 
 
-//// dyn can have 2 forms: Box<dyn Trait>, &dyn Trait or &mut dyn Trait 
-// Box<dyn Trait> is owned trait obj vs others are refs hence they start w/ "&"
+//// dyn can have 2 forms: 1. Box<dyn Trait>, 2. &dyn Trait or &mut dyn Trait 
+// Box<dyn Trait> is owned trait obj vs others are just refs
 
 //// 1.a Box<dyn Trait> as return type
 

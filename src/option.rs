@@ -1,10 +1,15 @@
-struct Foo {
-    x: i32
-}
+// interv
+
+
+// Foo with an int
+// Create from Some(Foo) -> Some(Foo.x) elegantly
+
+struct Foo { x: i32 }
 
 #[test]
-fn ex1_option_swap_inner_value() {
-    // Map Option<Foo> into Option<i32>
+fn ex1_make_new_from_inner_value() {
+
+    // from Option<Foo> -> Option<Foo.x>
     let foo = Some(Foo { x: 42 }); // Option<Foo>
     let foo_x = foo.map(|f| f.x);  // Option<i32>
 

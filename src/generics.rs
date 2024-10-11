@@ -1,3 +1,23 @@
+
+// interv
+// 1. Write a simple generic fn
+//   - test: call fn with explicit type param and without
+//
+// 2. Generic struct Val with gen_val
+//   - generic method fn gen_val
+//   - impl for T: int, fn gen_val and fn val
+//   - test: 
+//   - create a Val with explicit type param and without
+// 
+// 4. Generic struct Foo with types A,B and 
+//    with one normal and one Phantom data member
+//   - test: create Foos with same A and diff B's
+
+
+
+
+
+
 //// Generics
 
 
@@ -7,18 +27,22 @@
 // 1
 // Generic fn
 struct Gen<T> { val: T }
-struct Foo {}
+struct Woo {}
 
 // not generic
-fn f1(f: Gen<Foo>) { }
+fn f1(f: Gen<Woo>) { }
 
 // not generic
 fn f2(f: Gen<i32>) { }
 
-// generic over `T`.
-fn f3<T>(f: Gen<T>) { }
+// generic over `T`
+fn f3<T>(g: &Gen<T>) -> i32 { 42 }
 
-
+#[test] fn ex_1() {
+    let g = Gen { val: 0 };
+    assert_eq!(f3(&g), 42);
+    assert_eq!(f3::<i32>(&g), 42);
+}
 
 // 2 
 // Generic struct and method
@@ -49,8 +73,8 @@ impl GenericVal<Wii> {}
 }
 
 
-/// 3
-/// Generic Enum
+// 3
+// Generic Enum
 
 enum MyOption<T> {
     Some(T),
@@ -70,10 +94,11 @@ impl<E>   MyResult<i32,E> { fn name_i32() -> &'static str { "MyResult<i32>" } }
 
 
 #[test] fn ex_3() {
-    let e = MyOption::Some(42);
-    let e = MyOption::<i32>::Some(42);
+    let oo = MyOption::Some(42);
+    // same
+    let oo = MyOption::<i32>::Some(42);
 
-    let r = MyResult::<i32, Error>::Ok(42);
+    let rr = MyResult::<i32, Error>::Ok(42);
 
     // assert_eq!(f1, f2);
     // assert_eq!(f1, f3); // error[E0308]: mismatched types
@@ -94,15 +119,16 @@ impl<E>   MyResult<i32,E> { fn name_i32() -> &'static str { "MyResult<i32>" } }
 use std::{fmt::{Display, Error}, marker::PhantomData, ops::Add};
 
 #[derive(Debug, PartialEq)]
-struct PhantomFoo<A, B> { 
+struct Foo<A, B> { 
     x: A,
     y: PhantomData<B> 
 }
 
 #[test] fn ex_4() {
-    let f1 = PhantomFoo { x: 11, y: PhantomData::<u8>};
-    let f2 = PhantomFoo { x: 11, y: PhantomData::<u8>};
-    let f3 = PhantomFoo { x: 33, y: PhantomData::<u32>};
-    assert_eq!(f1, f2);
+    let f1 = Foo { x: 11, y: PhantomData::<u8>};
+    let f2 = Foo { x: 11, y: PhantomData::<u8>};
+    let f3 = Foo { x: 33, y: PhantomData::<u32>};
+
+    assert_eq!(f1, f2); // ok: same types
     // assert_eq!(f1, f3); // error[E0308]: mismatched types
 }

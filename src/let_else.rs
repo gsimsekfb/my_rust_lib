@@ -1,6 +1,6 @@
 use std::str::FromStr;
 
-#[test] fn ex_1() {
+#[test] fn ex_1_early_return() {
     let res = Some(42);
     // let else - since rust 1.66
     // before:
@@ -8,8 +8,10 @@ use std::str::FromStr;
       Some(x) => x,
       None => return,
     };
-    // now:
-    let Some(x) = res else { return };
+    // now: good for early returns
+    let Some(x) = res else { 
+        return // !! must diverge here (e.g. break, return, panic!) 
+    };
     assert_eq!(x, 42); // !! x is in scope here
 }
 
@@ -22,9 +24,7 @@ fn process_str(s: &str) -> u64 {
     };
     // instead of
     let res = u64::from_str(s);
-    if res.is_err() {
-        return 42
-    }
+    if res.is_err() { return 42 }
     let count = res.unwrap();
 
     // !! count is still in scope here
@@ -33,7 +33,7 @@ fn process_str(s: &str) -> u64 {
 }
 
 #[test]
-fn ex2_simple_works() {
+fn ex2_ok() {
     assert_eq!(process_str("3"), 4);
 }
 

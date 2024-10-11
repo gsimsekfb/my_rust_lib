@@ -14,7 +14,6 @@ mod linked_list_del_nth_node;
 mod matrix_set_bits_at_row_column;
 mod string_len_longest_substr_w_nonrepeat_chars;
 mod sort_quick_aka_part_sort;
-mod tree;
-mod tree_1_max_height;
+mod tree_max_height;
 mod tree_serial_deserialize;
 

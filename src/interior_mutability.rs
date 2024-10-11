@@ -1,3 +1,10 @@
+// interv
+// 
+// 1. Create an *immut RefCell and modify it
+// 2. Foo with a val int and cell_val Cell, modify and read cell_val
+
+
+
 // Interior Mutability Pattern
 //
 // https://doc.rust-lang.org/std/cell/index.html
@@ -10,10 +17,33 @@
 // To use references instead of values, one must use the RefCell<T> type,
 // acquiring a write lock before mutating.
 
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 
-#[test] fn ex1() {
-    let cc = RefCell::new(5);
-    cc.replace(33);
-    assert_eq!(cc, RefCell::new(33));
+#[test] fn ex1_refcell() {
+    let rr = RefCell::new(5);
+    rr.replace(33);
+    assert_eq!(rr, RefCell::new(33));
 }
+
+
+
+struct Foo {
+    regular_field: u8,
+    special_field: Cell<u8>,
+}
+
+#[test] fn ex2_cell() {
+    let foo = Foo {
+        regular_field: 0,
+        special_field: Cell::new(1),
+    };
+
+    // ERROR: `foo` is immutable
+    // foo.regular_field = 42;
+
+    // WORKS: although `foo` is immutable, `special_field` is a `Cell`,
+    // which can always be mutated
+    foo.special_field.set(42);
+    assert_eq!(foo.special_field.get(), 42);
+}
+

@@ -1,8 +1,6 @@
 #![allow(dead_code)]
 
-
-// !!! moved to my_rust_templates
-
+// interv
 
 // - create new Rust project
 // - add player.rs into src/

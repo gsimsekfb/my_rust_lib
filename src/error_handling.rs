@@ -1,4 +1,14 @@
 
+// interv
+// 1. multi type error w/ runtime polymorphism
+// - fn foo which returns Result with any type of errors
+// - in foo body, open a file and parse str to int or ip4 address
+// 
+// 2. multi type error w/ compile polymorphism
+// - same as above but different impl
+
+
+
 //// Rust groups errors into two major categories: recoverable and unrecoverable
 //// 1. Recoverable error
 //// such as a file not found error, we most likely just want to report the 
@@ -24,6 +34,7 @@
 // https://www.lurklurk.org/effective-rust/errors.html
 
 // -----------------------------------------
+
 
 //// A. Returning multi-type error
 
@@ -66,14 +77,14 @@ impl std::fmt::Display for MyError {
 }
 
 impl From<std::io::Error> for MyError {
-    fn from(error: std::io::Error) -> Self {
-        MyError::IO(error)
+    fn from(err: std::io::Error) -> Self {
+        MyError::IO(err)
     }
 }
 
 impl From<std::net::AddrParseError> for MyError {
-    fn from(error: std::net::AddrParseError) -> Self {
-        MyError::Parsing(error)
+    fn from(err: std::net::AddrParseError) -> Self {
+        MyError::Parsing(err)
     }
 }
 
@@ -81,8 +92,8 @@ fn foo2() -> Result<(), MyError> {
     let _file = std::fs::File::open("tt.txt")?;
     let _ip = "abc".parse::<std::net::Ipv6Addr>()?;
     // Or use `map_err` if we don't want to impl From trait
-    // let _file = std::fs::File::open("tt.txt").map_err(MyError::IO)?;
-    // let _ip = "abc".parse::<std::net::Ipv6Addr>().map_err(MyError::Parsing)?;    
+    let _file = std::fs::File::open("tt.txt").map_err(MyError::IO)?;
+    let _ip = "abc".parse::<std::net::Ipv6Addr>().map_err(MyError::Parsing)?;    
     Ok(())
 }
 
@@ -103,7 +114,7 @@ fn ex_a_2_return_multi_type_error() {
 #[should_panic] // Comment to see the panic
 fn ex_b_1() {
     let xx: Result<u32, &str> = Err("emergency failure");
-    let _yy = xx.expect("Error xyz happened"); 
+    let _yy = xx.expect("Failed to open file etc."); 
         // panics with `Error xyz happened`: emergency failure`
 }
 
@@ -119,7 +130,7 @@ fn ex_b_2() {
     };
 }
 
-// Using unwrap - same as using an empty expect `expect("")` in ex_1:
+// Using unwrap - equivalent to using an empty expect `expect("")` in ex_1:
 #[test]
 #[should_panic] // Comment to see the panic
 fn ex_b_3() {
@@ -129,7 +140,8 @@ fn ex_b_3() {
 }
 
 
-
+//// skip
+////
 //// C. How to implement MyError a String wrapper, convertible to String, and 
 //// implements Error trait
 

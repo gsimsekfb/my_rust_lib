@@ -1,3 +1,14 @@
+// interv
+// add_one a const fn which returns input added with one
+
+
+
+
+// -----------------------------------------------------------------------
+
+
+
+
 // const fn:
 // https://rust-lang.github.io/rfcs/0911-const-fn.html
 // Allow marking free functions and inherent methods as const, enabling them to

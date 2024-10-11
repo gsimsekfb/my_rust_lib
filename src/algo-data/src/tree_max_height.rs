@@ -1,4 +1,4 @@
-use crate::tree::{new_node, new_node_leaf, Node};
+// use crate::tree::{new_node, new_node_leaf, Node};
 
 // Prob:
 // Find the Maximum Depth or Height of given Binary Tree
@@ -11,11 +11,26 @@ use crate::tree::{new_node, new_node_leaf, Node};
 // https://medium.com/go-rust/rust-day-10-lc-maximum-depth-of-binary-tree-872b39537716
 
 
-// Time Complexity: O(N)
-// Auxiliary Space: O(N)
+#[derive(Debug)]
+pub struct Node {
+    pub v: i32,
+    pub l: Option<Box<Node>>,
+    pub r: Option<Box<Node>>
+}
 
+pub fn new_node(v: i32, l: Option<Box<Node>>, r: Option<Box<Node>>) -> Option<Box<Node>> {
+    Some(Box::new(Node { v, l, r }))
+}
+
+pub fn new_node_leaf(v: i32) -> Option<Box<Node>> {
+    Some(Box::new(Node { v, l: None, r: None }))
+}
 
 // 2nd attempt
+//
+// ?
+// Time Complexity: O(N)
+// Auxiliary Space: O(N)
 pub fn max_height_2(node: &Option<Box<Node>>) -> usize {
     match node {
         Some(n) => {

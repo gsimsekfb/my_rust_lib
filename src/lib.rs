@@ -10,8 +10,9 @@
 #[cfg(test)]
 mod integration_tests;
 
-pub mod maze_1d; // pub because we this from examples
+pub mod maze_1d_todo; // pub because we this from examples
 mod api;
+mod array;
 mod array_slice_unpack;
 mod async_;
 mod averaged_collection;
@@ -30,9 +31,9 @@ mod drop_aka_dtor;
 mod r#dyn;
 mod r#enum;
 mod env_logger;
-mod env_vars;
+mod environment_variable;
 mod error_handling;
-mod file_sum_time_logs;
+mod sum_of_times_in_log_file;
 mod func_ptr;
 mod generics;
 mod hash_map_set;
@@ -52,10 +53,10 @@ mod range;
 mod re_export;
 mod serde_json;
 mod smart_ptrs;
-mod str;
+mod str_dynamically_sized_types_dst;
 mod string_concat;
-mod unit_tested_file;
-mod unit_integration_tests;
+mod test_unit_tested_file;
+mod test_integration_tests;
 mod temp;
 mod type_;
 mod trait_simple_vs_enum;

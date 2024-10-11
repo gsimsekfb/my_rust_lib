@@ -1,12 +1,23 @@
 
-// Todos
-// -
+// interv
 
-// Appendix:
-// 1. fn that accepts array, slice, vec
-// 2. fn that accepts &str, String and &String
+// 
+// 1. fn that accepts array, slice, vec of strings and find_str
+//  - return the strs which has find_str in it
+//  - use it w/ arr, slice and vec of strings 
+//     
+// 2. fn that accepts string like input - &str, String and &String and suffix
+//  - returns input + suffix
+//  - use it w/ all string like inputs
+
+
+
+
 
 // -------------------------------------------------------------------
+
+
+
 
 
 // 1. fn that accepts array, slice, vec of Strings
@@ -49,11 +60,14 @@ fn ex1_accept_arr_slice_vec() {
 fn add_suffix(s: impl AsRef<str>, suffix: &str) -> String {
     s.as_ref().to_string() + suffix
 }
+// todo: 
+// also use ToString, Into traits
 
 #[test]
 fn ex2_accept_str_string_like() {
     let s1 = "a".to_string();
     let s2 = "a";
+    //
     let suffix = "b";
     let res = "ab";
 

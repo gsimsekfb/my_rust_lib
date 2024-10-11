@@ -4,12 +4,15 @@
 // mut can be used in several situations:
 // A mutable variable, reference, or pointer
 
+// Also see mut.jpg
+
 // 1. mut var
 // mutable variable in the parameter list of a function.
 fn add_suffix(mut ss: String) -> String { // arg moved to ss and it is mut now
     ss.push_str(" world");
     ss
 }
+
 #[test]
 fn ex1_mut_var() {
     let s = String::from("hello");

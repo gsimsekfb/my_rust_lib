@@ -1,3 +1,5 @@
+// interv
+
 use std::fmt;
 
 // Using the Newtype Pattern to Implement External Traits on External Types:
@@ -12,7 +14,7 @@ use std::fmt;
 
 
 // Ex.1 - Creating a Wrapper type around Vec<String> to implement Display
-//        aka bypassing the orphan rule
+//        aka by-passing the orphan rule
 struct Wrapper(Vec<String>);
 
 impl fmt::Display for Wrapper {
@@ -32,7 +34,7 @@ fn ex_1() {
 
 
 
-// Ex.2 - Use explicitly named types instead of lang. types when needed
+// Ex.2 - Use explicitly named types instead of lang. types when needed.
 //        Both for readability and type safety.
 
 mod foo {

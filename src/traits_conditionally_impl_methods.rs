@@ -1,3 +1,10 @@
+// interv
+// generic struct Val with val T
+// impl fn new, 
+// impl to_str method only for Ts that impl Display trait
+// struct A empty
+// test: use these methods for Val i32 and Val A
+
 //// Traits to Conditionally Implement Methods
 //// https://doc.rust-lang.org/book/ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods
 

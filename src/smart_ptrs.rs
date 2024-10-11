@@ -1,8 +1,15 @@
 
 // interview
 
+// Create Boxed string, mutate it, create immut ref (2 ways) and mut ref,
+// Create MyBox generic struct, impl fn new and fn val
+// Impl Deref for generic MyBox and use it
+
+
 
 // -------------------------------------------------------
+
+
 
 use std::cell::RefCell;
 use std::rc::{Rc, Weak};
@@ -21,22 +28,22 @@ fn ex1_basics() {
         // error[E0382]: borrow of moved value: `p`
 
     // read
-    let refer = p.deref(); // &String
-    let refer = &*p;       // &String
-    assert_eq!(refer, "ab");
+    let immut_ref = p.deref(); // &String
+    let immut_ref = &*p;       // &String
+    assert_eq!(immut_ref, "ab");
     // mutate
     *p = "ff".to_string();
     assert_eq!(p.deref(), "ff");
     // or
-    let refer = p.deref_mut(); // &mut String
-    *refer = "cd".to_string();
-    assert_eq!(refer, "cd");   // to &String 
+    let mut_ref = p.deref_mut(); // &mut String
+    *mut_ref = "cd".to_string();
+    assert_eq!(mut_ref, "cd");   // to &String 
 
     // b. With copy type i32
     let mut sp = Box::new(42);
     // read
-    let refer = sp.as_ref();   // &i32
-    assert_eq!(refer, &42);
+    let immut_ref = sp.as_ref();   // &i32
+    assert_eq!(immut_ref, &42);
     assert_eq!(*sp, 42);        // i32 - !! copied not moved
     // mutate
     *sp = 44;               
@@ -78,16 +85,19 @@ fn hello(name: &str) {
     println!("Hello, {}!", name);
 }
 
-/// Implicit Deref Coercions
+/// Implicit Deref Coercions aka implicit forced deref
 #[test]
 fn ex2_deref_coerc() {
-    let ss = MyBox::new(String::from("aaa"));
+    let p = MyBox::new(String::from("aaa"));
 
+    // &MyBox<String> derefed to &String, that's it
+    //
+    // From book: wrong?
     // Rust turns &MyBox<String> into &String by calling deref.
-    // Rust calls deref again to turn the &String into &str
-    hello(&ss); // with auto deref coerc.
-                // same as:
-    hello(&(*ss)[..]); // // w/o auto deref coerc.
+    // Rust calls deref again to turn the &String into &str ??
+    hello(&p); // with auto deref coerc.
+               // same as:
+    hello(&(*p)[..]); // // w/o auto deref coerc.
 }
 
 
@@ -95,22 +105,20 @@ fn ex2_deref_coerc() {
 // -------------------------------------------------------
 
 
-// 3. Rc<T>, ref counted ptr (== C++ shared_ptr<const T>)
+// 3. Rc<T>, "immutable" ref counted ptr (== C++ shared_ptr<const T>)
 
 #[test]
 fn ex3_rc_ref_counted_ptr() {
 
-  // 1.a mutable
-  // mutating Rc (hint: it is immutable when total ref count > 1)
-  // is possible ONLY when the ref count (strong + weak) is 1
-  // which is not a reason to use, instead Box can be used
+  // 1.a mutable - ONLY when the ref count (strong + weak) is 1
+  // which is not a reason to use, use Box instead
   let mut sp = Rc::new(3);
   *Rc::get_mut(&mut sp).unwrap() = 4;
   assert_eq!(Rc::strong_count(&sp), 1);
   assert_eq!(Rc::weak_count(&sp), 0);
   assert_eq!(*sp, 4);
 
-  // 1.b. not mutable
+  // 1.b. otherwise not-mutable
   // !!! Rc is not mutable when the ref count (strong + weak) is more than 1
   let sp2 = Rc::clone(&sp);
   assert_eq!(Rc::strong_count(&sp) + Rc::weak_count(&sp), 2);
@@ -136,6 +144,8 @@ fn ex3_rc_ref_counted_ptr() {
   assert_eq!(unsafe { *p1 } , 3); // !! unsafe
 }
 
+
+// 4. Rc<RefCell<T>>, "mutable" ref counted ptr (== C++ shared_ptr<T>)
 
 #[test] fn ex_4_rc_refcell() {
   use std::rc::Rc;
@@ -173,6 +183,7 @@ fn ex3_rc_ref_counted_ptr() {
 }
 
 
+// 5. Weak Ptr
 
 #[test] fn ex_5_weak_ptr() {
   use std::cell::RefCell;
@@ -207,7 +218,7 @@ fn ex3_rc_ref_counted_ptr() {
 
 
 
-// x. RefCell<T> - interior mutability at runtime
+// 6. RefCell<T> - interior mutability, postpone borrow rules to runtime
 //                 (disabling compile time borrow rules)
 pub trait Messenger {
     fn send(&self, msg: &str);
@@ -249,7 +260,7 @@ impl Messenger for MockMessenger {
 
 // interior mutability
 #[test]
-fn ex_5_a_refcell_interior_mutability() {
+fn ex_6_a_refcell_interior_mutability() {
     let msgr = MockMessenger::new();
     msgr.send("abc");
     assert!(msgr.sent_messages.borrow().len() == 1);
@@ -258,7 +269,7 @@ fn ex_5_a_refcell_interior_mutability() {
 #[test]
 #[should_panic(expected = "already borrowed")]
 // or just: #[should_panic]
-fn ex_5_b_refcell_bad_interior_mutability() {
+fn ex_6_b_refcell_bad_interior_mutability() {
     let msgr = MockMessenger::new();
     msgr.bad_send("bad"); // runtime err: see "fn bad_send()"
     assert!(msgr.sent_messages.borrow().len() == 1);

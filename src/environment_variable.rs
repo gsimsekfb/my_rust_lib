@@ -1,3 +1,5 @@
+// reading environment variable
+
 // build.rs:
 // println!("cargo:rustc-env=LOG_LEVEL=1");
 #[test]

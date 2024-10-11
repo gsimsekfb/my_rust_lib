@@ -1,5 +1,5 @@
 
-#[path = "../src/maze_1d.rs"] mod maze_1d;
+#[path = "../src/maze_1d_todo.rs"] mod maze_1d;
 use maze_1d::*;
 
 fn main() {

@@ -90,10 +90,10 @@ fn ex_4_a() {
         Point { x, y: 0 } => 1, // x is any, y is 0
         Point { x: 0, y } => 2,
         Point { x, y } => 3, // !!! covers all cases
-                             // if last line is commented,
-                             // error[E0004]: non-exhaustive patterns:
-                             // help: ensure that all possible cases are being handled by adding
-                             // a match arm with a wildcard pattern as shown, or multiple match arms
+            // if this line is commented,
+            // error[E0004]: non-exhaustive patterns:
+            // help: ensure that all possible cases are being handled by adding
+            // a match arm with a wildcard pattern as shown, or multiple match arms
     };
     assert_eq!(val, 2);
 
@@ -188,15 +188,16 @@ fn ex_6() {
 
     let msg = Message::Hello { id: 7 };
     match msg {
-        // id is not in scope, hence we use id_ and @
+        // using @: id is not in scope, hence we use id_ and @
         Message::Hello { id: id_ @ 3..=7 } => {
             println!("Found an id in a range, id: {}", id_)
         }
+        // why to use @
         Message::Hello { id: 10..=12 } => {
-            println!("Found an id in another range")
-            // println!("Found an id in another range, id: {}", id)
+            // println!("Found an id in another range, id: {}", id);
             // Err: not found in this scope
         }
+        // using if match guards instead of @
         Message::Hello { id } if id > 0 => {
             println!("Found non-zero id: {}", id)
         }

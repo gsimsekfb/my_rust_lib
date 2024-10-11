@@ -1,3 +1,5 @@
+// interv
+// enum Num with One, Two with underlying type u8
 
 
 // 1 Defining enums
@@ -13,7 +15,7 @@ enum E1 {
 
 #[repr(u8)]
 enum E2 {
-    One = 1, // type: E2, underlying type: isize
+    One = 1, // type: E2, underlying type: u8
     Two = 2,
 }
 
@@ -49,8 +51,11 @@ struct ChangeColor(i32, i32, i32); // tuple struct
     let m2 = Message::Move { x: 2, y: 2 };
     let m3 = Message::Write("abc".to_string());
     let m4 = Message::ChangeColor(4,5,6);
+
     // Things we can use instead of match
-    if let Message::Move { x, y } = m2 { // if_let
+
+    // a. if let - for Some() case
+    if let Message::Move { x, y } = m2 {
         assert_eq!(x as i32, 2);
     };
     if let Message::Write(val) = &m3 {
@@ -59,7 +64,9 @@ struct ChangeColor(i32, i32, i32); // tuple struct
     if let Message::ChangeColor(_,y,_) = &m4 {
         assert_eq!(y, &5);
     };
-    let Message::Write(val) = m3 else {    // let_else
+
+    // b. let else - for None case e.g. early returns
+    let Message::Write(val) = m3 else {    // let else
         panic!("empty Msg");
         // error[E0308]: `else` clause of `let...else` does not diverge
         // println!("err");
@@ -106,7 +113,8 @@ impl Ip {
 }
 
 
-
+// !! Duplicate: See trait_simple_vs_enum.rs as an interview task
+//
 // 4. impl enum also kind of inheritance
 // src: https://www.lurklurk.org/effective-rust/use-types-2.html
 enum Shape {

@@ -1,5 +1,5 @@
 
-use my_rust_lib::maze_1d::*;
+use my_rust_lib::maze_1d_todo::*;
 
 fn main() {
     let start_pos = 2;

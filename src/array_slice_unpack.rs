@@ -1,10 +1,30 @@
+// interv
+
+// Foo with an int member
+// fn modify_foo_array accepts arr of two (or unspecified # of) Foos
+// Unpack arr and change the first Foo's val
+// Use modify_foo_array with diff sizes of arrays
+
+
+
+
+
+//// ---------------------------------------------------------------------
+
+
+
+
+
+
 struct Foo { x: i32 }
 
 fn modify_foo_array(arr: &mut [&mut Foo]) {
-          // or    (arr: &mut [&mut Foo; 2]) 
+          // or    (arr: &mut [&mut Foo; 2])
+
     // matches/unpacks only with size 2 arrays, otherwise goes to else
+    // key: let else
     let [f1, f2] = arr else { panic!("Err: arr doesn't have two elems") };
-    // or    array is fixed sized 
+    // or array is fixed sized 
     // let [f1, f2] = arr;
     f1.x = 55;
 }

@@ -1,3 +1,10 @@
+// interv
+
+// struct Num with int
+// struct Str with string
+// enum Val which wraps Num and Str
+// fn variadic which takes a slice of Vals
+// use variadic w/ diff length slices
 
 /* 
 //// C++ variadic template sum
@@ -28,15 +35,17 @@ enum Color {
     Txt(Text)
 }
 
-fn variadic_generic(args: &[impl Debug]) {
+// not variadic, array elems have to be the same type
+fn not_variadic_generic(args: &[impl Debug]) {
     for arg in args { println!("arg: {:?}", arg); }
 }
 
+// looks like same types in array but under the Enum actually different types
 fn variadic(args: &[Color]) {
-    if let Color::Num(n) = &args[0] {
+    if let Some(Color::Num(n)) = &args.first() {
         println!("n.x: {:?}", n.x);
     };
-    if let Color::Txt(t) = &args[1] {
+    if let Some(Color::Txt(t)) = &args.get(1) {
         println!("t.y: {:?}", t.y);
     };
 }
@@ -48,8 +57,12 @@ fn ex1() {
         Color::Txt( Text{ y:"green".to_string() } ) 
     ]);
 
-    variadic_generic(&[1, 2, 3]);
-    variadic_generic(&['a', 'b']);
+    variadic(&[ 
+        Color::Num( Number{ x: 42 } ),
+    ]);    
+
+    not_variadic_generic(&[1, 2, 3]);
+    not_variadic_generic(&['a', 'b']);
 
     assert_eq!(32, 32);
 }

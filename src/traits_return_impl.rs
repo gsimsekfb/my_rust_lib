@@ -1,3 +1,4 @@
+// interv
 
 // https://doc.rust-lang.org/rust-by-example/trait/impl_trait.html#as-a-return-type
 // https://blog.rust-lang.org/2018/05/10/Rust-1.26.html#impl-trait
@@ -5,8 +6,9 @@
 // Returning -> impl Trait
 
 // 1
-// fn get_closure which returns types which impl Fn trait that takes i32 and returns i32
-// and returns a closure that increments the param  1
+// fn get_closure which returns (types which impl Fn trait that takes i32 
+// and returns i32)
+// fn returns a closure that increments closure param with 1
 // same with - get_closure_box with Box syntax
 // Test these fns
 

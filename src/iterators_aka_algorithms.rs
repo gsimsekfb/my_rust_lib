@@ -1,5 +1,23 @@
 // rust iterators == similar to c++ algorithm
 
+// interv
+
+// From vec 1,2,3 to vec "1", "2", "3" - manual and use std lib fn
+// From 1,2,3 create an Enum vector - enum Status { Value(u32) }
+// Combine two vecs: a1 = vec![1, 2], a2 = vec![4, 5] - manual and std lib fn
+// Convert vec!['a', 'b'] to  vec![(0, 'a'), (1, 'b')] - manual and use std lib fn
+// Flatten vec![vec![1, 2], vec![3, 4]]
+// From ["b", "a"], [2, 1] to BTreeMap ([(&"a", &1), (&"b", &2)]
+// Stop iteration at error e.g. foo has negative value and 
+// return Result<Vec<&Foo>, &str>> - err and ok case
+//
+// Check others:
+// https://doc.rust-lang.org/std/iter/trait.Iterator.html
+
+
+
+
+
 // How to test this file: 
 // Run: cargo t iter
 
@@ -30,26 +48,52 @@ pub fn foo() {
 }
 
 // sum (reduce)
-#[test] fn iter_sum() {
+#[test] fn sum() {
     let v1 = vec![1, 2, 3]; // Vec<i32, Global>
     let v1_iter = v1.iter(); // Iter<i32>
-    let total: i32 = v1_iter.sum(); // total: 6
-    assert_eq!(total, 6);
+    let sum: i32 = v1_iter.sum(); // total: 6
+    assert_eq!(sum, 6);
     // or
-    let total: i32 = v1.iter().sum(); // total: 6
-    assert_eq!(total, 6);
+    let sum: i32 = v1.iter().sum(); // total: 6
+    assert_eq!(sum, 6);
+
+    // map & sum
+    let sum: i32 = v1.iter().map(|e| e*10).sum(); // total: 60
+    assert_eq!(sum, 60);
 }
 
 // map
-#[test] fn iter_inc_one() {
+#[test] fn incr_one() {
     let v1: Vec<i32> = vec![1, 2, 3];
     let v2: Vec<_> = v1.iter().map(|x| x + 1).collect();
         // * iters are lazy evaluated, collect() forces evaluation
     assert_eq!(v2, vec![2, 3, 4]);
 }
 
+// map - with Trait fn ptr
+#[test] fn map_with_fn_ptr() {
+    let nums = vec![1, 2, 3];
+    let strs: Vec<String> = nums.iter().map(ToString::to_string).collect();
+    // instead of 
+    let _strs: Vec<String> = nums.iter().map(|i| i.to_string()).collect();
+
+    assert_eq!(strs, ["1", "2", "3"]);
+}
+
+// map - called by initializer function
+#[derive(Debug, PartialEq)]
+enum Status { Value(u32), Stop }
+
+#[test]
+fn map_with_init_fn() {
+    let res: Vec<Status> = (1u32..3)
+        .map(Status::Value) // initializer function
+        .collect();
+    assert_eq!(res, [Status::Value(1), Status::Value(2)]);
+}
+
 // filter
-#[test] fn iter_filter_even() {
+#[test] fn filter_even() {
     let v1: Vec<i32> = vec![1, 2, 3, 4];
     let v2: Vec<_> = v1.into_iter().filter(|e| e % 2 == 0).collect();
         // * iters are lazy evaluated, collect() forces evaluation
@@ -58,7 +102,7 @@ pub fn foo() {
 
 // mixing: filter/take/map/sum
 // sum the squares of the first five even items 
-#[test] fn iter_sum_squares_of_first_two_even_items() {
+#[test] fn sum_squares_of_first_two_even_items() {
     let v1: Vec<i32> = vec![1, 2, 3, 4, 5, 6];
     let even_sum_squares: i32 = v1
         .iter()
@@ -70,36 +114,33 @@ pub fn foo() {
     assert_eq!(even_sum_squares, 20);
 }
 
-#[test] fn iter_chain() {
+#[test] fn chain() {
     let a1 = vec![1, 2];
     let a2 = vec![4, 5];
-    let vec: Vec<_> = a1.iter().chain(a2.iter()).collect();
+    let vec: Vec<_> = a1.iter().chain(a2.iter()).collect(); // Vec<&i32>
     assert_eq!(vec, vec![&1, &2, &4, &5]);
 }
 
-#[test] fn iter_enumerate() {
-    let aa = vec!['a', 'b'];
-    let iter = aa.iter().enumerate();
-    let vec: Vec<_> = iter.collect();
-    assert_eq!(vec, vec![(0, &'a'), (1, &'b')]);
-    // or
-    // assert_eq!(iter.next(), Some((0, &'a')));
+#[test] fn enumerate() {
+    let vec = vec!['a', 'b'];
+    let vec_2: Vec<(usize, &char)> = vec.iter().enumerate().collect();
+    assert_eq!(vec_2, vec![(0, &'a'), (1, &'b')]);
 }
 
-#[test] fn iter_find() {
+#[test] fn find() {
     let a = [1, 2, 3];
     assert_eq!(a.iter().find(|&&x| x == 2), Some(&2));
     assert_eq!(a.iter().find(|&&x| x == 5), None);
 }
 
-#[test] fn iter_flatten() {
+#[test] fn flatten() {
     let data = vec![vec![1, 2], vec![3, 4]];
     let flattened = data.into_iter().flatten().collect::<Vec<u8>>();
     assert_eq!(flattened, &[1, 2, 3, 4]);
 }
 
 #[test]
-fn iter_zip() {
+fn zip() {
     let vars = vec!["b", "a"];
     let vals = vec![2, 1];
     use std::collections::BTreeMap;
@@ -107,22 +148,40 @@ fn iter_zip() {
     assert_eq!(args, BTreeMap::from([(&"a", &1), (&"b", &2)]));
 }
 
+#[test]
+fn inspect() {
+    let a = [1, 4, 2, 3];
+ 
+    // inspect is mostly for debugging
+    // adding inspect() to investigate what's happening
+    let sum = a.into_iter()
+        .inspect(|x| println!("--- filtering: {x}"))
+        .filter(|x| x % 2 == 0)
+        .inspect(|x| println!("--- passed filter: {x}"))
+        .fold(0, |sum, i| sum + i);
+
+    assert_eq!(sum, 6);
+}
+
+
 
 #[derive(Debug, PartialEq)]
 struct Foo { x: i32 } 
 
 #[test]
-fn iter_stop_at_error_return_result() {
+fn stop_at_error_return_result() {
     // 1. Stop iteration at error w/ collect() and return Result
+    // a
     let arr = [ Foo { x: 2 }, Foo { x: -2 }, Foo { x: 6 } ];
     let mut itr_cnt = 0;
-    let res = arr.iter().map(|f| {
+    let res = arr.iter().map(|f| { // Result<Vec<&Foo>, &str>
         itr_cnt += 1;
         if f.x < 0 { return Err("negative elem") } // some breaking condition
         else { Ok(f) }
-    }).collect::<Result<Vec<&Foo>, _>>();
+    }).collect::< Result<Vec<&Foo>, _> >();
     assert_eq!(itr_cnt, 2); // not 3
     assert_eq!(res, Err("negative elem"));
+    // b
     // Non-err case: same code, only change is all elems of arr are positive
     let arr = [ Foo { x: 2 }, Foo { x: 2 }, Foo { x: 6 } ];
     let res = arr.iter().map(|f| {
@@ -132,6 +191,7 @@ fn iter_stop_at_error_return_result() {
     assert_eq!(res.unwrap().len(), 3);
 
     // 2. Stop iteration at error w/ sum() and return Result
+    // a
     let arr = [ Foo { x: 2 }, Foo { x: -2 }, Foo { x: 6 } ];
     let mut itr_cnt = 0;
     let res = arr.iter().map(|f| {
@@ -141,6 +201,7 @@ fn iter_stop_at_error_return_result() {
     }).sum::<Result<i32, _>>();
     assert_eq!(itr_cnt, 2); // not 3
     assert_eq!(res, Err("negative element"));
+    // b
     // Non-err case: same code, only change all elems of arr are positive
     let arr = [ Foo { x: 2 }, Foo { x: 2 }, Foo { x: 6 } ];
     let res = arr.iter().map(|f| {

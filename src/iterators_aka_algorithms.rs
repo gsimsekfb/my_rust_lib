@@ -49,7 +49,7 @@ pub fn foo() {
 
 // sum (reduce)
 #[test] fn sum() {
-    let v1 = vec![1, 2, 3]; // Vec<i32, Global>
+    let v1 = [1, 2, 3]; // Vec<i32, Global>
     let v1_iter = v1.iter(); // Iter<i32>
     let sum: i32 = v1_iter.sum(); // total: 6
     assert_eq!(sum, 6);
@@ -72,7 +72,7 @@ pub fn foo() {
 
 // map - with Trait fn ptr
 #[test] fn map_with_fn_ptr() {
-    let nums = vec![1, 2, 3];
+    let nums = [1, 2, 3];
     let strs: Vec<String> = nums.iter().map(ToString::to_string).collect();
     // instead of 
     let _strs: Vec<String> = nums.iter().map(|i| i.to_string()).collect();
@@ -115,15 +115,15 @@ fn map_with_init_fn() {
 }
 
 #[test] fn chain() {
-    let a1 = vec![1, 2];
-    let a2 = vec![4, 5];
+    let a1 = [1, 2];
+    let a2 = [4, 5];
     let vec: Vec<_> = a1.iter().chain(a2.iter()).collect(); // Vec<&i32>
-    assert_eq!(vec, vec![&1, &2, &4, &5]);
+    assert_eq!(vec, [&1, &2, &4, &5]);
 }
 
 #[test] fn enumerate() {
-    let vec = vec!['a', 'b'];
-    let vec_2: Vec<(usize, &char)> = vec.iter().enumerate().collect();
+    let arr = ['a', 'b'];
+    let vec_2: Vec<(usize, &char)> = arr.iter().enumerate().collect();
     assert_eq!(vec_2, vec![(0, &'a'), (1, &'b')]);
 }
 
@@ -141,8 +141,8 @@ fn map_with_init_fn() {
 
 #[test]
 fn zip() {
-    let vars = vec!["b", "a"];
-    let vals = vec![2, 1];
+    let vars = ["b", "a"];
+    let vals = [2, 1];
     use std::collections::BTreeMap;
     let args: BTreeMap<_,_> = vars.iter().zip(vals.iter()).collect();
     assert_eq!(args, BTreeMap::from([(&"a", &1), (&"b", &2)]));
@@ -158,7 +158,7 @@ fn inspect() {
         .inspect(|x| println!("--- filtering: {x}"))
         .filter(|x| x % 2 == 0)
         .inspect(|x| println!("--- passed filter: {x}"))
-        .fold(0, |sum, i| sum + i);
+        .sum::<i32>();
 
     assert_eq!(sum, 6);
 }
@@ -176,7 +176,7 @@ fn stop_at_error_return_result() {
     let mut itr_cnt = 0;
     let res = arr.iter().map(|f| { // Result<Vec<&Foo>, &str>
         itr_cnt += 1;
-        if f.x < 0 { return Err("negative elem") } // some breaking condition
+        if f.x < 0 { Err("negative elem") } // some breaking condition
         else { Ok(f) }
     }).collect::< Result<Vec<&Foo>, _> >();
     assert_eq!(itr_cnt, 2); // not 3
@@ -185,7 +185,7 @@ fn stop_at_error_return_result() {
     // Non-err case: same code, only change is all elems of arr are positive
     let arr = [ Foo { x: 2 }, Foo { x: 2 }, Foo { x: 6 } ];
     let res = arr.iter().map(|f| {
-        if f.x < 0 { return Err("negative elem") } // some breaking condition
+        if f.x < 0 { Err("negative elem") } // some breaking condition
         else { Ok(f) }
     }).collect::<Result<Vec<&Foo>, _>>();
     assert_eq!(res.unwrap().len(), 3);
@@ -196,7 +196,7 @@ fn stop_at_error_return_result() {
     let mut itr_cnt = 0;
     let res = arr.iter().map(|f| {
         itr_cnt += 1;
-        if f.x < 0 { return Err("negative element") } 
+        if f.x < 0 { Err("negative element") } 
         else { Ok(f.x) }
     }).sum::<Result<i32, _>>();
     assert_eq!(itr_cnt, 2); // not 3
@@ -205,7 +205,7 @@ fn stop_at_error_return_result() {
     // Non-err case: same code, only change all elems of arr are positive
     let arr = [ Foo { x: 2 }, Foo { x: 2 }, Foo { x: 6 } ];
     let res = arr.iter().map(|f| {
-        if f.x < 0 { return Err("negative element") } 
+        if f.x < 0 { Err("negative element") } 
         else { Ok(f.x) }
     }).sum::<Result<i32, _>>();
     assert_eq!(res, Ok(10));

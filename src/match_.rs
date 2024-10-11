@@ -16,6 +16,7 @@ fn ex_1() {
         assert_eq!(x, 42);
     }
     // instead of
+    #[allow(clippy::single_match)]
     match result {
         Some(x) => assert_eq!(x, 42),
         _ => (),

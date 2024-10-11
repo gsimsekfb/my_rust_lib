@@ -56,7 +56,7 @@ struct ChangeColor(i32, i32, i32); // tuple struct
 
     // a. if let - for Some() case
     if let Message::Move { x, y } = m2 {
-        assert_eq!(x as i32, 2);
+        assert_eq!(x, 2);
     };
     if let Message::Write(val) = &m3 {
         assert_eq!(val, "abc");
@@ -103,10 +103,10 @@ impl Ip {
     let val = 2; // this value comes at runtime
     match val {
         val if val == E1::One as u8 => {
-            assert_eq!(val as u8, 1);
+            assert_eq!(val, 1);
         } ,
         val if val == E1::Two as u8 => {
-            assert_eq!(val as u8, 2);
+            assert_eq!(val, 2);
         } ,
         _ => todo!()
     }

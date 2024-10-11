@@ -114,6 +114,7 @@ fn ex_a_2_return_multi_type_error() {
 #[should_panic] // Comment to see the panic
 fn ex_b_1() {
     let xx: Result<u32, &str> = Err("emergency failure");
+    #[allow(clippy::unnecessary_literal_unwrap)]
     let _yy = xx.expect("Failed to open file etc."); 
         // panics with `Error xyz happened`: emergency failure`
 }
@@ -135,6 +136,7 @@ fn ex_b_2() {
 #[should_panic] // Comment to see the panic
 fn ex_b_3() {
     let xx: Result<u32, &str> = Err("emergency failure");
+    #[allow(clippy::unnecessary_literal_unwrap)]
     let _yy = xx.unwrap(); 
         // panics with `: emergency failure`
 }
@@ -191,5 +193,5 @@ fn ex_c_1() {
     // -- res: Err(MyError_("Failed to open file: 
     // Os { code: 2, kind: NotFound, message: \"No such file or directory\" }"))
 
-    assert_eq!(res.is_err(), true);
+    assert!(res.is_err());
 }

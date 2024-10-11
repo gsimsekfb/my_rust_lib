@@ -11,7 +11,7 @@
         i += 1000;
         print!("{}-", i);
         if i % 10000 == 0 {
-            print!{"\n"}
+            println!{}
         }
     }
     // info: let sixty_five_thousand_535: u16 = 0b1111_1111_1111_1111;
@@ -33,7 +33,6 @@
     let (a, b) = (200, 200);
     let c: u8 = a + b;
     println!("200 + 200 = {}", c);
-    assert!(true);
 }
 // error: this arithmetic operation will overflow
 //   --> src/int_overflow.rs:31:17

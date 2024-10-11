@@ -53,12 +53,12 @@
     assert_eq!("abcdef--", &str);
 
     // vec!["aa", "bb"] -> vec.concat() -> String("aabb")
-    let vec = vec!["aa", "bb"];
-    let str: String = vec.concat();
+    let arr = ["aa", "bb"];
+    let str: String = arr.concat();
     assert_eq!("aabb", &str);
 
     // vec!["aa", "bb"] -> vec.join() -> String("aa-bb")
-    let vec = vec!["aa", "bb"];
-    let str: String = vec.join("-");
+    let arr = ["aa", "bb"];
+    let str: String = arr.join("-");
     assert_eq!("aa-bb", &str);
 }

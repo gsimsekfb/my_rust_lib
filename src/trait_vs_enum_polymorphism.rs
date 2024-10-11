@@ -52,20 +52,20 @@ impl Shape_ {
 fn ex1() {
     // 1. trait version
     let s1: Box<dyn Shape> = Box::new(Square {x: 4});
-    let vec_of_traits = vec![
+    let traits = [
         s1, 
         Box::new(Rect {w: 5, h: 6}) as Box<dyn Shape> // s2
     ];
-    crate::print_type_of("vec_of_traits[0]", &vec_of_traits[0]);
+    crate::print_type_of("traits[0]", &traits[0]);
         // alloc::boxed::Box<dyn rust_book_minigrep::temp::Shape>
-    println!("-- {}", vec_of_traits[0].area());
+    println!("-- {}", traits[0].area());
 
     // 2. enum version
-    let vec_of_enums = vec![Shape_::Square { x: 8 }];
-    crate::print_type_of("vec_of_enums[0]", &vec_of_enums[0]);
+    let enums = [Shape_::Square { x: 8 }];
+    crate::print_type_of("enums[0]", &enums[0]);
         // rust_book_minigrep::temp::Shape_
-    println!("-- {}", vec_of_enums[0].area());
-    let xx = match vec_of_enums[0] {
+    println!("-- {}", enums[0].area());
+    let xx = match enums[0] {
         Shape_::Square {x} => x,
         Shape_::Rect {w, ..} => w
     };

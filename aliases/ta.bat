@@ -9,4 +9,4 @@
 
 @echo off
 echo.
-cargo test --all
+cargo test --all %*

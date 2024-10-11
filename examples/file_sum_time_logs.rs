@@ -33,7 +33,7 @@ fn main() {
 
     match read_lines(file) {
         Ok(lines) => {
-            for line in lines.flatten() {
+            for line in lines.map_while(Result::ok) {
                 if !line.contains(find_str) { continue; }
                 let v: Vec<&str> = line.split(':').collect(); 
                 let num_str = v[1].trim().trim_end_matches("ms");

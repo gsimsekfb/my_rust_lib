@@ -29,13 +29,13 @@ fn ex_1() {
 #[test]
 fn ex_2() {
     // 1. using closure
-    let nums = vec![1, 2, 3];
+    let nums = [1, 2, 3];
     let strs: Vec<String> = nums.iter().map(|i| i.to_string()).collect();
     assert_eq!(strs, ["1", "2", "3"]);
 
     // 2. using fn ptr 
     // (this is also a task in iter*algo*.rs)
-    let nums = vec![1, 2, 3];
+    let nums = [1, 2, 3];
     let strs: Vec<String> = nums.iter().map(ToString::to_string).collect();
     assert_eq!(strs, ["1", "2", "3"]);
 }

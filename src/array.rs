@@ -13,8 +13,8 @@ fn ex1() {
     }
     assert_eq!(res, 0);
 
-    if let Some(val) = arr.get(0) {
+    if let Some(val) = arr.get(2) {
         res = *val;
     }    
-    assert_eq!(res, 1);
+    assert_eq!(res, 3);
 }

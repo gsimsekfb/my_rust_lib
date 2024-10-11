@@ -2,20 +2,20 @@
 //// 
 #[test]
 fn ex1_first_last_n_elements() {
-    let vec = vec![1, 2, 3, 4, 5, 6];
+    let arr = [1, 2, 3, 4, 5, 6];
 
     // first n elem
     let first_n = 2;
-    assert_eq!([1, 2], &vec[..first_n]);       // first n element
+    assert_eq!([1, 2], &arr[..first_n]);       // first n element
     // same as
-    assert_eq!([1, 2], &vec[0..first_n]);      // first n element
+    assert_eq!([1, 2], &arr[0..first_n]);      // first n element
 
     // last n elem
     let last_n = 4;
-    let len = vec.len();
-    assert_eq!([3, 4, 5, 6], &vec[len-last_n..]);    // last n element
+    let len = arr.len();
+    assert_eq!([3, 4, 5, 6], &arr[len-last_n..]);    // last n element
     // same as
-    assert_eq!([3, 4, 5, 6], &vec[len-last_n..len]); // last n element
+    assert_eq!([3, 4, 5, 6], &arr[len-last_n..len]); // last n element
 }
 
 

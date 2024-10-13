@@ -21,6 +21,7 @@ mod cargo_expand;
 mod cfg;
 mod copy_vs_move;
 mod const_generics_lifetimes;
+mod cow;
 mod ctor_chain;
 mod compile_vs_runtime_read_env_and_file;
 mod concurrency;

@@ -17,6 +17,7 @@ mod array_slice_unpack;
 mod async_;
 mod averaged_collection;
 mod break_;
+mod cargo_expand;
 mod cfg;
 mod copy_vs_move;
 mod const_generics_lifetimes;

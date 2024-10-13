@@ -150,10 +150,10 @@ fn first_next_<T: GenIter<u32>>(c: &mut T) -> u32 {
 
 
 #[test] fn usage() {
-    let c = Counter::new();
-    assert!(dummy(&c));
-    assert!(dummy_a(&c));
-    assert!(dummy_b(&c));
+    let c = Counter::new(); // count: 0
+    assert!(!dummy(&c));
+    assert!(!dummy_a(&c));
+    assert!(!dummy_b(&c));
 
     let mut c = Counter::new();
     assert_eq!(first_next(&mut c), 1);

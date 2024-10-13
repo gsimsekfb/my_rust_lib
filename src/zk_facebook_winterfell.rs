@@ -27,9 +27,9 @@ fn ex1_zk() {
         // 190393255176150493381245531460827183000
     let start = winterfell::math::fields::f128::BaseElement::new(3);
     
-    assert_eq!(verify_work(start, result, proof.clone()), true);
+    assert!(verify_work(start, result, proof.clone()));
     // Verify should fail with wrong result
-    assert_eq!(verify_work(start, result.double(), proof), false);
+    assert!(!verify_work(start, result.double(), proof));
 }
 
 use winterfell::{

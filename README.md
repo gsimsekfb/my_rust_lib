@@ -9,6 +9,7 @@ This repo is for my personal use with tips, tools, ready to use examples/explana
 
 #### Important tools & tips:
 > . Use latest Rust & read release notes -> https://github.com/rust-lang/rust/releases  
+> . Subscribe to Rust vulnerability database -> https://rustsec.org/advisories/  
 > . Follow surveys/latest trends -> e.g. https://www.jetbrains.com/lp/devecosystem-2023/rust/  
 > . Use & study latest edition -> https://doc.rust-lang.org/edition-guide  
 > . Use `cargo check` to speed up the development (`cargo check` performs compilation checks without generating machine code)  

@@ -4,16 +4,24 @@ const XX : i32 = 22;
 #[cfg(not(feature = "foo"))]
 const XX : i32 = 44;
 
-// HINT:
-// Both tests must fail when foo used like this:
-// cargo t cfg --features foo
+pub const fn feature_foo_enabled() -> bool {
+    if cfg!(feature = "foo") { true } else { false }
+}
 
-#[test] fn ex_1_should_fail_with_foo() {
+// HINT:
+// Tests ex0, 1 and ex2  must fail when feature foo is enabled
+// cargo t -F foo cfg           // -F: --features
+
+#[test] fn ex_0_feature_foo_enabled() {
+    assert_eq!(feature_foo_enabled(), false);
+}
+
+#[test] fn ex_1_should_fail_with_feature_foo() {
     assert_eq!(XX, 44);
 }
 
 // Using: if cfg!(feature = "foo")
-#[test] fn ex_2_using_if_cfg_and_should_fail_with_foo() {
+#[test] fn ex_2_using_if_cfg_and_should_fail_with_feature_foo() {
     if cfg!(feature = "foo") {
         assert_eq!(42, 4);
     } else {
@@ -22,7 +30,7 @@ const XX : i32 = 44;
 }
 
 // Will fail with 
-// cargo t cfg_all --features "foo aa"
+// cargo t --features "foo aa" cfg_all
 // More:
 // https://doc.rust-lang.org/reference/conditional-compilation.html#conditional-compilation
 #[test] fn ex_3_cfg_all() {

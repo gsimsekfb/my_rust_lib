@@ -5,7 +5,7 @@ const XX : i32 = 22;
 const XX : i32 = 44;
 
 pub const fn feature_foo_enabled() -> bool {
-    if cfg!(feature = "foo") { true } else { false }
+    cfg!(feature = "foo")
 }
 
 // HINT:

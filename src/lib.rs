@@ -3,6 +3,7 @@
 #![allow(unused_variables)]
 #![allow(non_camel_case_types)]
 #![allow(clippy::four_forward_slashes)]
+#![allow(clippy::empty_line_after_doc_comments)]
 
 // mod doc_test; 
   // todo: failed to resolve: use of undeclared crate or module `doc_test`

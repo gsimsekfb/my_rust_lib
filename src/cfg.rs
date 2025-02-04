@@ -13,7 +13,7 @@ pub const fn feature_foo_enabled() -> bool {
 // cargo t -F foo cfg           // -F: --features
 
 #[test] fn ex_0_feature_foo_enabled() {
-    assert_eq!(feature_foo_enabled(), false);
+    assert!(!feature_foo_enabled());
 }
 
 #[test] fn ex_1_should_fail_with_feature_foo() {

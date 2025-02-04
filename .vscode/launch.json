@@ -18,6 +18,24 @@
         {
             "type": "lldb",
             "request": "launch",
+            "name": "iota-cargo-b",
+            "cargo": {
+                "args": ["b", "--package=iota",],
+            },
+            "args": ["start", "--force-regenesis"],
+            "cwd": "${workspaceFolder}"
+        },        
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "iota-from-target",
+            "program": "${workspaceFolder}/target/debug/iota",
+            "args": ["start", "--force-regenesis"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
             "name": "test iota-types",
             "cargo": {
                 "args": [

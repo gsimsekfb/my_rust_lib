@@ -18,6 +18,21 @@
         {
             "type": "lldb",
             "request": "launch",
+            "name": "test iota-types",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--lib",
+                    "--package=iota-types"
+                ],
+            },
+            "args": ["--nocapture", "test_foo"],
+            "cwd": "${workspaceFolder}"
+        },        
+        {
+            "type": "lldb",
+            "request": "launch",
             "name": "Debug unit tests in library 'rust-book-minigrep'",
             "cargo": {
                 "args": [

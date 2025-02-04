@@ -93,7 +93,7 @@
             "args": ["create-account -s ~/libra/swarm_temp -a ~/account.json"],
             "env":{"NODE_ENV": "test"}, // {"ENV1": "aa", "ENV2: "bb"}
             "cwd": "${workspaceFolder}"
-        },                
+        },
         {
             "name": "debug func-tests",
             "type": "lldb",

@@ -109,14 +109,17 @@ fn ex_a_2_return_multi_type_error() {
 //// B. Three equivalent error handling when panicking (w/o propagating to caller)
 //// https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html
 
-// Using expect - SUGGESTED OPTION
+// Using expect or unwrap_or_else - SUGGESTED OPTION
 #[test] 
 #[should_panic] // Comment to see the panic
 fn ex_b_1() {
     let xx: Result<u32, &str> = Err("emergency failure");
-    #[allow(clippy::unnecessary_literal_unwrap)]
-    let _yy = xx.expect("Failed to open file etc."); 
-        // panics with `Error xyz happened`: emergency failure`
+    let _yy = xx.expect("Error happened");
+        // Error happened: emergency failure
+    // or with capture variable
+    let err_code = 42;
+    let _zz = xx.unwrap_or_else(|_| panic!("Error {err_code} happened"));
+        // Error 42 happened
 }
 
 // Using match - same as `expect(". . .")` in ex_1:

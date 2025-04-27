@@ -91,3 +91,8 @@ debug = true
 # split-debuginfo = "unpacked" # Requires macOS ?
 lto = false
 incremental = true
+
+# todo: this does not work
+[profile.test]
+panic = 'abort'     # Abort on panic
+

@@ -114,10 +114,12 @@ fn ex_a_2_return_multi_type_error() {
 #[should_panic] // Comment to see the panic
 fn ex_b_1() {
     let xx: Result<u32, &str> = Err("emergency failure");
+    #[allow(clippy::unnecessary_literal_unwrap)]
     let _yy = xx.expect("Error happened");
         // Error happened: emergency failure
     // or with capture variable
     let err_code = 42;
+    #[allow(clippy::unnecessary_literal_unwrap)]
     let _zz = xx.unwrap_or_else(|_| panic!("Error {err_code} happened"));
         // Error 42 happened
 }

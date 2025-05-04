@@ -70,10 +70,12 @@ fn parallel_exec(arr: &mut [i32]) {
 
 
 unsafe fn any_as_u8_slice<T: Sized>(p: &T) -> &[u8] {
-    ::core::slice::from_raw_parts(
-        (p as *const T) as *const u8,
-        ::core::mem::size_of::<T>(),
-    )
+    unsafe {        
+        ::core::slice::from_raw_parts(
+            (p as *const T) as *const u8,
+            ::core::mem::size_of::<T>(),
+        )
+    }
 }
 
 // See ex1 for simple example

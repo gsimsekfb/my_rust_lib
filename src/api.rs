@@ -1,12 +1,12 @@
 
-// interv
+// interv-1 & todo
 
 // 
-// 1. fn that accepts array, slice, vec of strings and find_str
+// 1. fn(list of strings, find_str)
 //  - return the strs which has find_str in it
-//  - use it w/ arr, slice and vec of strings 
+//  - accepts arr, slice and vec of strings
 //     
-// 2. fn that accepts string like input - &str, String and &String and suffix
+// 2. fn(1: single string like types - &str, String, &String 2: suffix)
 //  - returns input + suffix
 //  - use it w/ all string like inputs
 
@@ -40,13 +40,13 @@ fn find_strs(strs: &[String], find_str: &str) -> Vec<String> {
 
 #[test]
 fn ex1_accept_arr_slice_vec() {
-    let vec = vec![
+    let vec: Vec<String> = vec![
         "abc".to_string(), "ccc".to_string(), "acc".to_string()
     ];
-    let arr = ["abc".to_string(), "ccc".to_string(), "acc".to_string()];
+    let arr: [String; 3] = ["abc".to_string(), "ccc".to_string(), "acc".to_string()];
     let result: Vec<_> = vec!["ccc".to_string(), "acc".to_string()];
 
-    // array, slice and vec
+    // array, slice and vec in order
     assert_eq!(find_strs(&arr, "cc"), result);
     assert_eq!(find_strs(&arr[..], "cc"), result);
     assert_eq!(find_strs(&vec, "cc"), result);

@@ -1,9 +1,9 @@
-// interv
+// interv-1
 
-// Foo with an int member
-// fn modify_foo_array accepts arr of two (or unspecified # of) Foos
-// Unpack arr and change the first Foo's val
-// Use modify_foo_array with diff sizes of arrays
+// 1. Foo with an int member
+// 2. fn modify_foo_array ( arr of two (or unspecified # of) Foos )
+// Unpack arr and change the first Foo's val, panic if arr does not have 2 elems
+// 3. Use modify_foo_array with diff sizes of arrays
 
 
 
@@ -24,7 +24,7 @@ fn modify_foo_array(arr: &mut [&mut Foo]) {
     // matches/unpacks only with size 2 arrays, otherwise goes to else
     // key: let else
     let [f1, f2] = arr else { panic!("Err: arr doesn't have two elems") };
-    // or array is fixed sized 
+    // or if array is fixed sized:
     // let [f1, f2] = arr;
     f1.x = 55;
 }

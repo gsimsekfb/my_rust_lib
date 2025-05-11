@@ -42,6 +42,7 @@ async fn foo() -> u8 { 5 }
 // a. Thread
 // downloading a web page is a small task; creating a thread for such a small
 // amount of work is quite wasteful.
+//
 // fn get_two_sites() {
 //     // Spawn two threads to do work.
 //     let thread_one = std::thread::spawn(|| download("https://www.foo.com"));
@@ -55,7 +56,9 @@ async fn foo() -> u8 { 5 }
 // b. Async
 // Here, no extra threads are created. Additionally, all function calls are 
 // statically dispatched, and there are no heap allocations! 
+//
 // However, we need to write the code to be asynchronous in the first place,
+//
 // async fn get_two_sites_async() {
 //     // Create two different "futures" which, when run to completion,
 //     // will asynchronously download the webpages.
@@ -68,7 +71,11 @@ async fn foo() -> u8 { 5 }
 
 
 // 3. async await basic example
-async fn learn_song() { for i in 1..=3 { println!("--- learning song. . . {}", i); } }
+async fn learn_song() { 
+    let ten_millis = std::time::Duration::from_millis(10);
+    use std::thread::sleep;
+    for i in 1..=3 { sleep(ten_millis); println!("--- learning song. . . {i}"); }
+}
 
 async fn sing() { for i in 1..=3 { println!("--- singing. . . {}", i); } }
 
@@ -94,6 +101,7 @@ async fn async_main() {
 
     // `join!` is like `.await` (which blocks/waits one future) but can wait 
     // for multiple futures concurrently.
+    //
     // If we're temporarily blocked in the `learn_and_sing` future, the `dance`
     // future will take over the current thread. If `dance` becomes blocked,
     // `learn_and_sing` can take back over. If both futures are blocked, then
@@ -101,13 +109,58 @@ async fn async_main() {
     futures::join!(learn_and_sing, dance); // await/block multiple futures concurrently
 }
 
-#[test] fn ex1() {
+// Note: flavor = "multi_thread"):
+// Needed for actual parallelism in tests. The default test Tokio runtime is 
+// single-threaded.
+//
+#[tokio::test(flavor = "multi_thread")]
+async fn ex1() {
     // get_two_sites();
     futures::executor::block_on(async_main());
         // `block_on` blocks the current thread until the provided future has run to
         // completion. Other executors provide more complex behavior, like scheduling
         // multiple futures onto the same thread
+   
+    // probably running learn_and_sing and dance in different tasks?
 }
+    /* 
+    --- learning song. . . 1
+    --- learning song. . . 2
+    --- learning song. . . 3
+    --- singing. . . 1
+    --- singing. . . 2
+    --- singing. . . 3
+    --- dancing. . . 1
+    --- dancing. . . 2
+    --- dancing. . . 3
+    test async_::ex1 ... ok
+    */
+
+// Note: flavor = "multi_thread"):
+// Needed for actual parallelism in tests. The default test Tokio runtime is 
+// single-threaded.
+//
+// Run learn_and_sing and dance in non-blocking way
+#[tokio::test(flavor = "multi_thread")]
+async fn ex2() {
+    let task1 = tokio::spawn(learn_and_sing());
+    let task2 = tokio::spawn(dance());
+    
+    let _ = tokio::join!(task1, task2);
+}
+    /* 
+    --- dancing. . . 1
+    --- dancing. . . 2
+    --- dancing. . . 3
+    --- learning song. . . 1
+    --- learning song. . . 2
+    --- learning song. . . 3
+    --- singing. . . 1
+    --- singing. . . 2
+    --- singing. . . 3
+    test async_::ex2 ... ok
+    */
+
 
 // 3.c. try_join - use it for futures which return Result
 use futures::try_join;

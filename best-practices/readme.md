@@ -137,6 +137,7 @@ Src: https://www.lurklurk.org/effective-rust/use-types.html
 ```rust
     pub fn find_user(username: &str) -> Result<UserId, std::io::Error> {
         let f = std::fs::File::open("/etc/passwd")?;
+        Ok(f)
     }
 ```
 
@@ -175,10 +176,12 @@ For this situation, an if let expression is one line shorter and, more important
             Ok(f) => f,
             Err(e) => return Err(e),
         };
+        Ok(f)
     }
 
     pub fn find_user(username: &str) -> Result<UserId, std::io::Error> {
         let f = std::fs::File::open("/etc/passwd")?;
+        Ok(f)
     }
 ```
 
@@ -191,6 +194,7 @@ For this situation, an if let expression is one line shorter and, more important
                 return Err(format!("Failed to open password file: {:?}", e))
             }
         };
+        Ok(f)
         // . . .
     }
 
@@ -198,6 +202,7 @@ For this situation, an if let expression is one line shorter and, more important
         let f = std::fs::File::open("/etc/passwd")
             .map_err(|e| format!("Failed to open password file: {:?}", e))?;
         // . . .
+        Ok(f)
     }
     // Better still, even map_err may not be necessary – if the outer error type 
     // can be created from the inner error type via an implementation of the 

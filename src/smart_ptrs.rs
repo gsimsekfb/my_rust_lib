@@ -19,7 +19,7 @@ use std::ops::DerefMut;
 // 1. Basics
 
 #[test]
-fn ex1_basics() {
+fn ex1_box() {
     // a. With non-copy type String
     let mut p = Box::new("ab".to_string());
     // move

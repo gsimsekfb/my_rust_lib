@@ -1,6 +1,10 @@
-// interv
+// interv-1
 
-// use array fn to get array elem at index i, checked
+// use std::array fn to get array elem at index i, checked, using if let
+
+
+
+
 
 
 #[test]

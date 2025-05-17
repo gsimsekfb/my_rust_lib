@@ -1,6 +1,11 @@
-// interv
-// test - assign a "loop" into res, increment cntr inside it,
+// interv-1
+// test - increment an outside defined cntr inside a loop
+// assign the loop into a var `res`
 // when the cntr is 10, finish loop and return cntr  
+// assert res, 10
+
+
+
 
 
 

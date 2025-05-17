@@ -6,7 +6,6 @@
 mod mini_grep;
 use mini_grep::{SearchConfig, run_search};
 mod cacher;
-mod closure;
 
 // todos: 
 // - yml for macos
@@ -55,8 +54,4 @@ fn main() {
     println!("--- res for 12: {:?}", expensive_fn.result_for(12)); // get cashed res.
     println!("--- res for 8: {:?}", expensive_fn.result_for(8)); // calculate
     println!("--- res for 8: {:?}", expensive_fn.result_for(8)); // get cached res.
-
-    // 3) Closure ----------------------------------------------
-    println!("\n3. Closure \n-------------");
-    closure::examples();
 }

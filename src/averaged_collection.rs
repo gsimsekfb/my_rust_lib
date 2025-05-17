@@ -1,3 +1,7 @@
+
+// skip
+// todo: delete?
+
 pub struct AveragedCollection {
     values: Vec<i32>,
     average: f64,

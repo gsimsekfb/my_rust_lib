@@ -1,29 +1,54 @@
-// 1. Return closure
+
+// interv-1
 //
-// 1.a. Error
-// fn returns_closure() -> Fn(i32) -> i32 {
-//     |x| x + 1
-// }
-    // 1 | fn returns_closure() -> Fn(i32) -> i32 {
-    //     | ^^^^^^^^^^^^^^ `std::ops::Fn(i32) -> i32 +
-    //     'static` does not have a constant size known at compile-time
-    //     |
-    //     = help: the trait `std::marker::Sized` is not implemented for
-    //     `std::ops::Fn(i32) -> i32 + 'static`
-    //     = note: the return type of a function must have a statically known size
-//
-// 1.b. OK
-fn returns_closure() -> Box<dyn Fn(i32) -> i32> {
+// 1. How to return a closure from an fn - 2 ways
+// Hint at the end
+
+
+
+
+
+// ------------------------------------------------------------
+
+
+
+
+
+// Solution:
+
+// static version
+fn return_closure_w_impl() -> impl Fn(i32) -> i32 {
+    |x| x + 1
+}
+
+// dynamic version
+fn return_closure_w_box() -> Box<dyn Fn(i32) -> i32> {
     Box::new(|x| x + 1)
 }
 
 #[test] fn ex1() {
-    assert_eq!(5, returns_closure()(4));
+    assert_eq!(5, return_closure_w_impl()(4));
+    assert_eq!(5, return_closure_w_box()(4));
 }
+
+// Hint: There are two ways with impl and with dyn
+
+
 
 // ------------------------------------
 
-// 2.
+
+// interv-1
+//
+// 2. implement the followings for a closure:
+// - immutable burrow capture
+// - mutable burrow capture
+// - move capture
+
+
+
+
+#[test]
 pub fn examples() {
     let color = String::from("green");
 
@@ -43,6 +68,7 @@ pub fn examples() {
     // an immutable reference to `color`. 
     let _reborrow = &color;
     print();
+
 
     // 2. Mutable burrow capture
     // 
@@ -74,14 +100,14 @@ pub fn examples() {
 
     // 3. move capture
     // 
-    // A non-copy type.
+    // A non-copy (aka not copied automatically, but moved) type Box
     let movable = Box::new(42);
 
     // `mem::drop` requires `T` so this must take by value. A copy type
     // would copy into the closure leaving the original untouched.
     // A non-copy must move and so `movable` immediately moves into
     // the closure.
-    let consume = || {
+    let consume = move || {  // move is unnecessary here
         println!("`movable`: {:?}", movable);
         std::mem::drop(movable);
     };
@@ -99,8 +125,9 @@ pub fn examples() {
 
     let contains = move |needle| vec.contains(needle); // move is unnecessary here
 
-    println!("{}", contains(&1));
-    println!("{}", contains(&4));
+    assert!(contains(&1));
+    assert!(!contains(&4));
+
 
     // println!("There're {} elements in vec", vec.len());
     // ^ Uncommenting above line will result in compile-time error

@@ -1,4 +1,8 @@
-// cfg blocks
+// cfg_if is for "multi" line conditional use statements,
+// since #[cfg(feature=foo)] supports only one line for use statements
+// and if cfg!(feature = "foo") { ... } is for regular code which does not work
+// with use statements
+
 // https://crates.io/crates/cfg-if
 
 // lib.rs

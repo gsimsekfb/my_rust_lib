@@ -37,7 +37,7 @@ fn count_set_bits_loop(mut n: usize) -> usize {
 // Auxiliary Space: O(log n) for recursive stack space
 fn count_set_bits_recur(n: usize) -> usize {
     if n == 0 { return 0; }
-    return (n & 1) + count_set_bits_recur(n >> 1);
+    (n & 1) + count_set_bits_recur(n >> 1)
     // todo: whats wrong w/ line below, + run before & ?
     // return n & 1 + count_set_bits_recur(n >> 1);
 }

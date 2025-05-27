@@ -2,7 +2,7 @@
 name = "my_rust_lib"
 version = "0.1.0"
 authors = ["Gokhan Simsek <g.simsek@paralect.com>"]
-edition = "2024"
+edition = "2021"
 
 # Ref:
 # From Rust Programming Language
@@ -43,6 +43,7 @@ members = [
   "src/web-server-multi-threaded",
   "src/web-server-async-and-parallel",
 ]
+test-members = true
 
 ## examples/hello.rs works with `cargo r --example hello` without this section
 # [[example]]

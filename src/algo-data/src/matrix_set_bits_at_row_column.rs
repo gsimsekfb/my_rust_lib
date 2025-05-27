@@ -35,8 +35,9 @@
     // https://www.reddit.com/r/rust/comments/qjm0uv/what_is_a_functional_way_to_change_one_item_in/
 fn set_matrix<const J: usize>(m: &mut [[i32;J]]) { // v3
     println!("------------");
-    print_matrix(&m, "before:");
+    print_matrix(m, "before:");
     const MARKER: i32 = 7; 
+    #[allow(clippy::needless_range_loop)]
     for i in 0..m.len() {
         for j in 0..m[i].len() {
             // m[i][j] -> mark m[i][...]s and m[...][j]s
@@ -54,6 +55,7 @@ fn set_matrix<const J: usize>(m: &mut [[i32;J]]) { // v3
             }
         }
     }
+    #[allow(clippy::needless_range_loop)]
     for i in 0..m.len() {
         for j in 0..m[i].len() {
             if m[i][j] == MARKER {
@@ -61,11 +63,12 @@ fn set_matrix<const J: usize>(m: &mut [[i32;J]]) { // v3
             }
         }
     }
-    print_matrix(&m, "after:");
+    print_matrix(m, "after:");
     println!("------------");
 }
 
-#[test] fn test() {
+#[test]
+fn test() {
     // Sol-1
     // -1s are markers to be set finally
     // 0 0 0              0 -1 0              0 -1 -1
@@ -103,7 +106,7 @@ fn print_matrix<const J: usize>(arr: &[[i32;J]], s: &str) {
         for j in i {
             print!("{j} ");
         }
-        println!("");
+        println!("...");
     }
-    println!("");
+    println!("...");
 }

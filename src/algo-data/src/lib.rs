@@ -16,4 +16,4 @@ mod string_len_longest_substr_w_nonrepeat_chars;
 mod sort_quick_aka_part_sort;
 mod tree_max_height;
 mod tree_serial_deserialize;
-
+mod trie;

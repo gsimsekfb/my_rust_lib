@@ -1,4 +1,4 @@
-// use crate::tree::{new_node, new_node_leaf, Node};
+// interv-2
 
 // Prob:
 // Find the Maximum Depth or Height of given Binary Tree
@@ -64,6 +64,14 @@ pub fn max_height_2(node: &Option<Box<Node>>) -> usize {
   rh = 1
   return max: 2
 */
+// or less idiomatic version:
+fn he(t: &Option<Box<Node>>) -> usize {
+    if t.is_none() { return 0 };
+    let l_h = he(&t.as_ref().unwrap().l) + 1;
+    let r_h = he(&t.as_ref().unwrap().r) + 1;
+    return std::cmp::max(l_h, r_h)
+}
+
 
 // 1st attempt
 fn max_height(node: &Node) -> usize {

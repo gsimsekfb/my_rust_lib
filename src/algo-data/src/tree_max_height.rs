@@ -69,7 +69,7 @@ fn he(t: &Option<Box<Node>>) -> usize {
     if t.is_none() { return 0 };
     let l_h = he(&t.as_ref().unwrap().l) + 1;
     let r_h = he(&t.as_ref().unwrap().r) + 1;
-    return std::cmp::max(l_h, r_h)
+    std::cmp::max(l_h, r_h)
 }
 
 

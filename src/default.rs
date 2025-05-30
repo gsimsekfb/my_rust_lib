@@ -1,3 +1,11 @@
+// interv-1
+// Derive Default for Foo x,y,z,t : u8
+// Create a Foo: literal vals for x,y ; using default values for y,z
+
+
+// ---------------------------------------
+
+
 #[derive(Debug, Default, PartialEq)]
 struct Foo {
     x: i32,

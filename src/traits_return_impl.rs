@@ -5,6 +5,25 @@
 
 // Returning -> impl Trait
 
+
+/* what is impl Trait ?
+impl Trait means "some *specific type* that implements MyTrait": When you write -> impl MyTrait, you're telling the compiler that the function will return *one specific*, concrete type that implements MyTrait. The caller doesn't know what that specific type is, but the function itself must consistently return the same type.
+
+// e.g.
+//
+// Not possible with return impl, we can return only one type, see error:
+//
+// error[E0308]: `if` and `else` have incompatible types
+// expected `Wii`, found `Foo`
+//
+// fn get_wii_or_foo_(cond: bool) -> impl MyTrait {
+//     if cond { Wii { } }
+//     else    { Foo { } }
+// }
+*/
+
+
+
 // 1
 // fn get_closure which returns (types which impl Fn trait that takes i32 
 // and returns i32)

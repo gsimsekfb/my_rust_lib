@@ -6,12 +6,12 @@ use std::borrow::Cow;
 // https://dev.to/kgrech/6-things-you-can-do-with-the-cow-in-rust-4l55
 // https://dhghomon.github.io/easy_rust/Chapter_42.html
 
-// interv
-// 1
-// fn remove_zz(s) which accepts &str returns String if s has "zz"
-// otherwise s as &str
-// 2 ?
-// 3 ?
+// interv-1
+// 1. Use Cow (or impl Cow yourself) struct which represents allocating/owned
+//    String and non-allocating/borrowed &str
+// - use fn remove_zz(s) which accepts &str if s has "zz", returns String w/o "zz"
+// otherwise returns s unchanged as &str
+
 
 
 // -----------------------------------------------------------------
@@ -40,7 +40,8 @@ fn remove_zz_cow(s: &str) -> Cow<str> {
     }
 }
 
-#[test] fn return_str_or_string() {
+#[test]
+fn return_str_or_string() {
     let ss = "aazz";
     assert_eq!(remove_zz_cow(ss), Cow::from("aa**"));
     assert_eq!(remove_zz_cow(ss), Cow::Borrowed("aa**"));
@@ -74,19 +75,21 @@ impl<'a> LazyBuffer<'a> {
     }
 }
 
-#[test] fn cow() {
+#[test]
+fn append() {
     let arr = [0; 3];
 
     // No memory copied yet
     let mut buf = LazyBuffer::new(&arr);
+
     assert_eq!(buf.data.as_ref(), [0; 3]);
     assert_eq!(buf.data(), [0; 3]);
 
-    // The buf data is cloned and owned
+    // The buf data (arr) is cloned and owned
     buf.append(&[1,2,3]);
     assert_eq!(buf.data.as_ref(), [0,0,0,1,2,3]);
 
-    // The data is not cloned on further attempts
+    // The data (arr) is not cloned on further attempts
     buf.append(&[4, 5]);
     assert_eq!(buf.data.as_ref(), [0,0,0,1,2,3,4,5]);
 }
@@ -121,5 +124,4 @@ impl<'a> User<'a> {
     let b = "b";
     let user = User::new_borrowed(a, b);
     assert_eq!(user.first_name(), "a");
-
 }

@@ -6,3 +6,5 @@
 //     let start_dir = Dir::L;
 //     start_game(&start_dir, start_pos);
 // }
+
+fn main() {}

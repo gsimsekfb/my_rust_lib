@@ -1,5 +1,8 @@
-// interv
-// enum Num with One, Two with underlying type u8
+// interv-1
+// 1. enum Num with One, Two, underlying type u8
+// see other qs below
+
+
 
 
 // 1 Defining enums
@@ -58,9 +61,11 @@ struct ChangeColor(i32, i32, i32); // tuple struct
     if let Message::Move { x, y } = m2 {
         assert_eq!(x, 2);
     };
+
     if let Message::Write(val) = &m3 {
         assert_eq!(val, "abc");
     };
+
     if let Message::ChangeColor(_,y,_) = &m4 {
         assert_eq!(y, &5);
     };
@@ -74,6 +79,12 @@ struct ChangeColor(i32, i32, i32); // tuple struct
     };
     assert_eq!(val, "abc"); // !! val is still valid here
 }
+
+
+// 2. 
+//  - impl enum with v4, v6
+//  - impl fn name which returns "v4", "v6"
+
 
 
 // 2. impl Enum is same as structs
@@ -93,14 +104,21 @@ impl Ip {
 }
 
 
-// 3. convert enum to T 
-#[test] fn ex_cast_enum_to_int() {
+// 3. 
+// a. convert simple enum E1 to u8
+// b. match u8 w/ enum E1
+
+
+
+#[test]
+fn ex_cast_enum_to_int() {
     let one = E1::One;
     assert_eq!(one as u32, 1);
 }
 
-#[test] fn ex_match_enum_with_an_int() {
-    let val = 2; // this value comes at runtime
+#[test]
+fn ex_match_int_with_an_enum() {
+    let val: u8 = 2; // this value comes at runtime
     match val {
         val if val == E1::One as u8 => {
             assert_eq!(val, 1);
@@ -132,7 +150,7 @@ impl Shape {
     }
 }
 
-#[test] fn ex3_impl_enum_also_kind_of_inheritance() {
+#[test] fn ex3_use_enum_like_an_inheritance() {
     let rec = Shape::Rect { w: 4.0, h: 3.0};
     assert_eq!(rec.area(), 12.0);
 

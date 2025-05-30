@@ -1,11 +1,15 @@
 
-// interv
+// interv-1
+// A
 // 1. multi type error w/ runtime polymorphism
-// - fn foo which returns Result with any type of errors
-// - in foo body, open a file and parse str to int or ip4 address
-// 
-// 2. multi type error w/ compile polymorphism
-// - same as above but different impl
+// - fn foo returns Result with any type of errors
+// - return two different stdlib error types in foo body
+//   e.g.
+//       std::fs::File::open("tt.txt")
+//       "abc".parse::<std::net::Ipv6Addr>()
+//
+// 2. multi type error w/ compile time polymorphism
+// - same as above
 
 
 
@@ -93,7 +97,7 @@ fn foo2() -> Result<(), MyError> {
     let _ip = "abc".parse::<std::net::Ipv6Addr>()?;
     // Or use `map_err` if we don't want to impl From trait
     let _file = std::fs::File::open("tt.txt").map_err(MyError::IO)?;
-    let _ip = "abc".parse::<std::net::Ipv6Addr>().map_err(MyError::Parsing)?;    
+    let _ip = "abc".parse::<std::net::Ipv6Addr>().map_err(MyError::Parsing)?;
     Ok(())
 }
 

@@ -9,6 +9,8 @@
 /// # Examples
 ///
 /// ```
+/// use super::add_two;
+/// 
 /// let x = 5;
 /// let res = add_two(x);
 ///

@@ -92,6 +92,11 @@ fn map_with_init_fn() {
     assert_eq!(res, [Status::Value(1), Status::Value(2)]);
 }
 
+// todo: map_err
+// fn stringify(x: u32) -> String { format!("error code: {x}") }
+// let x: Result<u32, u32> = Ok(2);
+// assert_eq!(x.map_err(stringify), Ok(2));
+
 // filter
 #[test] fn filter_even() {
     let v1: Vec<i32> = vec![1, 2, 3, 4];

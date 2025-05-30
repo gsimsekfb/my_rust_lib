@@ -11,7 +11,6 @@
 #[cfg(test)]
 mod integration_tests;
 
-pub mod maze_1d_todo; // pub because we this from examples
 mod api;
 mod array;
 mod array_slice_unpack;

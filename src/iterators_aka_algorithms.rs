@@ -1,6 +1,6 @@
-// rust iterators == similar to c++ algorithm
+// rust iterators == c++ algorithms
 
-// interv
+// interv-1
 
 // From vec 1,2,3 to vec "1", "2", "3" - manual and use std lib fn
 // From 1,2,3 create an Enum vector - enum Status { Value(u32) }
@@ -40,11 +40,12 @@ pub trait Iterator {
 
 
 // next
-pub fn foo() {
+#[test]
+pub fn next() {
     let v1 = [1, 2, 3]; // Vec<i32, Global>
     let mut v1_iter = v1.iter(); // Iter<i32>
-    assert_eq!(v1_iter.next(), Some(&1));
-    let xx = v1_iter.next(); // Option<&i32>
+    assert_eq!(v1_iter.next(), Some(&1));  // v1_iter.next(): Option<&i32>
+    assert_eq!(v1_iter.next(), Some(&2));
 }
 
 // sum (reduce)
@@ -71,7 +72,8 @@ pub fn foo() {
 }
 
 // map - with Trait fn ptr
-#[test] fn map_with_fn_ptr() {
+#[test]
+fn map_with_fn_ptr() {
     let nums = [1, 2, 3];
     let strs: Vec<String> = nums.iter().map(ToString::to_string).collect();
     // instead of 
@@ -91,11 +93,6 @@ fn map_with_init_fn() {
         .collect();
     assert_eq!(res, [Status::Value(1), Status::Value(2)]);
 }
-
-// todo: map_err
-// fn stringify(x: u32) -> String { format!("error code: {x}") }
-// let x: Result<u32, u32> = Ok(2);
-// assert_eq!(x.map_err(stringify), Ok(2));
 
 // filter
 #[test] fn filter_even() {
@@ -119,20 +116,23 @@ fn map_with_init_fn() {
     assert_eq!(even_sum_squares, 20);
 }
 
-#[test] fn chain() {
+#[test]
+fn chain() {
     let a1 = [1, 2];
     let a2 = [4, 5];
     let vec: Vec<_> = a1.iter().chain(a2.iter()).collect(); // Vec<&i32>
     assert_eq!(vec, [&1, &2, &4, &5]);
 }
 
-#[test] fn enumerate() {
+#[test]
+fn enumerate() {
     let arr = ['a', 'b'];
     let vec_2: Vec<(usize, &char)> = arr.iter().enumerate().collect();
     assert_eq!(vec_2, vec![(0, &'a'), (1, &'b')]);
 }
 
-#[test] fn find() {
+#[test]
+fn find() {
     let a = [1, 2, 3];
     assert_eq!(a.iter().find(|&&x| x == 2), Some(&2));
     assert_eq!(a.iter().find(|&&x| x == 5), None);
@@ -146,10 +146,10 @@ fn map_with_init_fn() {
 
 #[test]
 fn zip() {
-    let vars = ["b", "a"];
+    let keys = ["b", "a"];
     let vals = [2, 1];
     use std::collections::BTreeMap;
-    let args: BTreeMap<_,_> = vars.iter().zip(vals.iter()).collect();
+    let args: BTreeMap<_,_> = keys.iter().zip(vals.iter()).collect();
     assert_eq!(args, BTreeMap::from([(&"a", &1), (&"b", &2)]));
 }
 
@@ -175,16 +175,17 @@ struct Foo { x: i32 }
 
 #[test]
 fn stop_at_error_return_result() {
-    // 1. Stop iteration at error w/ collect() and return Result
+    // 1. Stop iteration at "error" w/ collect() and return Result
     // a
     let arr = [ Foo { x: 2 }, Foo { x: -2 }, Foo { x: 6 } ];
     let mut itr_cnt = 0;
-    let res = arr.iter().map(|f| { // Result<Vec<&Foo>, &str>
+    let res = arr.iter().map(|foo| { // Result<Vec<&Foo>, &str>
+        dbg!(foo.x); // prints: 2, -2
         itr_cnt += 1;
-        if f.x < 0 { Err("negative elem") } // some breaking condition
-        else { Ok(f) }
+        if foo.x < 0 { Err("negative elem") } // some breaking condition
+        else { Ok(foo) }
     }).collect::< Result<Vec<&Foo>, _> >();
-    assert_eq!(itr_cnt, 2); // not 3
+    assert_eq!(itr_cnt, 2); // not 3, Foo {6} is not processed
     assert_eq!(res, Err("negative elem"));
     // b
     // Non-err case: same code, only change is all elems of arr are positive
@@ -195,7 +196,7 @@ fn stop_at_error_return_result() {
     }).collect::<Result<Vec<&Foo>, _>>();
     assert_eq!(res.unwrap().len(), 3);
 
-    // 2. Stop iteration at error w/ sum() and return Result
+    // 2. Stop iteration at "error" w/ "sum()" and return Result
     // a
     let arr = [ Foo { x: 2 }, Foo { x: -2 }, Foo { x: 6 } ];
     let mut itr_cnt = 0;
@@ -209,9 +210,9 @@ fn stop_at_error_return_result() {
     // b
     // Non-err case: same code, only change all elems of arr are positive
     let arr = [ Foo { x: 2 }, Foo { x: 2 }, Foo { x: 6 } ];
-    let res = arr.iter().map(|f| {
-        if f.x < 0 { Err("negative element") } 
-        else { Ok(f.x) }
+    let res = arr.iter().map(|foo| {
+        if foo.x < 0 { Err("negative element") } 
+        else { Ok(foo.x) }
     }).sum::<Result<i32, _>>();
     assert_eq!(res, Ok(10));
 }

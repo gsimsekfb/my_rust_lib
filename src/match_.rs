@@ -1,3 +1,12 @@
+// interv-1
+//
+// 1. simple example usage if let and let else
+// more see tasks below
+
+
+// --------------------------------------------------------
+
+
 /// 1. Refutability
 // Irrefutable: int x = 42;
 // Refutable: able to be proven false
@@ -44,6 +53,19 @@ fn ex_1() {
     assert_eq!(x, 42); // !! x is still in scope here
 }
 
+
+
+
+// 2. x: 11 return -1 if x is bigger than 10 or less than -1
+// 3. x: 11 return -1 if x is between 0 and 5 included 
+
+
+
+// ==============================================================
+
+
+
+
 /// 2. Multiple Patterns
 
 #[test]
@@ -66,6 +88,21 @@ fn ex_3() {
         _ => println!("something else"),
     }
 }
+
+
+
+// 4.a Foo x,y. 
+// 1. If x any val, y:0 return 1, if x: 0, y any val return 2, 
+//    for x and y any val return 3
+// 2. If x 30, y ignored, if x any val, y ignored
+
+
+
+
+// ==============================================================
+
+
+
 
 /// 4
 // 4.a. Destructuring Structs
@@ -169,6 +206,17 @@ fn ex_4_c() {
     }
 }
 
+
+// 5. x: Some(4), if x some and < 5, if x is some and None
+
+
+
+
+// ==============================================================
+
+
+
+
 /// 5. Match Guards
 #[test]
 fn ex_5() {
@@ -179,6 +227,22 @@ fn ex_5() {
         None => (),
     }
 }
+
+
+// 6. for enum Message { Hello { id: i32 } }, 
+//    for any id, print id
+//    if id in range [0,2], print str "betw [0,2]"
+//    (task) if id in range [3,7], print id (two ways to do it)
+
+ 
+
+
+
+// ==============================================================
+
+
+
+
 
 /// 6. @ Bindings
 #[test]

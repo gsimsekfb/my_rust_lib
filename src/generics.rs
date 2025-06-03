@@ -1,21 +1,13 @@
 
-// interv
+// interv-1
+//
 // 1. Write a simple generic fn
 //   - test: call fn with explicit type param and without
-//
-// 2. Generic struct Val with gen_val
-//   - generic method fn gen_val
-//   - impl for T: int, fn gen_val and fn val
-//   - test: 
-//   - create a Val with explicit type param and without
-// 
-// 4. Generic struct Foo with types A,B and 
-//    with one normal and one Phantom data member
-//   - test: create Foos with same A and diff B's
+
+// see more below
 
 
-
-
+// ==============================================================
 
 
 //// Generics
@@ -26,6 +18,7 @@
 
 // 1
 // Generic fn
+
 struct Gen<T> { val: T }
 struct Woo {}
 
@@ -44,7 +37,18 @@ fn f3<T>(g: &Gen<T>) -> i32 { 42 }
     assert_eq!(f3::<i32>(&g), 42);
 }
 
-// 2 
+
+
+
+// 2. Generic struct GenericVal with field gen_val
+//   - getter method val
+//   - for GenericVal<i32> getter methods val
+//   - test: 
+//   - create a GenericVal with explicit type param and without
+
+
+
+
 // Generic struct and method
 
 struct Wii; // Concrete type `Wii`
@@ -52,14 +56,18 @@ struct Wii; // Concrete type `Wii`
 struct GenericVal<T> { gen_val: T } // Generic type `GenericVal`
 
 impl<T> GenericVal<T> { 
-    fn gen_val(&self) -> &T { &self.gen_val } // Generic method 
+    fn val(&self) -> &T { &self.gen_val } 
+        // !! Note: NOT a generic method, just a method of a generic struct.
+        // Reason: fn val does not introduce a new type parameter.
+    // fn generic_fn<U>(x: U) -> U { x }  // This is a generic function.
+
 }
 
 impl GenericVal<i32> {
     // !!! Compiler already implements this for us due to impl GenVal<T>
-    // error[E0592]: duplicate definitions with name `gen_val`
-    // fn gen_val(&self) -> i32 { self.gen_val + 10 }
-    fn val(&self) -> i32 { self.gen_val + 10 }
+    // error[E0592]: duplicate definitions with name `val`
+    // fn val(&self) -> i32 { self.gen_val + 10 }
+    fn val_(&self) -> i32 { self.gen_val + 10 }
 }
 
 impl GenericVal<Wii> {}
@@ -68,9 +76,11 @@ impl GenericVal<Wii> {}
     // GenericVal<i32>
     let val = GenericVal        { gen_val: 2 };
     let val = GenericVal::<i32> { gen_val: 2 };
-    assert_eq!(val.gen_val(), &2);
-    assert_eq!(val.val(), 12);
+    assert_eq!(val.val(), &2);
+    assert_eq!(val.val_(), 12);
 }
+
+
 
 
 // 3
@@ -105,7 +115,16 @@ impl<E>   MyResult<i32,E> { fn name_i32() -> &'static str { "MyResult<i32>" } }
 }
 
 
-/// 4
+
+
+
+// 4. Generic struct Foo with types A,B and 
+//    with one normal w/ A and one Phantom data member w/ B
+//   - test: create Foos with same A and diff B's
+
+
+
+/// 
 /// Phantom type parameters
 /// https://doc.rust-lang.org/rust-by-example/generics/phantom.html
 //

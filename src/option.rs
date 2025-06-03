@@ -1,8 +1,18 @@
-// interv
-
+// interv-1
 
 // Foo with an int
 // Create from Some(Foo) -> Some(Foo.x) elegantly
+
+
+
+
+
+// ==========================================================
+
+
+
+
+
 
 struct Foo { x: i32 }
 

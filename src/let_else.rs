@@ -27,8 +27,7 @@ fn process_str(s: &str) -> u64 {
     if res.is_err() { return 42 }
     let count = res.unwrap();
 
-    // !! count is still in scope here
-    // . . . do_something_with(count)
+    // !! count from "let else" is still in scope here
     count + 1
 }
 

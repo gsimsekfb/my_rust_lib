@@ -1,4 +1,4 @@
-// interv
+// interv-1
 // &str vs &T - memory layout and size
 
 
@@ -22,6 +22,7 @@
     // Sol: use &str (a slice: ptr + len) instead of str
     let s1: &str = "Hello there!";    // Size: 16 (2 usize, ptr + len)
     let s2: &str = "How's it going?"; // Size: 16 (2 usize, ptr + len)
+    // bytes
     assert_eq!(std::mem::size_of::<&str>(), 16); // size of &str: ptr + len   
     assert_eq!(std::mem::size_of::<&i32>(),  8); // size of  &T : ptr !!
 }

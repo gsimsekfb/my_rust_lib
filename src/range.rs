@@ -1,7 +1,17 @@
 
+// interv-1
+// 1. get first n and last n elements of an array
+// 2. match int with a range
+
+
+
+// =================================================================
+
+
+
 //// 
 #[test]
-fn ex1_first_last_n_elements() {
+fn ex1_first_and_last_n_elements() {
     let arr = [1, 2, 3, 4, 5, 6];
 
     // first n elem

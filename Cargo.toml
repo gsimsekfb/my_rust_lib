@@ -43,7 +43,6 @@ members = [
   "src/web-server-multi-threaded",
   "src/web-server-async-and-parallel",
 ]
-test-members = true
 
 ## examples/hello.rs works with `cargo r --example hello` without this section
 # [[example]]
@@ -94,6 +93,6 @@ lto = false
 incremental = true
 
 # todo: this does not work
-[profile.test]
-panic = 'abort'     # Abort on panic
+# [profile.test]
+# panic = 'abort'     # Abort on panic
 

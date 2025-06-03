@@ -15,11 +15,11 @@
 #[test] fn ex_1_string_from_strs() {
     let (str_1, str_2, str_3) = ("a", "b", "c");
 
-    // String from &strs using Slice.join(&str)
+    // a. String from &strs using Slice.join(&str)
     let _string = [str_1, str_2, str_3].join("");
     assert_eq!(_string, "abc");
 
-    // String from &strs using format!()
+    // b. String from &strs using format!()
     let _string = format!("{}{}", str_1, str_2);
     println!("_string: {:?}", _string);
     assert_eq!(_string, "ab");
@@ -42,8 +42,7 @@
 
 // 3. Misc
 #[test] fn ex_3_misc() {
-    // &str = concat!("ab", "-", 4)
-    let str = concat!("ab", "-", 4);
+    let str = concat!("ab", "-", 4); // &str
     assert_eq!(str, "ab-4");
 
     // mut String::extend(iter)

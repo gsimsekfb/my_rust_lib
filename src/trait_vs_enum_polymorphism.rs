@@ -1,4 +1,4 @@
-// interv
+// interv-2
 
 // Polymorphism using trait vs enum
 
@@ -74,13 +74,14 @@ fn ex1() {
 }
 // https://stackoverflow.com/questions/52240099/should-i-use-enums-or-boxed-trait-objects-to-emulate-polymorphism
 // - One of the big differences between using traits and enums is their 
-//   extensibility. If you make Axes an enum, then the two options are 
-//   hardcoded into the type. If you want to add some third form of axis, 
+//   extensibility. If you make Shape an enum, then the two options are 
+//   hardcoded into the type. If you want to add some third form of Shape, 
 //   you'll have to modify the type itself, which will probably involve a lot 
-//   of modifications to the code with uses Axes (e.g. anywhere you match on an 
-//   Axes will probably need to be changed)
-//   On the other hand, if you make Axes a trait, you can add other types of 
-//   axes by just defining a new type and writing an appropriate implementation, 
+//   of modifications to the code with uses Shape (e.g. anywhere you match on an 
+//   Shape will probably need to be changed)
+//
+//   On the other hand, if you make Shape a trait, you can add other types of 
+//   Shape by just defining a new type and writing an appropriate implementation, 
 //   without modifying existing code at all. This could even be done from outside 
 //   of the library, e.g. by a user.
 //
@@ -88,10 +89,10 @@ fn ex1() {
 //   internals of the structs. With an enum, you get full access to all the data 
 //   stored within the struct. If you want to write a function which can operate 
 //   on both Coordinate and Quaternion using a trait, then the only operations 
-//   you will be able to perform are those described in the Axes trait 
+//   you will be able to perform are those described in the Shape trait 
 //   (in this case Shift and Fold). For instance, giving the implementation of 
-//   Axes you gave, there would be no way for you to simply retrieve the (X,Y,Z) 
-//   tuple via the Axes interface. If you needed to do that at some point, you 
+//   Shape you gave, there would be no way for you to simply retrieve the (X,Y,Z) 
+//   tuple via the Shape interface. If you needed to do that at some point, you 
 //   would have to add a new method.
 //
 // - enums can be stored directly on the stack, while a boxed trait will always 
@@ -100,13 +101,16 @@ fn ex1() {
 // - an enum instance will always be as big as its biggest variant (plus a 
 //   discriminant in most cases), even if you store mostly small variants. 
 //   This would be a problem in a case like this:
+//
 //      enum Foo {
 //          SmallVariant(bool),
 //          BigVariant([u64; 100]),
 //      }
+//
 //   If you were to store N instances of this type in an vector, the vector 
 //   would always need N*(100*sizeof::<u64> + sizeOfDiscriminant) bytes of memory, 
 //   even when the vector only contains SmallVariants.
+//
 //   If you were using a boxed trait, the vector would use N * sizeOfFatPointer 
 //   == N * 2 * sizeof::<usize>
 //   Just for completeness, if you box just the array inside BigVariant, 

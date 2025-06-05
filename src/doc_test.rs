@@ -4,6 +4,8 @@
 // rustdoc --test src\doc_test.rs
 
 
+// todo
+/* 
 /// Adds two to the number given.
 ///
 /// # Examples
@@ -18,4 +20,5 @@
 /// ```
 pub fn add_two(x: i32) -> i32 {
     x + 2
-}
+} 
+*/

@@ -1,7 +1,19 @@
-// interv
+// interv-1
 
-use std::fmt;
+// 1. Impl std::fmt::Display for Vec<String>, check the hint below after or before 
+//    deciding how to impl
 
+
+
+
+
+// =========================================================================
+
+
+
+
+
+// Hint:
 // Using the Newtype Pattern to Implement External Traits on External Types:
 //
 // The orphan rule that states we’re allowed to implement a trait on a type as
@@ -13,10 +25,13 @@ use std::fmt;
 // https://www.lurklurk.org/effective-rust/newtype.html
 
 
+
+
 // Ex.1 - Creating a Wrapper type around Vec<String> to implement Display
 //        aka by-passing the orphan rule
 struct Wrapper(Vec<String>);
 
+use std::fmt;
 impl fmt::Display for Wrapper {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "[{}]", self.0.join(", "))

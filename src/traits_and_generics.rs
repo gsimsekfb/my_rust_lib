@@ -1,22 +1,28 @@
 
-// interview
+// interv-2 and 3
+// do last ?
 
 // Topics:
 // my / builtin (traits, structs, generics), ctor, trait as ctor param
+
+
 
 // todo
 #![allow(clippy::wrong_self_convention)]
 #![allow(clippy::to_string_trait_impl)]
 
+
+
+
 // 1.a - My Traits, My Structs, Generics
 // ============================================================
-// MyIntoString - trait and fn into_str() which converts input type by ref to String 
-// MyInto<T> - Generic trait  and fn into_t() which converts input type by ref to T 
+// MyIntoString trait and fn into_str() which converts input type by ref to String 
+// MyInto<T> Generic trait  and fn into_t() which converts input type by ref to T 
 //
 // Cat - struct with data member string "name"
 // GenericCat<T> - Generic struct with data member type T "name"
 //
-// Impl MyIntoString, MyInto<String>, MyInto<T> for Cat
+// Impl traits MyIntoString, MyInto<String>, MyInto<T> for Cat
 // For comparison impl Cat::name_() - member fn that returns ref to name
 // For comparison impl GenericCat::name_() - member fn that returns ref to name
 

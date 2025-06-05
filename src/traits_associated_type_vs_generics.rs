@@ -1,25 +1,22 @@
-// interv
+// interv-2
 
 //// Trait with an associated type vs Generic trait
 //// https://doc.rust-lang.org/rust-by-example/generics/assoc_items.html
 
 // Task A
-// Struct Counter with count u32 and def ctor sets count 0
-// Trait Iter with associated type Item fn next that returns Option<Item>
+// 1
+// Struct Counter with count u32 and def ctor w/ count 0
+// Trait Iter with associated type Item fn next that returns Option of Item
 // and fn value_not_zero returns bool
+// Impl Iter for Counter:
 // fn next will increment the count from 1 to 2, returns None when 3
 // fn value_not_zero will return true if count is positive
+//
 // Impl Iter with associated type u32 for Counter
 // Impl Iter with associated type f64 for Counter
-// Trait GenIter<T> with fn next_ that returns Option<T>
-// and fn value_not_zero_ returns bool
-// Impl GenIter<u32> for Counter
-// Impl GenIter<f64> for Counter
-// Test:
-// Use Iter, call next fn 3 times
-// Test:
-// Use GenIter, call next_ fn 3 times
-
+//
+// 2
+// below
 
 // Helper
 struct Counter { count: u32 }
@@ -75,7 +72,27 @@ impl Iter for Counter {
 // -------------------------------------------------------------------------
 
 
+
+
+
 // 2 - For comparison: Same trait using generics
+//
+// Trait GenIter<T> with fn next_ that returns Option<T>
+// and fn value_not_zero_ returns bool
+// Impl GenIter<u32> for Counter
+// Impl GenIter<f64> for Counter
+// Test:
+// Use Iter, call next fn 3 times
+// Test:
+// Use GenIter, call next_ fn 3 times
+
+
+
+
+// =======================================================================
+
+
+
 pub trait GenIter<T> {
     fn next_(&mut self) -> Option<T>;
     fn value_not_zero(&self) -> bool;
@@ -117,13 +134,14 @@ impl GenIter<u32> for Counter {
 // -------------------------------------------------------------------
 
 
+// skip ?
 //// Task B
 //
-//// Usage:
-// Non-generic
+// Non-generic:
 // fn dummy that accepts objects impl Iter returns value_not_zero()
 // fn first_next that accepts objects impl Iter returns next() as u32
-// Generic
+//
+// Generic:
 // fn dummy_ that accepts objects impl GenIter returns value_not_zero()
 // fn first_next_ that accepts objects impl GenIter returns next() as u32
 // Test:
@@ -131,11 +149,16 @@ impl GenIter<u32> for Counter {
 
 // Iter
 fn dummy(c: &impl Iter) -> bool { // 222: Cleaner, no need to specify Item
-    c.value_not_zero()
+    c.value_not_zero()  // fn value_not_zero(&self) -> bool
 }
-fn first_next<T: Iter<Item = u32>>(c: &mut T) -> u32 {
+fn first_next(c: &mut impl Iter<Item = u32>) -> u32 {
+    c.next().unwrap()   // fn next(&mut self) -> Option<Self::Item>;
+}
+// or same w/o impl
+fn first_next__<T: Iter<Item = u32>>(c: &mut T) -> u32 {
     c.next().unwrap()
 }
+
 
 // GenIter
 fn dummy_a<U>(c: &impl GenIter<U>) -> bool { // 222: We always need to provide T

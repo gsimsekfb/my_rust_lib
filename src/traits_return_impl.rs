@@ -1,9 +1,17 @@
-// interv
+// interv-1
 
 // https://doc.rust-lang.org/rust-by-example/trait/impl_trait.html#as-a-return-type
 // https://blog.rust-lang.org/2018/05/10/Rust-1.26.html#impl-trait
 
-// Returning -> impl Trait
+
+
+// 1
+// fn get_closure which returns (types which impl Fn trait that takes i32 
+// and returns i32)
+// and in body it returns a closure that increments closure param with 1
+// same with - get_closure_box with Box syntax
+// Test these fns
+
 
 
 /* what is impl Trait ?
@@ -23,14 +31,7 @@ impl Trait means "some *specific type* that implements MyTrait": When you write 
 */
 
 
-
 // 1
-// fn get_closure which returns (types which impl Fn trait that takes i32 
-// and returns i32)
-// fn returns a closure that increments closure param with 1
-// same with - get_closure_box with Box syntax
-// Test these fns
-
 // return concrete types that don't actually have a name you could type out, 
 // e.g. closure (every closure has its own type)
 fn get_closure() -> impl Fn(i32) -> i32 {
@@ -63,6 +64,15 @@ fn get_closure_box() -> Box<dyn Fn(i32) -> i32> {
 // if a true returns a Wii obj, else Foo obj - understand error
 // same with - fn get_wii_or_foo_box using Box
 // Get f obj from get_wii_or_foo_box. With f, call MyTrait fn
+
+
+
+
+// ========================================================================
+
+
+
+
 
 trait MyTrait   { fn name_(&self) -> &'static str { "my-trait" } }
 trait MyTrait_2 { fn age_(&self) -> u32 { 42 } }

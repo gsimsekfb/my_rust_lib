@@ -1,15 +1,25 @@
-// interv
+// interv-1
 
 // Supertraits: Require a trait in another trait
 
 // struct Point x,y i32
 // trait MyDisplay which requires Display trait, with fn my_print returns
-// string with def. impl.
-// Impl MyDisplay for Point - use ToString::to_string and our custom impl
+// a string ("MyDisplay") as def. impl.
+// Impl MyDisplay for Point - use ToString::to_string or our custom impl
 // Hint: ToString trait is automatically impl'ed for any type impls Display trait
 // Impl Display for Point
 // Test:
 // With a Point obj, use Display, ToString and MyDisplay traits
+
+
+
+
+
+// ==============================================================================
+
+
+
+
 
 struct Point { x: i32, y: i32 }
 

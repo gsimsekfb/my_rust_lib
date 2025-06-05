@@ -1,4 +1,4 @@
-// interv
+// interv-1 and 2
 
 //// Static dispatch vs Dynamic dispatch
 // 
@@ -23,7 +23,10 @@
 
 
 
+
+
 // ---------------------------------------------------------------------
+
 
 
 
@@ -70,7 +73,7 @@ fn ex1_static_dispatch() {
 // a
 // With trait objects multiple different shapes can 
 // be contained in the vector.
-fn sum_areas_dyn_a(shapes: Vec<Box<dyn Shape>>) -> f64 {
+fn sum_areas_dyn_a(shapes: Vec<Box<dyn Shape>>) -> f64 { // todo: remove Box?
     shapes.iter().map(|e| e.area()).sum()
     // or
     // shapes.iter().fold(0., |acc, shape| {
@@ -80,7 +83,7 @@ fn sum_areas_dyn_a(shapes: Vec<Box<dyn Shape>>) -> f64 {
 // instead of
 // Static dispatch
 // This only works if every element in the vector is the same Shape type
-// A generic type paramr can only be substituted with ONE concrete type at a time
+// A generic type param can only be substituted with ONE concrete type at a time
 fn sum_areas_static<S: Shape>(shapes: Vec<S>) -> f64 {
     shapes.iter().map(|e| e.area()).sum()
 }
@@ -89,7 +92,7 @@ fn sum_areas_static<S: Shape>(shapes: Vec<S>) -> f64 {
 //
 // more:
 // when we use trait bounds on generics: 
-// the compiler generates nongeneric implementations
+// the compiler generates non-generic implementations
 // of functions and methods for each concrete type that we use in place
 // of a generic type parameter. The code that results from monomorphization
 // is doing static dispatch, which is when the compiler knows what 
@@ -100,10 +103,12 @@ fn sum_areas_static<S: Shape>(shapes: Vec<S>) -> f64 {
 fn sum_areas_dyn_b_gen<S: Shape + ?Sized>(shapes: &[&S]) -> f64 {
     shapes.iter().map(|e| e.area()).sum()
 }
-fn sum_areas_dyn_b(shapes: &[&dyn Shape]) -> f64 { // clippy: &[&] instead of Vec<&S>
+fn sum_areas_dyn_b(shapes: &[&dyn Shape]) -> f64 { 
+                            // clippy: &[&] instead of Vec<&S>
     shapes.iter().map(|e| e.area()).sum()
 }
-fn sum_areas_dyn_b_sink(shapes: Vec<&dyn Shape>) -> f64 { // cannot use &[&] instead of Vec<&S>
+fn sum_areas_dyn_b_sink(shapes: Vec<&dyn Shape>) -> f64 { 
+                            // cannot use &[&] instead of Vec<&S>
     shapes.iter().map(|e| e.area()).sum()
 }
 
@@ -129,6 +134,8 @@ fn ex2_dyn_dispatch() {
     let vec: Vec<&dyn Shape> = vec![&rec, &cir];
     assert_eq!(sum_areas_dyn_b(&vec), 40.27433388230814);
     assert_eq!(sum_areas_dyn_b_gen(&vec), 40.27433388230814);
+
+    assert_eq!(sum_areas_dyn_b_sink(vec), 40.27433388230814);
 }
 
 

@@ -1,6 +1,16 @@
-// Interv
+// interv-1
 
-// Trait vs enum - to inherit behavior (fn area) for Rect and Circ structs
+// Trait vs enum - 
+// Impl behavior (fn area) for Rect w/ h,w and Circ w/ r structs using trait vs enum
+
+
+
+
+
+// ==========================================================================
+
+
+
 
 // 1. Simple trait example
 // Trait TShape with fn area that returns f64

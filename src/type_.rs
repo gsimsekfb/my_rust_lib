@@ -1,4 +1,18 @@
 
+// interv-1
+
+// 1. use "type" in trait body e.g. impl MyIter::next()
+// 2. Create Type Synonym Meters for i32;
+// Use them in test
+
+
+
+
+// =======================================================================
+
+
+
+
 
 // 1.
 // Simple, dummy representation of Iterator trait
@@ -22,10 +36,10 @@ fn foo() {
 
 // 2. 
 // Creating Type Synonyms with Type Aliases
-type Kilometers = i32;
+type Meters = i32;
 
 #[test] fn ex_2() {
     let x: i32 = 3;
-    let y: Kilometers = 2;
+    let y: Meters = 2;
     assert_eq!(x+y, 5);
 }

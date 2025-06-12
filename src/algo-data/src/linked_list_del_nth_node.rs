@@ -2,7 +2,7 @@
 // Problem Description
 // Remove Nth node of the Linked List
 // 
-// e.g. f(1-2-3-None, 2th node) ret 1-3-None
+// e.g. f(1-2-3-None, 2nd node) ret 1-3-None
 //
 // https://www.geeksforgeeks.org/remove-nth-node-from-end-of-the-linked-list/
 

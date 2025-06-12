@@ -160,8 +160,10 @@ fn ex_4_rc_refcell() {
     assert_eq!(Rc::weak_count(&p1), 0);
 
     // &T
-    let immut_ref = &*p1.borrow();  // &String
-    assert_eq!(immut_ref, "ab");
+    {
+        let immut_ref = &*p1.borrow();  // &String
+        assert_eq!(immut_ref, "ab");
+    }
 
     // mutate T
     // !! sp does not have to be "mut" to be mutated which is the point

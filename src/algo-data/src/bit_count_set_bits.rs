@@ -5,19 +5,18 @@
 // e.g. 6 is 110, ret 2
 //
 // https://www.geeksforgeeks.org/count-set-bits-in-an-integer/?ref=lbp
+// 
+// Hint at the end
 
 
-// todo
-// Sol 3. Lookup table
-// https://www.geeksforgeeks.org/count-set-bits-in-an-integer/?ref=lbp
+
+// =======================================================================
+
 
 
 // Sol 1. Simple Loop
 // Hint: Looping through all bits in an integer using bitwise "and" and "shift" 
-// Exp: init cntr, incr cntr w/ 
-// int's last bit setness using "bitwise and" op, then shift right to do
-// the next bit. Do this until the int is 0.  
-// Time Complexity: O(log n)  ??  n? 
+// Time Complexity: O(log n) 
 // Auxiliary Space: O(1)
 fn count_set_bits_loop(mut n: usize) -> usize {
     let mut cnt = 0;
@@ -28,6 +27,10 @@ fn count_set_bits_loop(mut n: usize) -> usize {
     cnt
 }
 
+
+
+// skip?
+//
 // Sol 2. Recursive
 // Hint: Recurse and shift right until int is 0, count last bit setness
 // Exp: Recurse/shift right until n is 0 which is last/exit case, return 0.
@@ -68,4 +71,13 @@ fn count_set_bits_recur(n: usize) -> usize {
     // Sol-3
     // todo
 }
+
+
+
+// ======================= hints
+
+
+// Sol 1. Simple Loop
+// Hint: Looping through all bits in an integer using bitwise "and" and "shift" 
+
 

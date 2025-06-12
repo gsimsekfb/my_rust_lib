@@ -75,6 +75,7 @@ mod traits_return_impl;
 mod traits_orphan_rule_newtype_pattern;
 mod traits_same_name_fn_call;
 mod traits_supertraits;
+mod unpack;
 mod utils;
 mod variadic;
 #[cfg(not(target_os = "windows"))]

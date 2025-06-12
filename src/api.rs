@@ -1,10 +1,9 @@
 
-// interv-1 & todo
+// interv-1
 
 // 
-// 1. fn(list of strings, find_str)
-//  - return the strs which has find_str in it
-//  - accepts arr, slice and vec of strings
+// 1. fn(list of i32)
+//  - accepts arr, slice and vec of i32s
 //     
 // 2. fn(1: single string like types - &str, String, &String 2: suffix)
 //  - returns input + suffix
@@ -20,36 +19,35 @@
 
 
 
+
 // 1. fn that accepts array, slice, vec of Strings
-fn find_strs(strs: &[String], find_str: &str) -> Vec<String> {
-    let mut res = vec![];
-    strs.iter().for_each(|s|
-        if s.contains(find_str) { res.push(s.clone()) } 
-    );
-    res
+fn foo(nums: &[i32]) {
+    println!("{nums:?}");
 }
 //
-// Wont work
-// fn find_strs(strs: &Vec<String>, find_str: &str) -> Vec<String> {
-//     let mut res = vec![];
-//     strs.iter().for_each(|s|
-//         if s.contains(find_str) { res.push(s.clone()) } 
-//     );
-//     res
+// Wont work w/ slice and arr
+// fn foo(nums: Vec<i32>) {
+//     println!("{nums:?}");
 // }
+//
+// error
+// ^^^^^ expected `&Vec<i32>`, found `&[i32]`           // err foo(slice)
+// ^^^^ expected `&Vec<i32>`, found `&[{integer}; 1]`   // err foo(array)
+
 
 #[test]
 fn ex1_accept_arr_slice_vec() {
-    let vec: Vec<String> = vec![
-        "abc".to_string(), "ccc".to_string(), "acc".to_string()
-    ];
-    let arr: [String; 3] = ["abc".to_string(), "ccc".to_string(), "acc".to_string()];
-    let result: Vec<_> = vec!["ccc".to_string(), "acc".to_string()];
+    let arr = [2];
+    let res = foo(&arr);
+    println!("\n## res: {res:?}");
 
-    // array, slice and vec in order
-    assert_eq!(find_strs(&arr, "cc"), result);
-    assert_eq!(find_strs(&arr[..], "cc"), result);
-    assert_eq!(find_strs(&vec, "cc"), result);
+    let v = vec![1,2,3,2];
+    let res = foo(&v);
+    println!("\n## res: {res:?}");
+
+    let slice = &v[0..1];
+    let res = foo(slice);
+    println!("\n## res: {res:?}");
 }
 
 
@@ -59,6 +57,9 @@ fn ex1_accept_arr_slice_vec() {
 // 2. fn that accepts &str, String and &String
 fn add_suffix(s: impl AsRef<str>, suffix: &str) -> String {
     s.as_ref().to_string() + suffix
+}
+fn add_suffix_2(s: impl ToString, suffix: &str) -> String {
+    s.to_string() + suffix
 }
 // todo: 
 // also use ToString, Into traits
@@ -75,6 +76,18 @@ fn ex2_accept_str_string_like() {
     assert_eq!(add_suffix(&s1, suffix), res);
     assert_eq!(add_suffix(s1, suffix), res);
     assert_eq!(add_suffix(s2, suffix), res);
+
+    // -------- ToString
+    let s1 = "a".to_string();
+    let s2 = "a";
+    //
+    let suffix = "b";
+    let res = "ab";
+
+    // accepts &String, String and &str (slice)
+    assert_eq!(add_suffix_2(&s1, suffix), res);
+    assert_eq!(add_suffix_2(s1, suffix), res);
+    assert_eq!(add_suffix_2(s2, suffix), res);    
 }
 
 

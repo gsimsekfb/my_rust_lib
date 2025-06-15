@@ -116,7 +116,6 @@ Derivable traits:
 - `Ord`: All items of this type can be compared and ordered.  
 - `Hash`: Items of this type can produce a stable hash of their contents when asked.  
 - `Debug`: Items of this type can be displayed to programmers.  
-- `Display`: Items of this type can be displayed to users.
 
 Other (non-deriveable) standard traits are covered in other Items, and so are not included here. These include:
 

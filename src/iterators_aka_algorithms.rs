@@ -4,12 +4,9 @@
 
 // From vec 1,2,3 to vec "1", "2", "3" - manual and use std lib fn
 // From 1,2,3 create an Enum vector - enum Status { Value(u32) }
-// Combine two vecs: a1 = vec![1, 2], a2 = vec![4, 5] - manual and std lib fn
-// Convert vec!['a', 'b'] to  vec![(0, 'a'), (1, 'b')] - manual and use std lib fn
-// Flatten vec![vec![1, 2], vec![3, 4]]
-// From ["b", "a"], [2, 1] to BTreeMap ([(&"a", &1), (&"b", &2)]
-// Stop iteration at error e.g. foo has negative value and 
-// return Result<Vec<&Foo>, &str>> - err and ok case
+// 11. Combine two vecs: a1 = vec![1, 2], a2 = vec![4, 5] - manual and std lib fn
+// 22. Convert vec!['a', 'b'] to  vec![(0, 'a'), (1, 'b')] - manual and use std lib fn
+// 33. 2d arr to 1d array
 //
 // Check others:
 // https://doc.rust-lang.org/std/iter/trait.Iterator.html
@@ -117,7 +114,7 @@ fn map_with_init_fn() {
 }
 
 #[test]
-fn chain() {
+fn chain_11() {
     let a1 = [1, 2];
     let a2 = [4, 5];
     let vec: Vec<_> = a1.iter().chain(a2.iter()).collect(); // Vec<&i32>
@@ -125,7 +122,7 @@ fn chain() {
 }
 
 #[test]
-fn enumerate() {
+fn enumerate_22() {
     let arr = ['a', 'b'];
     let vec_2: Vec<(usize, &char)> = arr.iter().enumerate().collect();
     assert_eq!(vec_2, vec![(0, &'a'), (1, &'b')]);
@@ -138,7 +135,7 @@ fn find() {
     assert_eq!(a.iter().find(|&&x| x == 5), None);
 }
 
-#[test] fn flatten() {
+#[test] fn flatten_33() {
     let data = vec![vec![1, 2], vec![3, 4]];
     let flattened = data.into_iter().flatten().collect::<Vec<u8>>();
     assert_eq!(flattened, &[1, 2, 3, 4]);

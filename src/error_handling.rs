@@ -68,8 +68,8 @@ fn ex_a_1_return_multi_type_error() {
 
 #[derive(Debug)]
 enum MyError {
-    IO(std::io::Error),
-    Parsing(std::net::AddrParseError),
+    FileErr(std::io::Error),
+    ParseErr(std::net::AddrParseError),
 }
 
 impl std::error::Error for MyError { }
@@ -82,13 +82,13 @@ impl std::fmt::Display for MyError {
 
 impl From<std::io::Error> for MyError {
     fn from(err: std::io::Error) -> Self {
-        MyError::IO(err)
+        MyError::FileErr(err)
     }
 }
 
 impl From<std::net::AddrParseError> for MyError {
     fn from(err: std::net::AddrParseError) -> Self {
-        MyError::Parsing(err)
+        MyError::ParseErr(err)
     }
 }
 
@@ -96,8 +96,8 @@ fn foo2() -> Result<(), MyError> {
     let _file = std::fs::File::open("tt.txt")?;
     let _ip = "abc".parse::<std::net::Ipv6Addr>()?;
     // Or use `map_err` if we don't want to impl From trait
-    let _file = std::fs::File::open("tt.txt").map_err(MyError::IO)?;
-    let _ip = "abc".parse::<std::net::Ipv6Addr>().map_err(MyError::Parsing)?;
+    let _file = std::fs::File::open("tt.txt").map_err(MyError::FileErr)?;
+    let _ip = "abc".parse::<std::net::Ipv6Addr>().map_err(MyError::ParseErr)?;
     Ok(())
 }
 
@@ -109,6 +109,8 @@ fn ex_a_2_return_multi_type_error() {
         //    code: 2, kind: NotFound, message: "No such file or directory" })
         // --- res: Err(AddrParseError(Ipv6))
 }
+
+
 
 //// B. Three equivalent error handling when panicking (w/o propagating to caller)
 //// https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html

@@ -1,6 +1,6 @@
 //// All uses of dyn
 
-//// interv-1
+// interv-1
 // 1.a
 // impl MyTrait with fn name returns &str, default impl. returns "MyTrait"
 // impl struct Foo empty
@@ -8,13 +8,24 @@
 // last step for struct Wii
 // fn get_wii_or_foo takes bool, returns MyTrait, if true a Wii, else a Foo
 
-// see 1.b and 2 below
+// interv-1
+// see 1.b below
+
+// interv-2
+// see 2 below
+
 
 // Also see
 // polymorphism-generics-static-dispatch-vs-traits-dynamic-dispatch.jpg
 
 
+
+
+
 // --------------------------------------------------------------------------
+
+
+
 
 
 //// dyn can have 2 forms: 1. Box<dyn Trait>, 2. &dyn Trait or &mut dyn Trait 

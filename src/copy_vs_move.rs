@@ -1,8 +1,8 @@
-// interv
+// interv-read
 
 #[test]
 fn ex1() {
-    // a. copy
+    // a. copy only types
     let x = 5;
     let y = x; // !! copied, not moved
     println!("x: {}!", x);

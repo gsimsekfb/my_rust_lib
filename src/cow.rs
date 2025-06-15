@@ -6,11 +6,22 @@ use std::borrow::Cow;
 // https://dev.to/kgrech/6-things-you-can-do-with-the-cow-in-rust-4l55
 // https://dhghomon.github.io/easy_rust/Chapter_42.html
 
-// interv-1
-// 1. Use Cow (or impl Cow yourself) struct which represents allocating/owned
-//    String and non-allocating/borrowed &str
-// - use fn remove_zz(s) which accepts &str if s has "zz", returns String w/o "zz"
-// otherwise returns s unchanged as &str
+// interv-2
+
+// 1.a For the fn below 
+//    - Use Cow struct which represents allocating/owned
+//    - return String when s has "zz"
+//    - else return &str (s)
+//
+// [perf]
+// 99.9% of the time s contains no "zz"
+fn remove_zz_(s: &str) -> String {
+    if s.contains("zz") { s.replace("zz", ".") } 
+    else { s.to_string() }
+}
+
+
+// 1.b. impl Cow yourself
 
 
 

@@ -2,6 +2,7 @@
 // interv-1
 //
 // 1. How to return a closure from an fn - 2 ways
+// 2. below 
 // Hint at the end
 
 
@@ -63,7 +64,6 @@ pub fn examples() {
     // impose anything more restrictive.
     let print = || println!("`color`: {}", color);
 
-    // 1.b
     // `color` can be borrowed immutably again, because the closure only holds
     // an immutable reference to `color`. 
     let _reborrow = &color;
@@ -122,19 +122,40 @@ pub fn examples() {
     // `Vec` has non-copy semantics.
     #[allow(clippy::useless_vec)]
     let vec = vec![1, 2, 3];
-
-    let contains = move |needle| vec.contains(needle); // move is unnecessary here
+    let contains = |elem| vec.contains(elem);
 
     assert!(contains(&1));
     assert!(!contains(&4));
 
+    println!("There're {} elements in vec", vec.len());
 
-    // println!("There're {} elements in vec", vec.len());
-    // ^ Uncommenting above line will result in compile-time error
-    // because borrow checker doesn't allow re-using variable after it
-    // has been moved.
-    
-    // Removing `move` from closure's signature will cause closure
-    // to borrow vec variable immutably, hence vec is still
-    // available and uncommenting above line will not cause an error.    
+
+
+    // 5. When "move" word is required? 
+    // A good rule of thumb: If your closure needs to:
+    //
+    // Be returned from a function
+    // Be moved into a new thread
+    // Take complete ownership of captured values
+    // Store the closure in a struct that outlives the captured variables
+
+
+    // ex:
+    // When the closure needs to outlive the current scope:
+    //
+    fn create_closure() -> impl Fn(i32) -> bool {
+        let vec = vec![1, 2, 3];
+        move |x| vec.contains(&x)  // move is required here
+    }
+
+    // ex:
+    // When working with threads:
+    //
+    let text = String::from("hello");
+    let thread_handle = std::thread::spawn(move || {
+        // `move` is required here because the closure needs to own `text`
+        // since it will outlive the current scope
+        println!("{}", text);
+    });
+  
 }

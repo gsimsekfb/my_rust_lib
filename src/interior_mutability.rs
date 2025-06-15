@@ -3,7 +3,7 @@
 // interv-1
 // 
 // 1. Create something immut (using stdlib) and modify its internal value
-// 2. below
+// 2. read ok, do skip
 // Also see hints at the end
 
 
@@ -22,15 +22,22 @@
 
 
 #[test]
-fn ex1_refcell() {
-    let rr = RefCell::new(5); // could use Cell as well, same API
-    rr.replace(33);
-    assert_eq!(rr, RefCell::new(33));
+fn ex1_cell() {
+    let cell = Cell::new(5); 
+        // use Cell with copy types like i32 
+        // and RefCell for non-copy types like String
+
+    cell.replace(33);
+    assert_eq!(cell, Cell::new(33));
 }
 
 
 // 2. Foo with a val int and cell_val Cell, 
 //    create a Foo, modify and read cell_val field
+
+
+
+
 
 
 struct Foo {

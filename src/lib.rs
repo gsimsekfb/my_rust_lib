@@ -20,6 +20,7 @@ mod break_;
 mod cargo_expand;
 mod catch_unwind;
 mod cfg;
+mod closure;
 mod copy_vs_move;
 mod const_generics_lifetimes;
 mod cow;

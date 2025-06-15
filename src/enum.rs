@@ -104,9 +104,9 @@ impl Ip {
 }
 
 
-// 3. 
+// 3.  
 // a. convert simple enum E1 to u8
-// b. match u8 w/ enum E1
+// b. match u8 w/ enum E1   // read only, skip doing? todo: what's the use case?
 
 
 

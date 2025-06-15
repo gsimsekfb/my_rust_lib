@@ -1,4 +1,5 @@
 // interv-1
+
 // - struct Foo with data String
 // - impl drop fn
 // - create a Foo and manually drop it
@@ -17,7 +18,7 @@ struct Foo {
 }
 impl Drop for Foo {
     fn drop(&mut self) {
-        println!("Dropping MySmartPtr with data `{}`!", self.data);
+        println!("Dropping with data `{}`!", self.data);
     }
 }
 

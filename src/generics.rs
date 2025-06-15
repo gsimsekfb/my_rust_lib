@@ -1,7 +1,8 @@
 
 // interv-1
-//
-// 1. Write a simple generic fn
+
+// 1. Write a simple generic fn takes T and returns T.to_string
+//   - use 3 different identical ways to write generic fn (hint: at the end)
 //   - test: call fn with explicit type param and without
 
 // see more below
@@ -40,7 +41,7 @@ fn f3<T>(g: &Gen<T>) -> i32 { 42 }
 
 
 
-// 2. Generic struct GenericVal with field gen_val
+// 2. Generic struct GenericVal with generic field val
 //   - getter method val
 //   - for GenericVal<i32> getter methods val
 //   - test: 
@@ -53,9 +54,9 @@ fn f3<T>(g: &Gen<T>) -> i32 { 42 }
 
 struct Wii; // Concrete type `Wii`
 
-struct GenericVal<T> { gen_val: T } // Generic type `GenericVal`
+struct GenVal<T> { gen_val: T } // Generic type `GenericVal`
 
-impl<T> GenericVal<T> { 
+impl<T> GenVal<T> { 
     fn val(&self) -> &T { &self.gen_val } 
         // !! Note: NOT a generic method, just a method of a generic struct.
         // Reason: fn val does not introduce a new type parameter.
@@ -63,19 +64,19 @@ impl<T> GenericVal<T> {
 
 }
 
-impl GenericVal<i32> {
+impl GenVal<i32> {
     // !!! Compiler already implements this for us due to impl GenVal<T>
     // error[E0592]: duplicate definitions with name `val`
     // fn val(&self) -> i32 { self.gen_val + 10 }
     fn val_(&self) -> i32 { self.gen_val + 10 }
 }
 
-impl GenericVal<Wii> {}
+impl GenVal<Wii> {}
 
 #[test] fn ex_2() {
     // GenericVal<i32>
-    let val = GenericVal        { gen_val: 2 };
-    let val = GenericVal::<i32> { gen_val: 2 };
+    let val = GenVal        { gen_val: 2 };
+    let val = GenVal::<i32> { gen_val: 2 };
     assert_eq!(val.val(), &2);
     assert_eq!(val.val_(), 12);
 }
@@ -116,7 +117,7 @@ impl<E>   MyResult<i32,E> { fn name_i32() -> &'static str { "MyResult<i32>" } }
 
 
 
-
+// interv-2
 
 // 4. Generic struct Foo with types A,B and 
 //    with one normal w/ A and one Phantom data member w/ B
@@ -151,3 +152,6 @@ struct Foo<A, B> {
     assert_eq!(f1, f2); // ok: same types
     // assert_eq!(f1, f3); // error[E0308]: mismatched types
 }
+
+
+// Hint: impl, <T: Trait>, where clause

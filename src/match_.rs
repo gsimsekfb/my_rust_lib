@@ -56,26 +56,43 @@ fn ex_1() {
 
 
 
-// 2. x: 11 return -1 if x is bigger than 10 or less than -1
-// 3. x: 11 return -1 if x is between 0 and 5 included 
+// task: 
+// for int x, match cases 
+// return -1 for case x is bigger than 10 or less than -1
+// case 1 or 2
+// case 3 
+// case between 0 and 5 "included" 
 
 
 
 // ==============================================================
 
 
+// skip for reading
+#[test]
+fn ex_task() {
+    let x = 40;
+    let res = match x {
+        1 | 2 => 12,
+        3 => 33,
+        x if x > 10 || x < -1 => -1,
+        0..=5 => -2,        
+        _ => -99
+    };
+    assert_eq!(res, -1);
+}
 
 
 /// 2. Multiple Patterns
-
 #[test]
 fn ex_2() {
-    let x = 1;
-    match x {
-        1 | 2 => println!("one or two"),
-        3 => println!("three"),
-        _ => println!("anything"),
-    }
+    let x = 40;
+    let res = match x {
+        1 | 2 => 12,
+        3 => 33,
+        _ => -99
+    };
+    assert_eq!(res, -1);
 }
 
 /// 3. Matching Ranges of Values with the . . . Syntax

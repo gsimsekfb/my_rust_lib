@@ -1,8 +1,19 @@
 
 // interv-1
-// - create an alias for fn ptr which takes int and returns int
+
+// 1. create an alias for fn ptr which takes int and returns int
+// 2. 1, 2, 3 into String using closure and fn ptr 
+// Hint: the fn ptr to use at the end
 
 
+// interv-2
+// 3. for an enum wrapping i32 and string, create vec or enums from 1,2,3
+//    using enum init fn ptr
+
+
+
+
+// ======================================================================
 
 
 // 1. Function pointer example
@@ -24,6 +35,7 @@ fn ex_1() {
     assert_eq!(res, 12);
 }
 
+
 // 2. Function ptr vs closure
 
 #[test]
@@ -39,6 +51,7 @@ fn ex_2() {
     let strs: Vec<String> = nums.iter().map(ToString::to_string).collect();
     assert_eq!(strs, ["1", "2", "3"]);
 }
+
 
 // 3. map called by initializer function
 
@@ -58,3 +71,6 @@ fn ex_3() {
         .collect();
     assert_eq!(res, [Status::Value(1), Status::Value(2)]);
 }
+
+
+// Hint: ToString::to_string()

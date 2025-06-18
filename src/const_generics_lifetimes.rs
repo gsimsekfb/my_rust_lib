@@ -4,17 +4,17 @@
 // 1.a. 
 // fn sum takes ref to arr of 2 ints, returns sum of them  
 // fn gen_sum_i32 takes ref to arr of N ints, returns sum of them  
-// fn gen_sum_t takes ref to arr of N Ts, returns sum of them
-// test - w. diff arr inputs
-//
+// fn gen_sum_t takes ref to arr of N Ts, returns sum of them ( hard )
+// test - w. diff arr inputs, call fn w/ explicit const generic parameter
+
 // 1.b.
 // fn double, no params, takes const generic param i32, returns double of it
 // use it
-//
+
 // 2
 // tuple struct Foo, member arr of N ints
 // and associated const PWD which is 10 times of N
-// 
+ 
 // 3
 // trait MyTrait w/ const generic R usize; fn pwd, returns usize
 // impl MyTrait for Foo, pwd returns sum of R and Foo's const

@@ -1,9 +1,16 @@
-// interv-1 and 2
+// interv-1 and interv-2
 
-// 1. Create Boxed string, mutate it, create immut ref to inner value (4 ways)
+// 1. Create Boxed Foo obj with int x, mutate x, create immut ref to inner value (4 ways)
 // .. more below
 
+
+
+
 // -------------------------------------------------------
+
+
+
+
 
 // 1. Basics
 
@@ -18,14 +25,18 @@ fn ex1_box() {
 
     // read
     let immut_ref: &String = &p; // &String aka Deref coercion (auto deref)
+        // same as:
+        let immut_ref = &p as &String;
     let immut_ref = p.deref(); // &String
     let immut_ref = p.as_ref(); // &String
     let immut_ref = &*p; // &String  - chose this? inline with mut vers.
     assert_eq!(immut_ref, "ab");
+
     // mutate
+    // a.1 choose this ?
     *p = "ff".to_string();
     assert_eq!(p.deref(), "ff");
-    // or
+    // a.2 or:
     let mut_ref = p.deref_mut(); // &mut String
     *mut_ref = "cd".to_string();
     assert_eq!(mut_ref, "cd"); // to &String

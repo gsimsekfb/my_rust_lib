@@ -1,5 +1,6 @@
 
 // interv-1
+
 // 1. get first n and last n elements of an array
 // 2. match int with a range
 

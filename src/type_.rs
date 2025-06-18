@@ -1,7 +1,7 @@
 
 // interv-1
 
-// 1. use "type" in trait body e.g. impl MyIter::next()
+// 1. <skip, todo> use "type" in trait body e.g. impl MyIter::next()
 // 2. Create Type Synonym Meters for i32;
 // Use them in test
 

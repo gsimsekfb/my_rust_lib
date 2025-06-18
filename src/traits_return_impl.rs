@@ -3,8 +3,6 @@
 // https://doc.rust-lang.org/rust-by-example/trait/impl_trait.html#as-a-return-type
 // https://blog.rust-lang.org/2018/05/10/Rust-1.26.html#impl-trait
 
-
-
 // 1
 // fn get_closure which returns (types which impl Fn trait that takes i32 
 // and returns i32)
@@ -12,6 +10,8 @@
 // same with - get_closure_box with Box syntax
 // Test these fns
 
+// 2
+// see below
 
 
 /* what is impl Trait ?
@@ -47,6 +47,9 @@ fn get_closure_box() -> Box<dyn Fn(i32) -> i32> {
 //     |x| x + 1
 // }
 
+
+
+// interv-2
 
 // 2
 // trait MyTrait   with fn name_ with default impl, returns &str

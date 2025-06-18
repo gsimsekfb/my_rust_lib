@@ -13,6 +13,16 @@
 // assert Foo's const u8
 // assert Foo's const i32
 
+
+
+
+
+// ========================================================================
+
+
+
+
+
 trait MyTrait {
     const MY_CONST: u8;                 // Associated Constant
     const CONST_WITH_DEFAULT: i32 = 99; // Associated Constant w/ default value

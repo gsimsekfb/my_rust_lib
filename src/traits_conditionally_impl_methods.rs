@@ -1,10 +1,10 @@
 // interv-1
-//
+
 // generic struct Val with val T
 // impl fn new, 
 // impl to_str method only for Val<T>s where T impl Display trait
 // struct A empty
-// test: use these methods for Val i32 and Val A
+// test: use these methods for Val i32 and Val A (expect error for A)
 
 
 
@@ -22,7 +22,7 @@ impl<T> Val<T> {
     fn new(val: T) -> Self { Self { val } }
 }
 
-// Impl/enable to_str method only for Ts that impl Display trait
+// Compiler to auto-impl to_str method only for Ts that impl Display trait
 impl<T: std::fmt::Display> Val<T> {
     fn to_str(&self) -> String { self.val.to_string() }
 }

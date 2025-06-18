@@ -1,4 +1,4 @@
-// interv-1 and 2
+// interv-2
 
 //// Static dispatch vs Dynamic dispatch
 // 

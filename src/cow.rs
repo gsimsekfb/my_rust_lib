@@ -9,19 +9,17 @@ use std::borrow::Cow;
 // interv-2
 
 // 1.a For the fn below 
-//    - Use Cow struct which represents allocating/owned
-//    - return String when s has "zz"
-//    - else return &str (s)
-//
 // [perf]
 // 99.9% of the time s contains no "zz"
 fn remove_zz_(s: &str) -> String {
     if s.contains("zz") { s.replace("zz", ".") } 
     else { s.to_string() }
 }
-
-
-// 1.b. impl Cow yourself
+//
+//    - Use Cow struct which represents allocating/owned obj.
+//    - return String when s has "zz"
+//    - else return &str (s)
+//
 
 
 

@@ -1,6 +1,6 @@
 // interv-1
 
-// 1. Impl std::fmt::Display for Vec<String>, check the hint below after or before 
+// 1. Impl std::fmt::Display for Vec<i32>, check the hint below after or before 
 //    deciding how to impl
 
 
@@ -27,22 +27,22 @@
 
 
 
-// Ex.1 - Creating a Wrapper type around Vec<String> to implement Display
+// Ex.1 - Creating a Wrapper type around Vec<i32> to implement Display
 //        aka by-passing the orphan rule
-struct Wrapper(Vec<String>);
+struct Wrapper(Vec<i32>);
 
 use std::fmt;
 impl fmt::Display for Wrapper {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "[{}]", self.0.join(", "))
+        write!(f, "[{:?}]", self.0)
     }
 }
 
 #[test] 
 fn ex_1() {
-    let wrapper = Wrapper(vec![String::from("a"), String::from("b")]);
+    let wrapper = Wrapper(vec![1,2]);
     // println!("w = {}", wrapper);
-    assert_eq!(wrapper.to_string(), "[a, b]")
+    assert_eq!(wrapper.to_string(), "[1, 2]")
         // Trait ToString::to_string() is automatically implemented for any type
         // which implements the [`Display`] trait    
 }

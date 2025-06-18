@@ -5,4 +5,4 @@
 // String, &String, &str
 // Box<i32>, Box<String>
 //
-// See: Tech-Pictures\Rust\types
+// See: Tech-Pictures\Rust\types\box-memory.jpg

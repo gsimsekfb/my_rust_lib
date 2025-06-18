@@ -7,7 +7,7 @@
 
 
 // interv-2
-// 3. for an enum wrapping i32 and string, create vec or enums from 1,2,3
+// 3. for an enum wrapping i32 and string, create vec of enums from 1,2,3
 //    using enum init fn ptr
 
 

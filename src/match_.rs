@@ -92,7 +92,7 @@ fn ex_2() {
         3 => 33,
         _ => -99
     };
-    assert_eq!(res, -1);
+    assert_eq!(res, -99);
 }
 
 /// 3. Matching Ranges of Values with the . . . Syntax

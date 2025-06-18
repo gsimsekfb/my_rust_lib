@@ -2,6 +2,8 @@
 
 // interv-1
 
+// skip? : this task is already being done in different tasks
+
 // - create new Rust project
 // - add player.rs into src/
 // - struct Player - string name, position (x,y coord), life int, attack int
@@ -20,7 +22,9 @@
 
 
 
+
 // -------------------------------------------------------------------
+
 
 
 

@@ -1,4 +1,4 @@
-// interv-1
+// interv-2
 
 // Supertraits: Require a trait in another trait
 

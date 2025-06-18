@@ -99,9 +99,10 @@ fn get_wii_or_foo(a: bool) -> Box<dyn MyTrait> {
 
 
 // 2
-// fn bar_1 accepts refs to polymorphic MyTrait items, calls name from params
-// fn bar_2 accepts refs to generic MyTrait items, calls name from params
-// Test: Just call these fns with Foo obj, without asserts
+// fn bar accepts refs to polymorphic MyTrait items, calls name() and put 
+// names into vec and returns
+// copy code from task 1
+// Test: call these fns with array and/or vec of Foo objs
 
 
 
@@ -111,6 +112,27 @@ fn get_wii_or_foo(a: bool) -> Box<dyn MyTrait> {
 
 
 
+// task-2
+
+fn bar(arr: &[&dyn MyTrait]) -> Vec<String> {
+    arr.iter().map(|e| e.name().to_string()).collect()
+}
+
+#[test]
+fn task_2() {
+    let f = Foo {};
+    let w = Wii {};
+    let arr: Vec<&dyn MyTrait> = vec![&f, &w];
+    // or
+    let arr: Vec<_> = vec![&f as &dyn MyTrait, &w];
+    // or
+    let arr: [&dyn MyTrait; 2] = [&f, &w];
+    assert_eq!(bar(&arr), &["Foo", "Wii"]);
+}
+
+
+
+// read
 
 //// &dyn Trait (or &mut dyn Trait)
 //// aka &dyn as fn param

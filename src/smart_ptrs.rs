@@ -1,6 +1,7 @@
 // interv-1 and interv-2
 
 // 1. Create Boxed Foo obj with int x, mutate x, create immut ref to inner value (4 ways)
+//
 // .. more below
 
 
@@ -52,12 +53,20 @@ fn ex1_box() {
     assert_eq!(*p, 44);
 }
 
+
+// todo
+
 // interv-2
+//
 // 2.
 // Create MyBox generic tuple struct, impl fn new and fn val
 // Impl std::ops::Deref for generic MyBox and use it
 
+
+
 // ===============================================================
+
+
 
 // 2. Deref Trait
 struct MyBox<T>(T);
@@ -116,7 +125,11 @@ fn ex2_deref_coerc() {
     hello(&(*p)[..]); // // w/o auto deref coerc.
 }
 
+
+
 // -------------------------------------------------------
+
+
 
 // 3. Rc<T>, "immutable" ref counted ptr (== C++ shared_ptr<const T>)
 

@@ -1,9 +1,89 @@
 // -------------------------------------------------------
 
-// 1. Not waiting for Spawned thread to finish
 
 use std::thread;
 use std::time::Duration;
+
+// 0. Most popular/realistic multi-threading usage 
+
+#[test]
+fn ex0_most_real_life_usage() {
+    #[derive(Debug)]
+    struct Foo { x: i32 }
+
+    use std::sync::{Arc, Mutex};
+    use std::{thread, vec};
+
+
+    // a. Modify vector in a worker thread
+
+    let data = Arc::new(Mutex::new(vec![Foo { x: 0 }]));
+
+    let handle = thread::spawn({
+        let data = Arc::clone(&data);
+        move || {
+            let mut lock = data.lock().unwrap();  // MutexGuard<'_, Vec<Foo>>
+            lock[0].x = 22;
+        }
+    });
+    let _ = handle.join();
+
+
+    // - Showing how to create/solve deadlock
+    {   // !!! deadlock: w/o this braces it will be deadlock,
+        // because MutexGuard created by the next line &*data.lock().unwrap() 
+        // will release the lock only after the end of main
+        assert_eq!(data.is_poisoned(), false);
+        let vec = &*data.lock().unwrap();   // & Vec<Foo>
+            // !!! This creates a MutexGuard that lives for the entire scope 
+            // - until the end of its block
+        assert_eq!(vec[0].x, 22);
+    } // Lock released here, good, there will not be deadlock
+
+    // ====
+
+    // b. Modify vector in a second, ""panicking" worker thread hence poisoning
+
+    let handle = thread::spawn({
+        let data = Arc::clone(&data);
+        move || {
+            let mut lock = data.lock().unwrap();  // MutexGuard<'_, Vec<Foo>>
+            lock[0].x = 33;
+            panic!("-- panicked while holding the lock! \n"); // !!! lock poisoned
+        }
+    });
+    let _result = handle.join();
+    // let _ = handle.join().unwrap(); // To force main thread panic if child panics
+
+    dbg!(&data);
+        /* 
+            [src\main.rs:65:5] &data = Mutex {
+                data: [ Foo { x: 33 } ],
+                poisoned: true,
+                ..
+            }
+        */
+
+    {
+        assert_eq!(data.is_poisoned(), true); // 3. Poisoned 
+        // let vec = &*data.lock().unwrap();  // & Vec<Foo>
+            // if lock poisoned errors with: 
+            // called `Result::unwrap()` on an `Err` value: PoisonError { .. }
+        // assert_eq!(vec[0].x,33); // 
+    }
+
+    // c. Recover read/write poisoned data
+    match data.lock() {
+        Ok(lock) => println!("-- lock acquired normally: {:?}", *lock),
+        Err(error) => {
+            println!("-- lock poisoned, value: {:?}", *error.into_inner())
+              // -- lock poisoned, value: [Foo { x: 33 }]
+        }
+    };
+}
+
+
+// 1. Not waiting for Spawned thread to finish
 
 #[test]
 fn ex1_spawn_thread_no_join() {

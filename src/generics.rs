@@ -119,10 +119,11 @@ impl<E>   MyResult<i32,E> { fn name_i32() -> &'static str { "MyResult<i32>" } }
 
 // interv-2
 
-// 4. Generic struct Foo with types A,B and 
-//    with one normal w/ A and one Phantom data member w/ B
-//   - test: create Foos with same A and diff B's
-
+// 4. Generic struct Foo with generic types T,F 
+//   - one field T, other field Phantom field w/ F
+//   - test: create Foos with same T and diff Fs
+//
+// std::marker::Phantom
 
 
 /// 
@@ -139,9 +140,9 @@ impl<E>   MyResult<i32,E> { fn name_i32() -> &'static str { "MyResult<i32>" } }
 use std::{fmt::{Display, Error}, marker::PhantomData, ops::Add};
 
 #[derive(Debug, PartialEq)]
-struct Foo<A, B> { 
-    x: A,
-    y: PhantomData<B> 
+struct Foo<T, F> {
+    x: T,
+    y: PhantomData<F> 
 }
 
 #[test] fn ex_4() {

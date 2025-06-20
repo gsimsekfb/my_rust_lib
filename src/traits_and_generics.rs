@@ -1,6 +1,6 @@
 
 // interv-2 and 3
-// do last ?
+// skip doing ? do last ?
 
 // Topics:
 // my / builtin (traits, structs, generics), ctor, trait as ctor param

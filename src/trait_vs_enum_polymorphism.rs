@@ -1,4 +1,7 @@
 // interv-2
+// todo: read but skip doing ? 
+// this topic almost never used or asked in interviews, also there is a 
+// similar task as interv-1, no ? 
 
 // Polymorphism using trait vs enum
 

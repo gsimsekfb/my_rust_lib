@@ -42,7 +42,7 @@ impl fmt::Display for Wrapper {
 fn ex_1() {
     let wrapper = Wrapper(vec![1,2]);
     // println!("w = {}", wrapper);
-    assert_eq!(wrapper.to_string(), "[1, 2]")
+    assert_eq!(wrapper.to_string(), "[[1, 2]]")
         // Trait ToString::to_string() is automatically implemented for any type
         // which implements the [`Display`] trait    
 }

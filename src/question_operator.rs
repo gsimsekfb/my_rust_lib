@@ -25,6 +25,7 @@ fn read_file_contents(path: &str) -> io::Result<String> {
 // - "Returns" the Err early if the result is Err
 
 fn read_file_contents_(path: &str) -> io::Result<String> {
+    #[allow(clippy::question_mark)]
     let mut file = match File::open(path) {
         Ok(f) => f,
         Err(e) => return Err(e),  // Early return on error

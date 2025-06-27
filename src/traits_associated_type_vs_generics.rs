@@ -1,9 +1,9 @@
 // interv-2
+// skip do?
 
 //// Trait with an associated type vs Generic trait
 //// https://doc.rust-lang.org/rust-by-example/generics/assoc_items.html
 
-// Task A
 // 1
 // Struct Counter with count u32 and def ctor w/ count 0
 // Trait Iter with associated type Item fn next that returns Option of Item
@@ -14,7 +14,7 @@
 //
 // Impl Iter with associated type u32 for Counter
 // Impl Iter with associated type f64 for Counter
-//
+
 // 2
 // below
 

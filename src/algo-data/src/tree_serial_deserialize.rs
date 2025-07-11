@@ -55,21 +55,35 @@ fn ser(n: &Option<Box<N>>, res: &mut Vec<i32> ) {
 // f ( null ) ret
 // end
 
+
+// todo
+//
+// fn deser_(arr: &[i32]) -> Option<Box<N>> {
+//     if let Some(e) = arr.get(0) {
+//         // print!("{e}-");
+//         if *e == 0 { return None };
+//         let mut n = new_leaf(*e);
+//         n.as_deref_mut().unwrap().l = deser_(&arr[1..arr.len()]);
+//         n.as_deref_mut().unwrap().r = deser_(&arr[1..arr.len()]);
+//         return n;
+//     }
+//     None
+// }
+
 //        1 
 //   21      
 //     31
 // 
 // csv: 1 21 0 31
-fn des(iter: &mut core::slice::Iter<i32>) -> Option<Box<N>> {
-    if let Some(e) = iter.next() {
-        // print!("{e}-");
-        if *e == 0 { return None };
-        let mut n = new_leaf(*e);
-        n.as_deref_mut().unwrap().l = des(iter);
-        n.as_deref_mut().unwrap().r = des(iter);
-        return n;
-    }
-    None
+fn deser(iter: &mut core::slice::Iter<i32>) -> Option<Box<N>> {
+    let &val = iter.next()?;
+    if val == 0 { return None };
+
+    let mut new_node = new_leaf(val);
+    new_node.as_deref_mut().unwrap().l = deser(iter);
+    new_node.as_deref_mut().unwrap().r = deser(iter);
+
+    new_node
 }
 // Debug
 // f(1)
@@ -89,7 +103,7 @@ fn des(iter: &mut core::slice::Iter<i32>) -> Option<Box<N>> {
 
 
 
-#[test] fn tt() {
+#[test] fn ser_deser() {
 
     // Sol-1
 
@@ -100,8 +114,8 @@ fn des(iter: &mut core::slice::Iter<i32>) -> Option<Box<N>> {
     //     31
     // 
     // csv: 1 21 0 31
-    let csv = [1, 21, 0, 31];
-    let tree = des(&mut csv.iter());
+    let arr = [1, 21, 0, 31];
+    let tree = deser(&mut arr.iter());
     let res = new_node(
         1,
         new_node(21, None, new_leaf(31)),
@@ -109,13 +123,18 @@ fn des(iter: &mut core::slice::Iter<i32>) -> Option<Box<N>> {
     );
     assert_eq!(tree, res);
 
+    // todo
+    //
+    // let tree = deser_(&arr);
+    // assert_eq!(tree, res);
+
     //        1 
     //  21        22
     //     31
     // 
     // csv: 1 21 0 31 0 0 22
     let csv = [1,21,0,31,0,0,22];
-    let tree = des(&mut csv.iter());
+    let tree = deser(&mut csv.iter());
     let res = new_node(
         1, 
         new_node(21, None, new_leaf(31)), 
@@ -130,7 +149,7 @@ fn des(iter: &mut core::slice::Iter<i32>) -> Option<Box<N>> {
     //
     // csv: 1 21 333 0 0 334 0 4444 0 0 22
     let csv = [1,21,333,0,0,334,0,4444,0,0,22];
-    let tree = des(&mut csv.iter());
+    let tree = deser(&mut csv.iter());
     let res = new_node(
         1, 
         new_node(21, new_leaf(333), new_node(334, None, new_leaf(4444))), 

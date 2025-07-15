@@ -51,6 +51,7 @@ mod mini_grep;
 mod multi_threading_par_iter;
 mod r#mut;
 mod never_type_never_returns;
+mod opaque_types;
 mod option;
 mod question_operator;
 mod struct_basics_enum_trait_player;

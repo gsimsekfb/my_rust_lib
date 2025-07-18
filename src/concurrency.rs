@@ -33,7 +33,7 @@ fn ex0_most_real_life_usage() {
     {   // !!! deadlock: w/o this braces it will be deadlock,
         // because MutexGuard created by the next line &*data.lock().unwrap() 
         // will release the lock only after the end of main
-        assert_eq!(data.is_poisoned(), false);
+        assert!(!data.is_poisoned());
         let vec = &*data.lock().unwrap();   // & Vec<Foo>
             // !!! This creates a MutexGuard that lives for the entire scope 
             // - until the end of its block
@@ -65,7 +65,7 @@ fn ex0_most_real_life_usage() {
         */
 
     {
-        assert_eq!(data.is_poisoned(), true); // 3. Poisoned 
+        assert!(data.is_poisoned()); // 3. Poisoned
         // let vec = &*data.lock().unwrap();  // & Vec<Foo>
             // if lock poisoned errors with: 
             // called `Result::unwrap()` on an `Err` value: PoisonError { .. }

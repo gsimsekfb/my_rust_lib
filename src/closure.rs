@@ -144,8 +144,8 @@ pub fn examples() {
     // When the closure needs to outlive the current scope:
     //
     fn create_closure() -> impl Fn(i32) -> bool {
-        let vec = vec![1, 2, 3];
-        move |x| vec.contains(&x)  // move is required here
+        let arr = [1, 2, 3];
+        move |x| arr.contains(&x)  // move is required here
     }
 
     // ex:

@@ -100,7 +100,7 @@ fn t1() {
 
     //  1
     let node = new_node_leaf(1);
-    assert_eq!(max_height(&node.as_deref().unwrap()), 1);
+    assert_eq!(max_height(node.as_deref().unwrap()), 1);
     assert_eq!(max_height_2(&node), 1);
 
     //    1

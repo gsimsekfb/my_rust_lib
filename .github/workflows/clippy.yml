@@ -14,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Rust version
+      run: cargo --version
+      run: rustc --version
     - name: Install lld linker for faster build times
       run: sudo apt -y install lld
     - name: a

@@ -77,7 +77,7 @@ async fn learn_song() {
     for i in 1..=3 { sleep(ten_millis); println!("--- learning song. . . {i}"); }
 }
 
-async fn sing() { for i in 1..=3 { println!("--- singing. . . {}", i); } }
+async fn sing() { for i in 1..=3 { println!("--- singing. . . {i}"); } }
 
 // 3.a. await - wait/block one future
 async fn learn_and_sing() {
@@ -90,7 +90,7 @@ async fn learn_and_sing() {
 }
 
 async fn dance() {
-    for i in 1..=3 { println!("--- dancing. . . {}", i); }
+    for i in 1..=3 { println!("--- dancing. . . {i}"); }
 }
 
 // 3.b. join - wait/block multiple futures concurrently

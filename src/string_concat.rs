@@ -20,8 +20,8 @@
     assert_eq!(_string, "abc");
 
     // b. String from &strs using format!()
-    let _string = format!("{}{}", str_1, str_2);
-    println!("_string: {:?}", _string);
+    let _string = format!("{str_1}{str_2}");
+    println!("_string: {_string:?}");
     assert_eq!(_string, "ab");
 }
 
@@ -36,7 +36,7 @@
     // String from Strings using format!()
     let s1 = String::from("a");
     let s2 = String::from("b");
-    let _string = format!("{}-{}", s1, s2);
+    let _string = format!("{s1}-{s2}");
     assert_eq!(_string, "a-b");
 }
 

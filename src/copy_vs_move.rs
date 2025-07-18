@@ -5,7 +5,7 @@ fn ex1() {
     // a. copy only types
     let x = 5;
     let y = x; // !! copied, not moved
-    println!("x: {}!", x);
+    println!("x: {x}!");
         // Ok: Since because integers are simple values with a known, 
         // fixed size, and these two 5 values are pushed onto the stack
 

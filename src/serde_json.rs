@@ -112,7 +112,7 @@ struct Address {
     }"#;
 
     let person: Person = serde_json::from_str(json).expect("Invalid JSON");
-    println!("{:#?}", person);
+    println!("{person:#?}");
         /* 
         Person {
             first_name: "John",

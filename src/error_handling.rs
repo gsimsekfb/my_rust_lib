@@ -57,7 +57,7 @@ fn foo() -> Result<(), Box<dyn Error>> {
 #[test]
 fn ex_a_1_return_multi_type_error() {
     let res = foo();
-    println!("--- res: {:?}", res);
+    println!("--- res: {res:?}");
         // --- res: Err(Os { 
         //    code: 2, kind: NotFound, message: "No such file or directory" })
         // --- res: Err(AddrParseError(Ipv6))
@@ -76,7 +76,7 @@ impl std::error::Error for MyError { }
 
 impl std::fmt::Display for MyError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self) // Implement Display in terms of Debug
+        write!(f, "{self:?}") // Implement Display in terms of Debug
     }
 }
 
@@ -104,7 +104,7 @@ fn foo2() -> Result<(), MyError> {
 #[test]
 fn ex_a_2_return_multi_type_error() {
     let res2 = foo2();
-    println!("--- res2: {:?}", res2);
+    println!("--- res2: {res2:?}");
         // --- res: Err(Os { 
         //    code: 2, kind: NotFound, message: "No such file or directory" })
         // --- res: Err(AddrParseError(Ipv6))
@@ -138,7 +138,7 @@ fn ex_b_2() {
     // panics with `Testing expect: emergency failure`
     let _yy = match xx {
         Ok(m) => m,
-        Err(error) => panic!("Error X happened, more: {:?}", error),
+        Err(error) => panic!("Error X happened, more: {error:?}"),
     };
 }
 
@@ -162,7 +162,7 @@ fn ex_b_3() {
 // so that other areas of code can work with it
 pub fn find_user_a(username: &str) -> Result<i32, String> {
     let _file = std::fs::File::open("/etc/passwd")
-        .map_err(|e| format!("Failed to open password file: {:?}", e))?;
+        .map_err(|e| format!("Failed to open password file: {e:?}"))?;
     Ok(42)
 }
 // So, we use newtype pattern 
@@ -184,7 +184,7 @@ impl std::fmt::Display for MyError_ {
 // b. We want this to work: String to MyError_ auto conversion
 pub fn find_user_b(username: &str) -> Result<i32, MyError_> {
     let _file = std::fs::File::open("/etc/aaa")
-        .map_err(|e| format!("Failed to open file: {:?}", e))?;
+        .map_err(|e| format!("Failed to open file: {e:?}"))?;
     Ok(42)
 }
 // error:
@@ -200,7 +200,7 @@ impl From<std::string::String> for MyError_ {
 #[test]
 fn ex_c_1() {
     let res = find_user_b("aaa");
-    println!("-- res: {:?}", res);
+    println!("-- res: {res:?}");
     // -- res: Err(MyError_("Failed to open file: 
     // Os { code: 2, kind: NotFound, message: \"No such file or directory\" }"))
 

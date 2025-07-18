@@ -186,11 +186,11 @@ fn ex_4_b() {
             println!("The Quit variant has no data to destructure.")
         }
         Message_1::Move { x, y } => {
-            println!("Move in the x direction {} and in the y direction {}", x, y);
+            println!("Move in the x direction {x} and in the y direction {y}");
         }
-        Message_1::Write(text) => println!("Text message: {}", text),
+        Message_1::Write(text) => println!("Text message: {text}"),
         Message_1::ChangeColor(r, g, b) => {
-            println!("Change the color to red {}, green {}, and blue {}", r, g, b)
+            println!("Change the color to red {r}, green {g}, and blue {b}")
         }
     }
 }
@@ -215,11 +215,10 @@ fn ex_4_c() {
 
     match msg {
         Message::ChangeColor(Color::Rgb(r, g, b)) => {
-            println!("Change the color to red {}, green {}, and blue {}", r, g, b)
+            println!("Change the color to red {r}, green {g}, and blue {b}")
         }
         Message::ChangeColor(Color::Hsv(h, s, v)) => println!(
-            "Change the color to hue {}, saturation {}, and value {}",
-            h, s, v
+            "Change the color to hue {h}, saturation {s}, and value {v}"
         ),
         _ => (),
     }
@@ -241,8 +240,8 @@ fn ex_4_c() {
 fn ex_5() {
     let num = Some(4);
     match num {
-        Some(x) if x < 5 => println!("less than five: {}", x),
-        Some(x) => println!("{}", x),
+        Some(x) if x < 5 => println!("less than five: {x}"),
+        Some(x) => println!("{x}"),
         None => (),
     }
 }
@@ -274,7 +273,7 @@ fn ex_6() {
     match msg {
         // using @: id is not in scope, hence we use id_ and @
         Message::Hello { id: id_ @ 3..=7 } => {
-            println!("Found an id in a range, id: {}", id_)
+            println!("Found an id in a range, id: {id_}")
         }
         // why to use @
         Message::Hello { id: 10..=12 } => {
@@ -283,13 +282,13 @@ fn ex_6() {
         }
         // using if match guards instead of @
         Message::Hello { id } if id > 0 => {
-            println!("Found non-zero id: {}", id)
+            println!("Found non-zero id: {id}")
         }
         Message::Hello { id } if (20..=40).contains(&id) => {
-            println!("Found non-zero id: {}", id)
+            println!("Found non-zero id: {id}")
         }
         Message::Hello { id } => {
-            println!("Found some other id: {}", id)
+            println!("Found some other id: {id}")
         }
     }
 }

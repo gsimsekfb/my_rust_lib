@@ -107,7 +107,7 @@ fn ex2_deref() {
 }
 
 fn hello(name: &str) {
-    println!("Hello, {}!", name);
+    println!("Hello, {name}!");
 }
 
 /// Implicit Deref Coercions aka implicit forced deref
@@ -160,10 +160,10 @@ fn ex3_rc_ref_counted_ptr() {
 
     // p1 and p2 are raw ptrs pointing into the same mem. address
     let p1 = Rc::as_ptr(&sp); // *const i32
-    println!("p1: {:p}", p1);
+    println!("p1: {p1:p}");
 
     let p2 = Rc::as_ptr(&sp2);
-    println!("p2: {:p}", p2);
+    println!("p2: {p2:p}");
 
     assert_eq!(p1, p2);
     assert_eq!(unsafe { *p1 }, 3); // !! unsafe

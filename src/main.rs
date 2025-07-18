@@ -14,7 +14,7 @@ fn main() {
 
     // 0) Use runtime env. vars. See [env] in Cargo.toml
     let xx: i32 = env!("XX").parse().unwrap();
-	println!("xx: {:?}", xx);   // 42
+	println!("xx: {xx:?}");   // 42
 
 
     // 1) Minigrep ---------------------------------------------
@@ -28,16 +28,16 @@ fn main() {
     // Create Config from args (get filename and search-str )
     println!("\n1. MiniGrep \n-------------");
     let args: Vec<String> = std::env::args().collect();
-	println!("args: {:?}", args);
+	println!("args: {args:?}");
     if args.len() == 3 {
         let config = SearchConfig::new(&args).unwrap_or_else(|err| {
-            eprintln!("Problem parsing arguments: {}", err);
+            eprintln!("Problem parsing arguments: {err}");
             eprintln!("HINT: Try \"cargo r cC test.txt\"");
             std::process::exit(1);
         });
         // Run search
         if let Err(e) = run_search(config) {
-            eprintln!("Application error: {}", e);
+            eprintln!("Application error: {e}");
             std::process::exit(1);
         }
         return;

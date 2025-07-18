@@ -45,7 +45,7 @@ impl std::fmt::Display for Point {
 
 #[test] fn ex1() {
     let p = Point { x: 1, y: 2 };
-    assert_eq!( format!("{}", p), "(1,2)" ); // using std::fmt::Display impl
+    assert_eq!( format!("{p}"), "(1,2)" ); // using std::fmt::Display impl
         // Using format!() without impl Display is error:
         // error[E0277]: `Point` doesn't implement `std::fmt::Display`
     assert_eq!(p.to_string(), "(1,2)");

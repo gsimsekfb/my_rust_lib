@@ -16,6 +16,6 @@ fn main() {
     let now = std::time::Instant::now();
     fibonacci(20);
     let elapsed = now.elapsed();
-    println!("Elapsed: {:.2?}", elapsed);  
+    println!("Elapsed: {elapsed:.2?}");  
 }
 //  Elapsed: 27.24µs

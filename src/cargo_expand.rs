@@ -7,7 +7,7 @@
 struct S;
 
 fn main_() {
-    println!("{:?}", S);
+    println!("{S:?}");
 }
 
 

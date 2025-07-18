@@ -8,7 +8,7 @@
 #[test] fn ex_1_panics_w_arithmetic_overflow_unsigned() {
     let (a, b) = (200, 200);
     let c: u8 = a + b;
-    println!("200 + 200 = {}", c);
+    println!("200 + 200 = {c}");
 }
 // error: this arithmetic operation will overflow
 //   --> src/int_overflow.rs:31:17
@@ -22,5 +22,5 @@
 #[test] fn ex_2_panics_w_arithmetic_overflow_signed() {
     let (a, b) = (100, 100);
     let c: i8 = a + b;
-    println!("200 + 200 = {}", c);    
+    println!("200 + 200 = {c}");    
 }

@@ -39,16 +39,16 @@ fn main() {
                 let num_str = v[1].trim().trim_end_matches("ms");
                 sum += num_str.parse::<f64>().unwrap_or_else(
                     |_| { 
-                        panic!("line: {}, num_str: {}", line, num_str)
+                        panic!("line: {line}, num_str: {num_str}")
                     }
                 );
                 count += 1;
             }
         },
-        Err(e) => { println!("err: {}", e); exit(-1) },
+        Err(e) => { println!("err: {e}"); exit(-1) },
     }
-    println!("str: {}", find_str);
-    println!("count: {} times", count);
-    println!("sum: {:.2} ms", sum);
+    println!("str: {find_str}");
+    println!("count: {count} times");
+    println!("sum: {sum:.2} ms");
 }
 

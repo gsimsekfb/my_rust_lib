@@ -34,10 +34,10 @@ impl<Function, Key, Val> Cacher<Function, Key, Val>
         #[allow(clippy::map_entry)]
         if self.results.contains_key(&arg) {
             let val = *self.results.get(&arg).unwrap();
-            println!("Cacher: cashed result for {}: {}", arg, val);
+            println!("Cacher: cashed result for {arg}: {val}");
             val
         } else {
-            println!("Cacher: calculating for {} . . .", arg);
+            println!("Cacher: calculating for {arg} . . .");
             let val = (self.function)(arg);
             self.results.insert(arg, val);
             val

@@ -48,7 +48,7 @@ pub fn run_search(config: SearchConfig) -> Result<(), Box<dyn std::error::Error>
     };
 
     for line in result {
-        println!("{}", line);
+        println!("{line}");
     }
 
     Ok(())

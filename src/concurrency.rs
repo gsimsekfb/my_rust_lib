@@ -89,13 +89,13 @@ fn ex0_most_real_life_usage() {
 fn ex1_spawn_thread_no_join() {
   thread::spawn(|| {
     for i in 1..=10 {
-      println!("--ST: {}", i);  // Spawned thread
+      println!("--ST: {i}");  // Spawned thread
       thread::sleep(Duration::from_millis(1));
     }
   });
 
   for i in 1..=5 {
-    println!("******** MT: {}", i); // Main thread
+    println!("******** MT: {i}"); // Main thread
     thread::sleep(Duration::from_millis(1));
   }
 
@@ -114,13 +114,13 @@ fn ex1_spawn_thread_no_join() {
 fn ex2_spawn_thread_w_join() {
   let st = thread::spawn(|| {
     for i in 1..=10 {
-      println!("--ST: {}", i);  // Spawned thread
+      println!("--ST: {i}");  // Spawned thread
       thread::sleep(Duration::from_millis(1));
     }
   });
 
   for i in 1..=5 {
-    println!("******** MT: {}", i); // Main thread
+    println!("******** MT: {i}"); // Main thread
     thread::sleep(Duration::from_millis(1));
   }
 
@@ -135,7 +135,7 @@ fn ex2_spawn_thread_w_join() {
 fn ex3_1_spawn_thread_w_join() {
   let vv = vec![1, 2, 3];
   let st = thread::spawn(move || {
-    println!("*** SP: vv is: {:?}", vv);
+    println!("*** SP: vv is: {vv:?}");
   });
   st.join().unwrap(); // block mt and wait for st
 }
@@ -160,7 +160,7 @@ fn ex4_a_message_passing() {
   let received = rx.recv().unwrap();
     // block the main thread’s execution and wait 
     // until a value is sent down the channel
-  println!("*** Rx: Got: {}", received);  
+  println!("*** Rx: Got: {received}");  
 }
 
 
@@ -182,7 +182,7 @@ fn ex4_b_multi_message_passing() {
   });
 
   for received in rx {
-    println!("--- Rx got: {}", received);
+    println!("--- Rx got: {received}");
       // --- Rx got: hi
       // --- Rx got: from
       // --- Rx got: the
@@ -224,7 +224,7 @@ fn ex4_c_multi_producer() {
   });  
 
   for received in rx {
-    println!("--- Rx got: {}", received);
+    println!("--- Rx got: {received}");
       // cout: different order each time:
         // --- Rx got: tx2-a
         // --- Rx got: tx1-xx

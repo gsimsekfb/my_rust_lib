@@ -57,7 +57,7 @@ async fn handle_connection(mut stream: TcpStream) {
         ("HTTP/1.1 404 NOT FOUND\r\n\r\n", "404.html")
     };
     let contents = std::fs::read_to_string(file)
-        .unwrap_or_else(|_| panic!("file not found: {}", file));
+        .unwrap_or_else(|_| panic!("file not found: {file}"));
 
     let response = format!("{status_line}{contents}");
     stream.write(response.as_bytes()).await.unwrap();

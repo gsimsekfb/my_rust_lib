@@ -46,7 +46,7 @@ use std::fmt::Debug;
 
 // not variadic, array elems have to be the same type
 fn not_variadic_generic(args: &[impl Debug]) {
-    for arg in args { println!("arg: {:?}", arg); }
+    for arg in args { println!("arg: {arg:?}"); }
 }
 
 // 1.

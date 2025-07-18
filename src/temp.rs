@@ -18,7 +18,7 @@ fn ex1_ww() {
 fn ex1_ww() {
 
     let xx = 55;
-    println!("xx: {:?}", xx);
+    println!("xx: {xx:?}");
     assert_eq!(32, 32);
 
 }

@@ -62,7 +62,7 @@ pub fn examples() {
     //
     // `println!` only requires arguments by immutable reference so it doesn't
     // impose anything more restrictive.
-    let print = || println!("`color`: {}", color);
+    let print = || println!("`color`: {color}");
 
     // `color` can be borrowed immutably again, because the closure only holds
     // an immutable reference to `color`. 
@@ -81,7 +81,7 @@ pub fn examples() {
     // calling the closure mutates the closure which requires a `mut`.
     let mut inc = || {
         count += 3;
-        println!("`count`: {}", count);
+        println!("`count`: {count}");
     }; 
 
     // Call the closure using a mutable borrow.
@@ -108,7 +108,7 @@ pub fn examples() {
     // A non-copy must move and so `movable` immediately moves into
     // the closure.
     let consume = move || {  // move is unnecessary here
-        println!("`movable`: {:?}", movable);
+        println!("`movable`: {movable:?}");
         std::mem::drop(movable);
     };
 
@@ -155,7 +155,7 @@ pub fn examples() {
     let thread_handle = std::thread::spawn(move || {
         // `move` is required here because the closure needs to own `text`
         // since it will outlive the current scope
-        println!("{}", text);
+        println!("{text}");
     });
   
 }

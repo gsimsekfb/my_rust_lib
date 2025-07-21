@@ -23,7 +23,7 @@ use winterfell::{
 #[test]
 fn ex1_zk() {
     let (result, proof) = prove_work();
-    println!("res: {:?}", result);
+    println!("res: {result:?}");
         // 190393255176150493381245531460827183000
     let start = winterfell::math::fields::f128::BaseElement::new(3);
     

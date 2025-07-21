@@ -1,5 +1,7 @@
 #![allow(clippy::needless_range_loop)]
 
+// last: 5/25
+
 // interv-1
 
 // maze 1d

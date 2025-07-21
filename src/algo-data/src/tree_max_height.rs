@@ -1,4 +1,5 @@
 // interv-2
+// last: 7/25
 
 // Prob:
 // Find the Maximum Depth or Height of given Binary Tree
@@ -12,33 +13,32 @@
 
 
 #[derive(Debug)]
-pub struct Node {
+pub struct N {
     pub v: i32,
-    pub l: Option<Box<Node>>,
-    pub r: Option<Box<Node>>
+    pub l: Option<Box<N>>,
+    pub r: Option<Box<N>>
 }
 
-pub fn new_node(v: i32, l: Option<Box<Node>>, r: Option<Box<Node>>) -> Option<Box<Node>> {
-    Some(Box::new(Node { v, l, r }))
+// type Tree = Option<Box<N>>;
+
+pub fn new_node(v: i32, l: Option<Box<N>>, r: Option<Box<N>>) -> Option<Box<N>> {
+    Some(Box::new(N { v, l, r }))
 }
 
-pub fn new_node_leaf(v: i32) -> Option<Box<Node>> {
-    Some(Box::new(Node { v, l: None, r: None }))
+pub fn new_node_leaf(v: i32) -> Option<Box<N>> {
+    Some(Box::new(N { v, l: None, r: None }))
 }
 
-// 2nd attempt
-//
-// ?
+// 2nd (better) attempt
 // Time Complexity: O(N)
-// Auxiliary Space: O(N)
-pub fn max_height_2(node: &Option<Box<Node>>) -> usize {
-    match node {
-        Some(n) => {
-            let left_h = max_height_2(&n.l) + 1;
-            let left_r = max_height_2(&n.r) + 1;
-            std::cmp::max(left_h, left_r)
-        }
-        _ => 0
+// Space: O(h), h: height of the tree.
+//   (Due to recursion stack; worst case is O(n) for a skewed tree, O(log n) 
+//    for a balanced tree.)
+pub fn height_2(tree: &Option<Box<N>>) -> usize {
+    use std::cmp::max;
+    match tree {
+        Some(val) => max(height_2(&val.l), height_2(&val.r)) + 1,
+        None => 0
     }
 }
 // Manual Debug
@@ -65,7 +65,7 @@ pub fn max_height_2(node: &Option<Box<Node>>) -> usize {
   return max: 2
 */
 // or less idiomatic version:
-fn he(t: &Option<Box<Node>>) -> usize {
+fn he(t: &Option<Box<N>>) -> usize {
     if t.is_none() { return 0 };
     let l_h = he(&t.as_ref().unwrap().l) + 1;
     let r_h = he(&t.as_ref().unwrap().r) + 1;
@@ -74,13 +74,13 @@ fn he(t: &Option<Box<Node>>) -> usize {
 
 
 // 1st attempt
-fn max_height(node: &Node) -> usize {
+fn max_height(node: &N) -> usize {
     let mut h: usize = 0;
     max_height_impl(node, h + 1, &mut h);
     h
 }
 
-fn max_height_impl(node: &Node, h: usize, max_height: &mut usize) {
+fn max_height_impl(node: &N, h: usize, max_height: &mut usize) {
     // println!("{h}: {}", node.v);
     if h > *max_height { *max_height = h; }
     if node.l.is_some() {
@@ -96,54 +96,54 @@ fn max_height_impl(node: &Node, h: usize, max_height: &mut usize) {
 #[test]
 fn t1() {
     //  - empty tree
-    assert_eq!(max_height_2(&None), 0);
+    assert_eq!(height_2(&None), 0);
 
     //  1
     let node = new_node_leaf(1);
     assert_eq!(max_height(node.as_deref().unwrap()), 1);
-    assert_eq!(max_height_2(&node), 1);
+    assert_eq!(height_2(&node), 1);
 
     //    1
     // 22
-    let node = Node { v: 1,  l: new_node_leaf(22), r: None };
+    let node = N { v: 1,  l: new_node_leaf(22), r: None };
     assert_eq!(max_height(&node), 2);
-    assert_eq!(max_height_2( &Some(Box::new(node)) ), 2);
+    assert_eq!(height_2( &Some(Box::new(node)) ), 2);
 
     //    1
     //       33
-    let node = Node { v: 1, l: None, r: new_node_leaf(33) };
+    let node = N { v: 1, l: None, r: new_node_leaf(33) };
     assert_eq!(max_height(&node), 2);
-    assert_eq!(max_height_2( &Some(Box::new(node)) ), 2);
+    assert_eq!(height_2( &Some(Box::new(node)) ), 2);
 
     //    1
     //       22
     //           333
-    let node = Node {
+    let node = N {
         v: 1,
         l: None,
         r: new_node(22, None, new_node_leaf(333)),
     };
     assert_eq!(max_height(&node), 3);
-    assert_eq!(max_height_2( &Some(Box::new(node)) ), 3);
+    assert_eq!(height_2( &Some(Box::new(node)) ), 3);
 
     //             1
     //       22          33
     //   333
     //
-    let node = Node {
+    let node = N {
         v: 1, 
         l: new_node(22, new_node_leaf(33), None),
         r: new_node_leaf(333)
     };
     assert_eq!(max_height(&node), 3);
-    assert_eq!(max_height_2( &Some(Box::new(node)) ), 3);
+    assert_eq!(height_2( &Some(Box::new(node)) ), 3);
 
     //                  1
     //       11                   22
     //   111     222
     //               4444
     //
-    let node = Node {
+    let node = N {
         v: 1, 
         l: new_node(
             11, 
@@ -153,6 +153,6 @@ fn t1() {
         r: new_node_leaf(22)
     };
     assert_eq!(max_height(&node), 4);
-    assert_eq!(max_height_2( &Some(Box::new(node)) ), 4);
+    assert_eq!(height_2( &Some(Box::new(node)) ), 4);
 
 }

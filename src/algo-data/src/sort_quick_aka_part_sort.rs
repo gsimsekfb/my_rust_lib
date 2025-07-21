@@ -1,4 +1,6 @@
 
+// skip: too hard, no need to re-invent the wheel
+
 // interv-3
 
 #[test] fn sol_1() {

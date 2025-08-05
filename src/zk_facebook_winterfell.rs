@@ -22,24 +22,25 @@ use winterfell::{
 
 #[test]
 fn ex1_zk() {
-    let (result, proof) = prove_work();
+    // ========= 1. Prover
+    let start = BaseElement::new(3);
+    let (result, proof) = prove_work(&start); // Public Inputs
     println!("res: {result:?}");
         // 190393255176150493381245531460827183000
-    let start = winterfell::math::fields::f128::BaseElement::new(3);
-    
+
+    // ========= 2. Verifier
+    // Ok case
     assert!(verify_work(start, result, proof.clone()));
     // Verify should fail with wrong result
     assert!(!verify_work(start, result.double(), proof));
 }
 
-use winterfell::{
-    FieldExtension, Proof,
-};
+use winterfell::{FieldExtension, Proof};
 
 // Generate a STARK proof
 // The function below, will execute our computation, and will return the result
 // together with the proof that the computation was executed correctly
-pub fn prove_work() -> (BaseElement, Proof) {
+pub fn prove_work(start: &BaseElement) -> (BaseElement, Proof) {
     // We'll just hard-code the parameters here for this example.
     let start = BaseElement::new(3);
     let n = 8;

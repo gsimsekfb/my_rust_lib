@@ -37,7 +37,8 @@ async fn main() {
 }
 
 /* 
-Short Explanation: 
+In Short: 
+
 - Both f1() and f2() are started simultaneously (they are "spawned" as async tasks under the hood).
 - The select! macro waits for whichever future completes first, other one dropped
 - e.g. if f2 completes first, f1() will be dropped 

@@ -98,7 +98,7 @@ pub fn examples() {
     let _count_reborrowed = &mut count; 
 
 
-    // 3. move capture
+    // 3. move capture - non-copy type: Box
     // 
     // A non-copy (aka not copied automatically, but moved) type Box
     let movable = Box::new(42);
@@ -117,7 +117,7 @@ pub fn examples() {
     // consume();
     // ^ TODO: Try uncommenting this line.
 
-    // 4. move capture
+    // 4. move capture - non-copy type: Vec
     //
     // `Vec` has non-copy semantics.
     #[allow(clippy::useless_vec)]
@@ -129,6 +129,12 @@ pub fn examples() {
 
     println!("There're {} elements in vec", vec.len());
 
+    
+    // x. move capture - copy type: i32
+    let num = 42;
+    let is_even = move |e| { e % 2 == 0 };
+    assert_eq!(is_even(num), true);
+    dbg!(num); // ! num is not moved
 
 
     // 5. When "move" word is required? 

@@ -20,30 +20,73 @@ async fn f2() -> u64 {
     ms
 }
 
-
 #[tokio::main]
 async fn main() {
     let mut cntr = 0;
     loop {
         cntr += 1;
         println!("====== loop {cntr}");
-    
+
+        //// 1. select!
+        // Waits on multiple concurrent branches (e.g. async fn) in same task (or 
+        // multiple tasks when f1 and f2 are spawned tasks) returning when the 
+        // first branch completes, cancelling the remaining branches.
+        // - e.g. if f2 completes first, f1() will be dropped 
+
+        // a. Default use case: concurrent branches
+        // f1 and f2 run concurrently in the same task (no parallelism)
+        // e.g. so, we do NOT need to clone an Arc, things work synchronously 
+        // in the same task
+        //
         tokio::select! {
             ms = f1() => { println!("11  f1() completed in {ms} ms") }
             ms = f2() => { println!("22  f2() completed in {ms} ms") }
         };
+
+        // b. Second use case: parallel execution in different tasks
+        // so, we DO need to clone the Arc
+
+        // Spawn each async function into its own task.
+        // This returns a JoinHandle, which is itself a future.
+        let f1_handle = tokio::spawn(f1());
+        let f2_handle = tokio::spawn(f2());
+    
+        // Now we select! on the JoinHandles, not the functions directly.
+        tokio::select! {
+            res = f1_handle => {
+                // res is a Result<u64, JoinError>
+                match res {
+                    Ok(ms) => println!("11  f1() task completed in {ms} ms"),
+                    Err(e) => eprintln!("11  f1() task failed: {e}"),
+                }
+            }
+            res = f2_handle => {
+                match res {
+                    Ok(ms) => println!("22  f2() task completed in {ms} ms"),
+                    Err(e) => eprintln!("22  f2() task failed: {e}"),
+                }
+            }
+        };
+
+
+        // 2. join! (and try_join!), similar to select!, read select! above first
+        // Waits on multiple concurrent branches (e.g. async fn) in same task (or 
+        // multiple tasks when f1 and f2 are spawned tasks) 
+        // returning when all branches complete.
+        // try_join: 
+        // same but it waits until returning when all branches complete 
+        // with Ok(_) or on the first Err(_).
+        //
+        let (res_f1, res_f2) = tokio::join!(
+            f1(), f2()
+        );
+        // do something with the values        
+
         println!("== loop {cntr} ends\n");
     }
 }
 
-/* 
-In Short: 
 
-- Both f1() and f2() are started simultaneously (they are "spawned" as async tasks under the hood).
-- The select! macro waits for whichever future completes first, other one dropped
-- e.g. if f2 completes first, f1() will be dropped 
-
-*/
 
 /* 
 stdout:

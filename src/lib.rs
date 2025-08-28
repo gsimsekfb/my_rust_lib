@@ -67,6 +67,7 @@ mod test_unit_tested_file;
 mod test_integration_tests;
 mod temp;
 mod tokio_channels;
+mod tokio_w_mutex_rwlock;
 mod tokio_pin;
 mod tokio_select_join_try_join;
 mod tokio_spawn_vs_spawn_blocking;

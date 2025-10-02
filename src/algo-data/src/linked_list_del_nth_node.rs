@@ -1,4 +1,4 @@
-// last: 10/24
+// last: 9/25
 
 // Problem Description
 // Remove Nth node of the Linked List
@@ -8,93 +8,107 @@
 // https://www.geeksforgeeks.org/remove-nth-node-from-end-of-the-linked-list/
 
 
-#[derive(Debug, Clone, PartialEq)]
-struct N {
-    v: i32,
-    next: Option<Box<N>>
+#[derive(Debug, PartialEq)]
+struct L {
+    val: u8,
+    next: Option<Box<L>>
 }
 
-fn new_leaf(v: i32) -> Option<Box<N>> {
-    Some(Box::new( N { v, next: None } ))
+type List = Option<Box<L>>;
+
+// See notes in fn
+// impl Drop for L {
+//     fn drop(&mut self) {
+//         println!("-- dropping {}", self.val);
+//     }
+// }
+
+fn new(v: u8, n: List) -> List { Some(Box::new(L { val: v, next: n })) }
+
+fn new_leaf(v: u8) -> List { new(v, None) }
+
+fn traverse_list_for_loop(list: &List) {
+    let mut current = list;
+    while let Some(node) = current {
+        println!("tll -- {}", node.val);
+        current = &node.next
+    }
 }
 
-fn new_node(v: i32, n: Option<Box<N>>) -> Option<Box<N>> {
-    Some(Box::new( N { v, next: n } ))
+fn traverse_list_recur(list: &List) {
+    let Some(node) = list else { return; };
+    println!("tlr >> {}", node.val);
+    traverse_list_recur(&node.next);
 }
 
 
-// Sol 1 - One loop using ptrs
-//
-// e.g. f(1-2-3-None, 2) ret 1-3-None
-//
-// Hint: keep track of new list's (head's beg, end and tail's beg)
+// Sol
+// Hint at the end
 //
 // Time : O(n)
 // Space: O(1)
 //
-// Debug: f(1-2-3-None, 2)
-fn delete_nth_node(list: &Option<Box<N>>, index: usize) -> Option<Box<N>> {
-    let mut head = None;            // t: mut Option<Box<N>> (obj, not a ptr)
-    let mut head_ptr = &mut head;   // mut t: &mut Option<Box<N>>
-    let mut tail_ptr = list;        // mut t: &    Option<Box<N>>
-        // start with pointing to the first node
-
-    // loop until we find (index)th node, to save next node as tail_ptr
-    // also build the head and head_ptr
-    for i in 1..index+1 { // deb: i 1,2 ; index 2
-        // Build head nodes and advance head_ptr to finally save ptr to
-        // last node (None), ir oder to later assign with tail_ptr.
-        // New head will end with list's (index-1)th node + None
-        if i < index {    // deb: i 1 ; index 2
-            *head_ptr = new_leaf(tail_ptr.as_deref().unwrap().v); // new ctr
-            head_ptr = &mut head_ptr.as_deref_mut().unwrap().next;
+// index: first elem's index is 1 (not 0)
+// e.g. f(1-2-3-None, 2) ret 1-3-None
+fn delete_nth_node(list: &mut Option<Box<L>>, index: u8) {
+    if index == 1 { // edge case: delete 1th node
+        if let Some(first_node) = list.take() {
+            *list = first_node.next;
+            println!("-- deleted node {}", first_node.val);
         }
-        tail_ptr = &tail_ptr.as_deref().unwrap().next; // go to next node
-        // tail ptr None means that, no more node to process, end loop
-        if tail_ptr.as_deref().is_none() { break; }
+        return;
     }
-    // dbg!(&head_ptr);  // deb: head: 1-None, head_ptr: &None
-    // dbg!(&tail_ptr);  // deb: &(3-None)
-
-    head_ptr.clone_from(tail_ptr); // copy ctr
-    // or
-    // *head_ptr = tail_ptr.clone(); // copy ctr //  tail_ptr auto derefed?
-        // *: deref ptr to access pointed object which is Option<Box<N>>
-
-    head
+    // all other cases
+    let mut current = list;
+    let mut i = 1;
+    while let Some(node) = current {
+        // debug for: index 2, i=1, take node_1.next (node_2) out and assign node_3 instead
+        if i + 1 == index {
+            if let Some(node_next) = node.next.take() { // take node_next (node 2) out of node 1
+                // node_next.next = None; // Todo: how come this is error but next line is Ok
+                                          // we can take out of something from node_next but 
+                                          // we cannot modify it ?
+                node.next = node_next.next; // node_1.next = (2.next which is node 3)
+                    // Note: partial move: move node_next.next (node 3) to node_1.next
+                    // - node_next(node_2).next which is node_3 moved to node_1.next
+                    // - node_next ( node 2, Box<L>) dropped at the end of this                    
+                // dbg!(&node_next);
+                    // Note: error[E0382]: borrow of partially moved value: `node_next`
+ 
+                println!("-- deleting node {}", node_next.val);
+                return;
+            }
+        }
+        dbg!(node.val);
+        current = &mut node.next; // next node
+        i += 1;
+    }
 }
 
 #[test] fn tt() {
+    let list = new(1, new(2, new_leaf(3)));
+    traverse_list_for_loop(&list);
+    // traverse_list_recur(&list);
 
-    // Sol-1
 
-    // 1-2-3-None
-    let list = new_node(1, new_node(2, new_node(3, None)));
-    //
-    let res = new_node(2, new_node(3, None));
-    assert_eq!(delete_nth_node(&list, 1), res);
-    //
-    let res = new_node(1, new_node(3, None));
-    assert_eq!(delete_nth_node(&list, 2), res);
-    //
-    let res = new_node(1, new_node(2, None));
-    assert_eq!(delete_nth_node(&list, 3), res);
-    //
-    let res = &list;
-    assert_eq!(&delete_nth_node(&list, 4), res);
+    let mut list_1_2_3 = new(1, new(2, new_leaf(3)));
+    delete_nth_node(&mut list_1_2_3, 2);
+    let list_1_3 = new(1, new_leaf(3));
+    assert_eq!(list_1_2_3, list_1_3);
 
-    // 1-None
-    let list = new_node(1, None);
-    //
-    let res = None;
-    assert_eq!(delete_nth_node(&list, 1), res);
+    let mut list_1_2_3 = new(1, new(2, new_leaf(3)));
+    delete_nth_node(&mut list_1_2_3, 3);
+    let list_1_2 = new(1, new_leaf(2));
+    assert_eq!(list_1_2_3, list_1_2);
 
-    // 1-2-None
-    let list = new_node(1, new_node(2, None));
-    //
-    let res = new_node(2, None);
-    assert_eq!(delete_nth_node(&list, 1), res);
-    //
-    let res = new_node(1, None);
-    assert_eq!(delete_nth_node(&list, 2), res);
+    let mut list_1_2_3 = new(1, new(2, new_leaf(3)));
+    delete_nth_node(&mut list_1_2_3, 1);
+    let list_2_3 = new(2, new_leaf(3));
+    assert_eq!(list_1_2_3, list_2_3);
+
+    let mut list_1_2_3_4_5 = new(1, new(2, new(3, new(4, new_leaf(5)))));
+    delete_nth_node(&mut list_1_2_3_4_5, 3);
+    let list_1_2_4_5 = new(1, new(2, new(4, new_leaf(5))));
+    assert_eq!(list_1_2_3_4_5, list_1_2_4_5);
+    
 }

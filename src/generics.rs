@@ -3,7 +3,7 @@
 
 // 1. Write a simple generic fn takes T and returns T.to_string
 //   - use 3 different identical ways to write generic fn (hint: at the end)
-//   - test: call fn with explicit type param and without
+//   - test: call each fn with explicit type param and without
 
 // see more below
 
@@ -32,10 +32,32 @@ fn f2(f: Gen<i32>) { }
 // generic over `T`
 fn f3<T>(g: &Gen<T>) -> i32 { 42 }
 
+// Task 1
+fn foo_1(arg: impl ToString) {
+    println!("{}", arg.to_string());
+}
+
+fn foo_2<T: ToString>(arg: T) {
+    println!("{}", arg.to_string());
+}
+
+fn foo_3<T>(arg: T) -> i32 
+where T: ToString {
+    println!("{}", arg.to_string());
+    42
+}
+
+
 #[test] fn ex_1() {
     let g = Gen { val: 0 };
     assert_eq!(f3(&g), 42);
     assert_eq!(f3::<i32>(&g), 42);
+
+    // Task-1
+    // foo_1::<u8>(42); // err
+        // w/ impl Trait, type args always inferred. cannot write foo::<T>
+    foo_2::<u8>(42);
+    foo_3::<u8>(42);
 }
 
 

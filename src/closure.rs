@@ -133,7 +133,7 @@ pub fn examples() {
     // x. move capture - copy type: i32
     let num = 42;
     let is_even = move |e| { e % 2 == 0 };
-    assert_eq!(is_even(num), true);
+    assert!(is_even(num));
     dbg!(num); // ! num is not moved
 
 

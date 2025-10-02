@@ -65,7 +65,7 @@ async fn tokio_pin_2_future_reuse_w_select() {
     tokio::pin!(future);
 
     tokio::select! {
-        result = &mut future => { println!("First try: {}", result) },
+        result = &mut future => { println!("First try: {result}") },
         _ = tokio::time::sleep(Duration::from_millis(100)) => {
             println!("Timeout, trying again...");
             // Can reuse the pinned future

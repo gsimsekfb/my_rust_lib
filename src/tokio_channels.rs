@@ -44,7 +44,7 @@ async fn tokio_channels_mpsc() {
     
     // Consumer
     while let Some(message) = rx.recv().await {
-        println!("Received: {}", message);
+        println!("Received: {message}");
     }
 }
 
@@ -63,7 +63,7 @@ async fn tokio_channels_bounded_and_unbounded_channels() {
     });
 
     while let Some(item) = rx.recv().await {
-        println!("Bounded: Received: {}", item);
+        println!("Bounded: Received: {item}");
         tokio::time::sleep(std::time::Duration::from_millis(100)).await;
     }
 
@@ -86,7 +86,7 @@ async fn tokio_channels_bounded_and_unbounded_channels() {
     });
 
     while let Some(item) = rx.recv().await {
-        println!("Un-Bounded: Received: {}", item);
+        println!("Un-Bounded: Received: {item}");
     }
 }
 

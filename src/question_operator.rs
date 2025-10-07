@@ -8,9 +8,9 @@ use std::io::{self, Read};
                             // pub type Result<T> = result::Result<T, Error>;
                             //             |
 fn read_file_contents(path: &str) -> io::Result<String> {
-    let mut file = File::open(path)?;  // ? operator here
+    let mut file = File::open(path)?;  // ? operator
     let mut contents = String::new();
-    file.read_to_string(&mut contents)?;  // ? operator here
+    file.read_to_string(&mut contents)?;  // ? operator
     Ok(contents)
 }
 

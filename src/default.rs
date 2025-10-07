@@ -1,8 +1,8 @@
 // interv-1
 
-// Derive Default for Foo x,y,z,t : u8
-// Create a Foo: literal vals for x,y ; using default values for z,t
-
+// Auto derive Default for Foo with x,y,z,t : u8
+// Create and use Foo new fn: literal vals for x,y ; using default values for z,t
+// impl Default for Foo and use it
 
 
 // ---------------------------------------

@@ -64,6 +64,12 @@ char str[4] = {'C','+','+','\0'};
 ```rust
 let v = vec![1,2,3];
 let v: Vec<i32> = Vec::new();
+
+// access
+if let Some(value) = vec.get(1) { }
+
+// add element
+v.push(42)
 ```
 
 </td>
@@ -72,6 +78,17 @@ let v: Vec<i32> = Vec::new();
 ```cpp
 std::vector v = {1, 2, 3};
 std::vector<int> v = {1, 2, 3};
+
+// safe access: 
+// (note: use vec[] if fast access needed)
+try {
+    int value = vec.at(0); // OK
+} catch (const std::out_of_range& err) {
+    std::cerr << "err: " << err.what() << "\n";
+}
+
+// add element
+v.push_back(42)
 ```
 </td>
 </tr>
@@ -96,6 +113,10 @@ let zeros: [i32;3] = [0;3];
 std::array<int, 3> arr = {1, 2, 3};
 // avoid raw arrays:
 int arr[3] = {1,2,3}; // arr:0x7fff1b72911c
+size_t arr_len = sizeof(arr) / sizeof(arr[0]); // 12/4=3
+
+std::array<std::array<int,2>,2> arr = {{ {{1,2}}, {{3,4}} }};
+int arr[3][2] = { {1,2}, {3,4}, {5,6} };
 ```
 </td>
 </tr>
@@ -111,6 +132,15 @@ int arr[3] = {1,2,3}; // arr:0x7fff1b72911c
 ```rust
 
 for e in vec { }
+for e in &vec { } // loop by reference 
+    // desugars into:
+    {
+        let mut iter = vec.iter_mut(); // iter: scoped mutable borrow
+        while let Some(e) = iter.next() {
+            *e *= 2;
+        }
+    }
+
 
 for i in 0..=5 { }
 
@@ -126,7 +156,7 @@ for (index, item) in items.iter().enumerate() {
     
 ```cpp
 
-for(int i : vec) { } 
+for(int e : vec) { } 
 
 for (int i = 0; i < 5; ++i) { }
 
@@ -148,7 +178,7 @@ for (int i = 0; i < 6; i+=2) { }
 ```rust
 loop {
     // body
-    if !condition {
+    if condition {
         break;
     }
 }
@@ -158,6 +188,11 @@ loop {
 <td>
     
 ```cpp
+while (cntr < 10>) {
+    std::cout << i << " ";
+    ++cntr;
+}   
+
 do {
     // body
 } while (condition);
@@ -170,7 +205,7 @@ do {
 <!-- ----------------------------------------------------- -->
 <tr>
 
-<td> Match / Switch </td>
+<td> Enums / Match / Switch </td>
 
 <td>
 
@@ -190,8 +225,14 @@ match color {
 <td>
     
 ```cpp
-enum class Color { Red, Green, Blue };
-Color c = Color::Green;
+// both has, by default, int underlying type
+// 1
+enum Num { Zero, One };
+// 2. strongly typed scoped enum (no implicit conversion to int)
+enum class Num { Zero, One };
+enum class Num: uint8_t { Zero, One };
+
+auto c = Num::Zero;
 
 switch (c) {
     case Color::Red:
@@ -210,7 +251,143 @@ switch (c) {
 </td>
 </tr>
 
+
+
+
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Class / Struct </td>
+
+<td>
+
+```rust
+#[derive(Default, Debug)]
+struct Person {
+    name: String,
+    age: i32
+}
+
+let person = Person::default();
+
+```
+
+</td>
+
+<td>
+    
+```cpp
+class Person {
+    string name;
+    int age;
+};
+
+Person person;
+```
+</td>
+</tr>
+
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> temp </td>
+
+<td>
+
+```rust
+
+
+```
+
+</td>
+
+<td>
+    
+```cpp
+
+
+```
+</td>
+</tr>
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Question mark operator </td>
+
+<td>
+
+```rust
+                // rustlib\src\rust\library\std\src\io\error.rs:
+                // pub type Result<T> = result::Result<T, Error>;
+                //                          |
+fn read_file_contents(path: &str) -> io::Result<String> {
+    let mut file = File::open(path)?;  // ? operator
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;  // ? operator
+    Ok(contents)
+}
+
+// Equivalent Code Without Question Mark Operator:
+//
+// The ? operator:
+// - Unwraps (not returns) the Ok value
+// - "Returns" the Err early if the result is Err
+fn read_file_contents_(path: &str) -> io::Result<String> {
+    #[allow(clippy::question_mark)]
+    let mut file = match File::open(path) {
+        Ok(f) => f,
+        Err(e) => return Err(e),  // Early return on error
+    };
+    
+    let mut contents = String::new();
+    match file.read_to_string(&mut contents) {
+        Ok(_) => Ok(contents),
+        Err(e) => Err(e),  // Return error (!! implicit return here)
+    }
+}
+```
+
+</td>
+
+<td>
+    
+```cpp
+
+
+```
+</td>
+</tr>
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> temp </td>
+
+<td>
+
+```rust
+
+
+```
+
+</td>
+
+<td>
+    
+```cpp
+
+
+```
+</td>
+</tr>
+
+
 <!-- ----------------------------------------------------- -->
 
 
 </table>
+
+

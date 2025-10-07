@@ -41,7 +41,7 @@ fn remove_zz(s: &str) -> String {
 // [perf]
 // What if 99.9% of the time s contains no "zz" ?? 
 // User to use to_string on return to get String
-fn remove_zz_cow(s: &str) -> Cow<str> {
+fn remove_zz_cow(s: &str) -> Cow<'_, str> {
     if s.contains("zz") {
         Cow::Owned(s.to_string().replace("zz", "**")) // String
     } else { // no allocation

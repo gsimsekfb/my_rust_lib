@@ -31,6 +31,100 @@ char ch = x < 0 ? '-' : '+';
 </tr>
 
 
+
+<!-- ----------------------------------------------------- -->
+<tr>
+
+<td> Borrowing vs C++ mut/const ref </td>
+
+<td>
+
+```rust
+// 1. Immutable borrow
+fn f(num: &i32) { }     // call: f(&x);
+
+// 2. Mutable borrow
+fn change_value(num: &mut i32) { *num = 44; }
+    // call:
+    let mut x = 0;
+    change_value(&mut x);
+
+// 3. Move
+fn move_(num: String) { }
+fn move_(mut num: String) { } // move and modify in fn
+    // call both:
+    move_(s);
+```
+
+</td>
+<td>
+    
+```cpp
+// 1. Const reference
+void f(const string& s) { s = "bb" };   // call: f(str);
+
+// 2. Mutable reference
+void changeValue(string& s) { s = "bb" };
+    // call:
+    string str = "undefined";
+    changeValue(str);
+
+// 3. Move
+void move_(const string s) { };
+void move_(string s) { s = "bb" }; // move and modify in fn
+    // call:
+    move_(str);
+```
+</td>
+</tr>
+
+
+
+
+
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Reference / Pointer </td>
+
+<td>
+
+```rust
+let i = 42;
+let ref_ = &i;
+let ptr = &i as *const i32;
+
+// deref
+dbg!(ref_);
+unsafe { dbg!(*ptr); }
+
+// print ptr addr
+dbg!(ptr);
+```
+
+</td>
+
+<td>
+    
+```cpp
+int i = 42;
+int& ref = i;
+int* ptr = &i;
+
+// deref
+cout << ref
+cout << *ptr
+
+// print ptr addr
+cout << ptr
+```
+</td>
+</tr>
+
+
+
+
 <!-- ----------------------------------------------------- -->
 <tr>
 
@@ -122,6 +216,7 @@ int arr[3][2] = { {1,2}, {3,4}, {5,6} };
 </tr>
 
 
+
 <!-- ----------------------------------------------------- -->
 <tr>
 
@@ -135,7 +230,8 @@ for e in vec { }
 for e in &vec { } // loop by reference 
     // desugars into:
     {
-        let mut iter = vec.iter_mut(); // iter: scoped mutable borrow
+        let mut iter = vec.iter_mut(); 
+            // iter: scoped mutable borrow
         while let Some(e) = iter.next() {
             *e *= 2;
         }
@@ -212,6 +308,10 @@ do {
 ```rust
 
 enum Color { Red, Green, Blue }
+
+#[repr(u8)]
+enum Num { One = 1, Two = 2 }
+
 let color = Color::Red;
 
 match color {
@@ -228,13 +328,14 @@ match color {
 // both has, by default, int underlying type
 // 1
 enum Num { Zero, One };
+enum Num { Ten = 10, Twenty = 20 };
 // 2. strongly typed scoped enum (no implicit conversion to int)
 enum class Num { Zero, One };
 enum class Num: uint8_t { Zero, One };
 
-auto c = Num::Zero;
+auto num = Num::Zero;
 
-switch (c) {
+switch (num) {
     case Color::Red:
         std::cout << "Red\n";
         break;
@@ -269,8 +370,19 @@ struct Person {
     age: i32
 }
 
-let person = Person::default();
+impl Person {
+    fn age(&self) -> i32 { self.age }
+    fn set_age(&mut self, new_age: i32) { self.age = new_age; }
+        // auto-deref for field access: 
+        // self.age auto becomes (*self).age 
 
+    // x. Class associated fn
+    fn type_name() -> &'static str { "Person" }
+        // call: Person::type_name();
+}
+
+let person = Person::default();
+let person = Person { name: "A".to_string(), age: 42 };
 ```
 
 </td>
@@ -279,14 +391,172 @@ let person = Person::default();
     
 ```cpp
 class Person {
-    string name;
-    int age;
+    private:
+        string name;
+        int age;
+
+    public:
+        Person(string name, int age)
+            : name(move(name)), age(age) {}
+
+        int get_age();
+        void set_age(int new_age);
+        
+        // x. Static member fn
+        static string type_name();
 };
+
+int Person::get_age() { return this->age; }
+void Person::set_age(int new_age) { this->age = new_age; }
+string Person::type_name() { return "Person"; };
 
 Person person;
 ```
 </td>
 </tr>
+
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Class Access Specifiers </td>
+
+<td>
+
+```rust
+fn f()             // Fully private   
+pub fn f()         // Fully public
+pub(crate) fn f()  // Visible only within the current crate.
+
+pub(super) fn f()  // Visible to the parent module.
+pub(in crate::utils::math) fn f() 
+    // Visible only within a specific module path
+```
+
+</td>
+
+<td>
+    
+```cpp
+public - members are accessible from outside the class
+private - members cannot be accessed from outside the class
+protected - members cannot be accessed from outside the class, 
+            however, they can be accessed in inherited classes.
+```
+</td>
+</tr>
+
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Constructors </td>
+
+<td>
+
+```rust
+todo
+```
+
+</td>
+
+<td>
+    
+```cpp
+// All ctors & dtor
+class Person {
+    private:
+        string name;
+        int age;
+
+    public:
+        // Default constructor
+        Person() : name(""), age(0) {}
+
+        // Parameterized constructor
+        Person(string name, int age)
+            : name(move(name)), age(age) {}
+
+        // dtor
+        ~Person() {}
+        
+        // copy ctor
+        Person(const Person& rhs) 
+            : name(rhs.name), age(rhs.age) { println("copy ctor"); };
+
+        // move ctor
+        Person(const Person&& rhs) 
+            : name(move(rhs.name)), age(rhs.age) { println("move ctor"); };
+
+        // copy assign operator
+        Person& operator=(const Person& rhs) { 
+            if (this != &rhs) {
+                name = rhs.name;
+                age = rhs.age;
+            }
+            return *this;
+        };
+
+        // move assign operator
+        Person& operator=(const Person&& rhs) { 
+            if (this != &rhs) {
+                name = move(rhs.name);
+                age = rhs.age;
+            }
+            return *this;
+        };
+};
+```
+</td>
+</tr>
+
+
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Closure / Lambda  </td>
+
+<td>
+
+```rust
+let s = "aa".to_string();
+
+// 1.a Move capture: by default implicit Move 
+let closure = |x: i32| s + "bb"; // s moved here, s does not impl Copy
+
+// 1.b. Move capture: explicit Move 
+// Use when: returned from a function or moved into a new thread
+let closure = move |x: i32| s + "bb";
+
+// 2. Capture by ref 
+let closure = |x: i32| (&s).to_string() + "bb";
+
+// 3. Copy Capture 
+let closure = |x: i32| s.clone() + "bb";
+```
+
+</td>
+
+<td>
+    
+```cpp
+string s = "aa";
+
+// 1. Copy capture: by default Copy 
+auto lambda = [s](int x) { return s + "bb"; };
+
+// 2. Capture by ref 
+auto lambda = [&s](int x) { return s + "bb"; };
+
+// 3. Move capture
+auto f = [s = move(s)]() { return s + "bb"; };
+// !! here, s is valid but has unspecified state/content,
+//    usually empty but don’t expect its old contents to remain
+```
+</td>
+</tr>
+
 
 
 
@@ -298,7 +568,6 @@ Person person;
 
 ```rust
 
-
 ```
 
 </td>
@@ -307,10 +576,10 @@ Person person;
     
 ```cpp
 
-
 ```
 </td>
 </tr>
+
 
 
 <!-- ----------------------------------------------------- -->
@@ -355,11 +624,149 @@ fn read_file_contents_(path: &str) -> io::Result<String> {
 <td>
     
 ```cpp
+N/A
+```
+</td>
+</tr>
 
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> new / delete </td>
+
+<td>
+
+```rust
+N/A
+```
+
+</td>
+
+<td>
+    
+```cpp
+int* ptr = new int;
+*ptr = 35;
+delete ptr;
+
+// For arrays: new[], delete[]
+string* strs = new string[numStrs];
+delete[] strs;
+```
+</td>
+</tr>
+
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> main fn </td>
+
+<td>
+
+```rust
+fn main() {
+    // ...
+}
+```
+
+</td>
+
+<td>
+    
+```cpp
+int main() {
+  // ...
+  return 0;
+}
+```
+</td>
+</tr>
+
+
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Fn Default Parameter Value </td>
+
+<td>
+
+```rust
+n/a
+```
+
+</td>
+
+<td>
+    
+```cpp
+void foo(string country = "Norway") {
+  cout << country << "\n";
+}
+```
+</td>
+</tr>
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Function Overloading </td>
+
+<td>
+
+```rust
+n/a
+```
+
+</td>
+
+<td>
+    
+```cpp
+// We can overload only by parameter types
+int f(int x)
+// float f(int x) // err 
+float f(float x)
+double f(double x, double y)
+```
+</td>
+</tr>
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Friend fn </td>
+
+<td>
+
+```rust
+n/a
+```
+
+</td>
+
+<td>
+    
+```cpp
+// def:
+class Person {
+    public:
+        friend int get_age(const Person& person);
+}
+
+int get_age(const Person& person) {
+    return person.age * 10;
+}
+
+// use:
+get_age(person);
 
 ```
 </td>
 </tr>
+
+
 
 
 <!-- ----------------------------------------------------- -->
@@ -370,7 +777,6 @@ fn read_file_contents_(path: &str) -> io::Result<String> {
 
 ```rust
 
-
 ```
 
 </td>
@@ -379,13 +785,10 @@ fn read_file_contents_(path: &str) -> io::Result<String> {
     
 ```cpp
 
-
 ```
 </td>
 </tr>
 
-
-<!-- ----------------------------------------------------- -->
 
 
 </table>

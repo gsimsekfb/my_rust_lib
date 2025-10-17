@@ -1,12 +1,12 @@
 //// All uses of dyn
-
 // interv-1
 // 1.a
 // impl MyTrait with fn name returns &str, default impl. returns "MyTrait"
 // impl struct Foo empty
 // impl MyTrait for Foo, name returns "Foo"
-// last step for struct Wii
+// Prev. step for struct Wii
 // fn get_wii_or_foo takes bool, returns MyTrait, if true a Wii, else a Foo
+
 
 // interv-1
 // see 1.b below
@@ -28,7 +28,9 @@
 
 
 
-//// dyn can have 2 forms: 1. Box<dyn Trait>, 2. &dyn Trait or &mut dyn Trait 
+//// dyn Trait must be behind a ptr of ref, so it can have 2 forms: 
+/// 1. Box<dyn Trait>   (smart ptr)
+/// 2. &dyn Trait or &mut dyn Trait (ref) 
 // Box<dyn Trait> is owned trait obj vs others are just refs
 
 //// 1.a Box<dyn Trait> as return type

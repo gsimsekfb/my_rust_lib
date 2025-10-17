@@ -6,12 +6,17 @@
 mod mini_grep;
 use mini_grep::{SearchConfig, run_search};
 mod cacher;
+mod random_file;
 
 // todos: 
 // - yml for macos
 
 fn main() {
 
+    // -1) 
+    println!("random file: {}", random_file::random_file());
+
+    
     // 0) Use runtime env. vars. See [env] in Cargo.toml
     let xx: i32 = env!("XX").parse().unwrap();
 	println!("xx: {xx:?}");   // 42

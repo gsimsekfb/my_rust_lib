@@ -170,15 +170,15 @@ v.push(42)
 <td>
     
 ```cpp
-std::vector v = {1, 2, 3};
-std::vector<int> v = {1, 2, 3};
+vector v = {1, 2, 3};
+vector<int> v = {1, 2, 3};
 
 // safe access: 
 // (note: use vec[] if fast access needed)
 try {
     int value = vec.at(0); // OK
-} catch (const std::out_of_range& err) {
-    std::cerr << "err: " << err.what() << "\n";
+} catch (const out_of_range& err) {
+    cerr << "err: " << err.what() << "\n";
 }
 
 // add element
@@ -204,12 +204,12 @@ let zeros: [i32;3] = [0;3];
 <td>
     
 ```cpp
-std::array<int, 3> arr = {1, 2, 3};
+array<int, 3> arr = {1, 2, 3};
 // avoid raw arrays:
 int arr[3] = {1,2,3}; // arr:0x7fff1b72911c
 size_t arr_len = sizeof(arr) / sizeof(arr[0]); // 12/4=3
 
-std::array<std::array<int,2>,2> arr = {{ {{1,2}}, {{3,4}} }};
+array<array<int,2>,2> arr = {{ {{1,2}}, {{3,4}} }};
 int arr[3][2] = { {1,2}, {3,4}, {5,6} };
 ```
 </td>
@@ -285,7 +285,7 @@ loop {
     
 ```cpp
 while (cntr < 10>) {
-    std::cout << i << " ";
+    cout << i << " ";
     ++cntr;
 }   
 
@@ -337,16 +337,16 @@ auto num = Num::Zero;
 
 switch (num) {
     case Color::Red:
-        std::cout << "Red\n";
+        cout << "Red\n";
         break;
     case Color::Green:
-        std::cout << "Green\n";
+        cout << "Green\n";
         break;
     case Color::Blue:
-        std::cout << "Blue\n";
+        cout << "Blue\n";
         break;
     default:
-        std::cout << "Error";
+        cout << "Error";
 }
 ```
 </td>
@@ -438,10 +438,10 @@ pub(in crate::utils::math) fn f()
 <td>
     
 ```cpp
-public - members are accessible from outside the class
-private - members cannot be accessed from outside the class
-protected - members cannot be accessed from outside the class, 
-            however, they can be accessed in inherited classes.
+public    - accessible by class instances
+private   - not accessible by class instances and child classes
+protected - not accessible by class instances,
+            can be accessed in child classes
 ```
 </td>
 </tr>
@@ -724,7 +724,7 @@ n/a
 <td>
     
 ```cpp
-// We can overload only by parameter types
+// We can overload only by parameter types, constness for member fns
 int f(int x)
 // float f(int x) // err 
 float f(float x)
@@ -732,6 +732,187 @@ double f(double x, double y)
 ```
 </td>
 </tr>
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Inheritance </td>
+
+<td>
+
+```rust
+n\a
+```
+
+</td>
+
+<td>
+    
+```cpp
+// !!! C++ Core Guidelines
+// - For code reuse: Prefer composition over inheritance.
+// - Use inheritance only when it models an ‘is-a’ relationship 
+//   and when you need polymorphic behavior.
+
+// Base class
+class Animal {
+protected:
+    void speak() { cout << "animal" << endl; }
+};
+
+// Child class
+class Cat : public Animal {
+public:
+    void speak_public() {
+        Animal::speak();
+        speak();
+    }
+private:
+    void speak() { cout << "cat" << endl; }
+};
+```
+</td>
+</tr>
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> 1. Polymorphism - static/compile time dispatch </td>
+
+<td>
+
+```rust
+// a. using generics + traits
+struct Cat {}
+impl Animal for Cat { fn speak(&self) { println!("cat"); } }
+
+fn speak<T: Animal>(animal: &T) { // or: fn speak(animal: impl Animal)
+    animal.speak(); // resolved at compile time
+}
+
+let cat = Cat {};
+speak(&cat);
+
+// b. using enum
+enum Animal { Cat, Dog }
+
+impl Animal {
+    fn speak(&self) {
+        match self {
+            Self::Cat => println!("cat"),
+            Self::Dog => println!("dog"),
+        }
+    }
+}
+
+fn speak(animal: &Animal) { animal.speak() }
+let cat = Animal::Cat;
+speak(&cat);
+```
+
+</td>
+
+<td>
+    
+```cpp
+// a. using template
+class Cat {
+public:
+    void speak() const { cout << "cat" << endl; }
+};
+
+template <typename T>
+void speak(const T& animal) { animal.speak(); }
+
+// usage:
+const Cat cat;
+speak(cat);
+
+// b. using Variant (similar to Rust's enum approach)
+using Animal = std::variant<Dog, Cat>;
+
+void speak(const Animal& animal) {
+    auto action = [](const auto& animal) { animal.speak(); };
+    std::visit(action, animal);
+}
+
+const Cat cat;
+speak(cat);
+
+// c. Inheritance
+... (see Inheritance section)
+```
+</td>
+</tr>
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> 2. Polymorphism - dynamic/runtime dispatch </td>
+
+<td>
+
+```rust
+trait Animal { fn speak() { println!("animal"); } }
+
+struct Cat {}
+impl Animal for Cat { fn speak( { println!("cat"); } ) }
+
+struct Dog {}
+impl Animal for Dog { fn speak( { println!("dog"); } ) }
+
+//// usage
+let cat: Box<dyn Animal> = Cat {};
+let dog: Box<dyn Animal> = Dog {};
+
+cat.speak(); // "cat"
+dog.speak(); // "dog"
+
+fn speak(animal: &dyn Animal) { animal.speak() }
+    // animal.speak() is resolved at runtime via vtable
+speak(&*cat);
+speak(&*dog);
+```
+</td>
+
+<td>
+    
+```cpp
+class Animal {
+public:
+    virtual void speak() const { cout << "animal" << endl; }
+    virtual ~Animal() { cout << "Animal dtor" << endl; }
+        // If you don't use a virtual dtor in a polymorphic base class,
+        // you risk undefined behavior when deleting derived objects 
+        // through base pointer. See below:
+        //
+        // Animal* a = new Cat();
+        // delete a; // ❌ Only Animal::~Animal() is called,
+        //           // Cat::~Cat() is skipped !!!
+};
+
+class Cat : public Animal {
+public:
+    void speak() const override final { cout << "cat" << endl; }
+        // final: can't be overridden again
+};
+
+//// Use
+/// 1. modern cpp
+unique_ptr<Animal> animal = make_unique<Cat>();
+// or
+const unique_ptr<const Animal> animal = make_unique<const Cat>();
+animal->speak(); // "cat"
+
+/// 2. raw ptrs
+const Cat cat;
+const Animal* animal_ptr = &cat;
+animal_ptr->speak(); // "cat"
+```
+</td>
+</tr>
+
+
 
 
 <!-- ----------------------------------------------------- -->

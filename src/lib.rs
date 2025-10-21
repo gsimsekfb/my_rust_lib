@@ -87,6 +87,7 @@ mod traits_same_name_fn_call;
 mod traits_supertraits;
 mod type_;
 mod unpack;
+mod unsafe_;
 mod utils;
 mod variadic;
 #[cfg(not(target_os = "windows"))]

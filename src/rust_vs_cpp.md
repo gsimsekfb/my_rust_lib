@@ -562,6 +562,87 @@ auto f = [s = move(s)]() { return s + "bb"; };
 
 <!-- ----------------------------------------------------- -->
 <tr>
+<td> Generics </td>
+
+<td>
+
+```rust
+//// 1. Generic Fn w/ Trait bounds - these are all same:
+fn foo_1<T: ToString>(arg: T) {
+    println!("{}", arg.to_string());
+}
+
+fn foo_2(arg: impl ToString) {  // this is sugar for foo_1
+    println!("{}", arg.to_string());
+}
+
+fn foo_3<T>(arg: T) -> i32 
+where T: ToString {
+    println!("{}", arg.to_string());
+    42
+}
+
+//// 2. Generic class
+struct Pair<T1, T2> {
+    first: T1,
+    second: T2
+}
+
+impl<T1: std::fmt::Display, T2> Pair<T1, T2> { // T1 is printable
+    fn first(&self) -> &T1 { &self.first }
+}
+
+let pair = Pair { first: 1, second: 2 };
+let pair = Pair::<u8, u8> { first: 1, second: 2 };
+```
+
+</td>
+
+<td>
+    
+```cpp
+//// 1. Generic fn
+// a. After C++20 Concepts:
+template <typename T>
+concept Addable = requires(T a, T b) {
+    { a + b } -> std::same_as<T>;
+};
+
+template <Addable T>
+T add(T a, T b) {
+    return a + b;
+}
+
+// b. Before C++20 Concepts:
+template <typename T>
+T add(T a, T b) {   // w/o concept, this is duck typing
+    return a + b; 
+}
+
+//// 2. Generic class
+template <typename T1, typename T2>
+class Pair {
+public:
+    void print_first() { cout << "first: " << this->first << endl; }
+    Pair(T1 first, T2 second) : first(first), second(second) {} 
+
+private:
+    T1 first;
+    T2 second;
+};
+
+auto pair = Pair(1, 2); 
+Pair<int,int> pair = Pair(1, 2);
+```
+</td>
+</tr>
+
+
+
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
 <td> temp </td>
 
 <td>

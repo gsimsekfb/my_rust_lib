@@ -3,6 +3,7 @@
 #![allow(unused_variables)]
 #![allow(non_camel_case_types)]
 #![allow(clippy::four_forward_slashes)]
+#![allow(clippy::println_empty_string)]
 
 // todos
 // todo-linked_list_reverse
@@ -10,6 +11,7 @@
 
 mod array_two_sum;
 mod bit_count_set_bits;
+mod graph;
 mod linked_list_del_nth_node;
 mod matrix_set_bits_at_row_column;
 mod maze_1d_array;

@@ -12,7 +12,8 @@
 mod array_two_sum;
 mod bit_count_set_bits;
 mod graph;
-mod linked_list_del_nth_node;
+mod list_del_nth_node;
+mod list_find_common_tail;
 mod matrix_set_bits_at_row_column;
 mod maze_1d_array;
 mod string_len_longest_substr_w_nonrepeat_chars;

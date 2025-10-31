@@ -63,21 +63,20 @@ fn delete_nth_node(list: &mut Option<Box<L>>, index: u8) {
     let mut i = 1;
     while let Some(node) = current {
         // debug for: index 2, i=1, take node_1.next (node_2) out and assign node_3 instead
-        if i + 1 == index {
-            if let Some(node_next) = node.next.take() { // take node_next (node 2) out of node 1
-                // node_next.next = None; // Todo: how come this is error but next line is Ok
-                                          // we can take out of something from node_next but 
-                                          // we cannot modify it ?
-                node.next = node_next.next; // node_1.next = (2.next which is node 3)
-                    // Note: partial move: move node_next.next (node 3) to node_1.next
-                    // - node_next(node_2).next which is node_3 moved to node_1.next
-                    // - node_next ( node 2, Box<L>) dropped at the end of this                    
-                // dbg!(&node_next);
-                    // Note: error[E0382]: borrow of partially moved value: `node_next`
- 
-                println!("-- deleting node {}", node_next.val);
-                return;
-            }
+        if i + 1 == index && let Some(node_next) = node.next.take() { 
+                                        // take node_next (node 2) out of node 1
+            // node_next.next = None; // Todo: how come this is error but next line is Ok
+                                        // we can take out of something from node_next but 
+                                        // we cannot modify it ?
+            node.next = node_next.next; // node_1.next = (2.next which is node 3)
+                // Note: partial move: move node_next.next (node 3) to node_1.next
+                // - node_next(node_2).next which is node_3 moved to node_1.next
+                // - node_next ( node 2, Box<L>) dropped at the end of this                    
+            // dbg!(&node_next);
+                // Note: error[E0382]: borrow of partially moved value: `node_next`
+
+            println!("-- deleting node {}", node_next.val);
+            return;
         }
         dbg!(node.val);
         current = &mut node.next; // next node

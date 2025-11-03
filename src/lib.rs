@@ -48,6 +48,7 @@ mod let_else;
 mod lifetimes;
 mod loop_multi;
 mod match_;
+mod memory_leak;
 mod mini_grep;
 mod multi_threading_par_iter;
 mod r#mut;

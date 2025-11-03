@@ -1,7 +1,26 @@
+// Last: 11.25
+
 // Task:
 // Given two linked lists, determine if they share a common tail 
 // (i.e., they converge at some node and share all subsequent nodes). 
 // If they do, return the node where they merge. If not, return null
+// Report time and space complexity
+
+
+// todo: compare w/ cpp impl
+
+
+
+
+
+
+// -----------------------------------------------------------------------
+
+
+
+
+
+
 
 use std::rc::Rc;
 
@@ -57,7 +76,11 @@ fn advance(mut list: &NodePtr, mut steps: usize) -> &NodePtr {
     list
 }
 
-fn find_common_tail<'a>(mut list1: &'a NodePtr, mut list2: &'a NodePtr) -> &'a NodePtr {
+// O(n+m) time, O(1) space
+fn find_common_tail<'a>(
+    mut list1: &'a NodePtr,
+    mut list2: &'a NodePtr
+) -> &'a NodePtr {
     // Step-1: find lens and last nodes. 
     let (len1, last_node_1) = find_len_and_last_node(list1);
     let (len2, last_node_2) = find_len_and_last_node(list2);

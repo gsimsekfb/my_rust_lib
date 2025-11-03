@@ -7,6 +7,9 @@
 // Find the cycle w/ 2 ways, using std lib fn and raw ptrs
 
 
+// todo: memory leak in stalled tasks/threads, ways to detect and cancel them
+
+
 
 
 // ========================================

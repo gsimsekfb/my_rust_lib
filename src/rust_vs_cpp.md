@@ -7,7 +7,45 @@
 </tr>
 
 
+// todo: refcell mutate
 
+    let p1 = Rc::new(RefCell::new(String::from("ab"))); // Rc<Refcell<T>>
+    // mutate T
+    // !! p1 does not have to be "mut" to be mutated which is the point
+    //    RefCell and Cell smart ptrs - aka Interior(Runtime) Mutability
+    *p1.borrow_mut() = "cd".to_string();
+
+// move semantics
+let pair = (42, "abc".to_string());
+let (x, s1) = &pair;     // x: &i32, s1: &String
+let (x, s1) = pair;      // x: i32,  s1: String   // !! pair is moved
+let (x, ref s1) = pair;  // x: i32,  s1: &String  // ref keyword
+
+// todo: .. keyword
+
+// todo: add to reference section
+const auto& [i, d, s] = tuple; // s is a const reference
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> temp </td>
+
+<td>
+
+```rust
+
+```
+
+</td>
+
+<td>
+    
+```cpp
+
+```
+</td>
+</tr>
 
 
 <!-- ----------------------------------------------------- -->
@@ -26,6 +64,7 @@ let res = if x < 0 { '-' } else { '+' };
     
 ```cpp
 char ch = x < 0 ? '-' : '+';
+    // Warn: Use ?: for pure value selection, not with fn calls w/ side effects
 ```
 </td>
 </tr>
@@ -91,16 +130,29 @@ void move_(string s) { s = "bb" }; // move and modify in fn
 <td>
 
 ```rust
-let i = 42;
-let ref_ = &i;
-let ptr = &i as *const i32;
+// 1. Basics
+let mut i = 42;
+let ref_ = &i;      // &i32     - immut binding to immut ref
+let ref_ = &mut i;  // &mut i32 - immut binding to mut ref
+let pair = (42, "abc".to_string());
+let (x, ref s1) = ; // x: i32, s1: &String  // ref keyword
+
+let ptr = &i as *const i32; // syntax: &T as *const T
+let ptr = &mut i *mut i32   // syntax: &T as *mut T
 
 // deref
 dbg!(ref_);
-unsafe { dbg!(*ptr); }
+unsafe { dbg!(*ptr); }  // !! unsafe required to deref raw ptr !!
 
 // print ptr addr
 dbg!(ptr);
+
+// 2. table
+let mut x = 1;
+let mut binding = &mut x;  // mut binding   to mut ref
+let binding     = &mut x;  // immut binding to mut ref
+let mut binding = &x;      // mut binding   to immut ref
+let binding     = &x;      // immut binding to immut ref
 ```
 
 </td>
@@ -108,9 +160,12 @@ dbg!(ptr);
 <td>
     
 ```cpp
+// 1. Basics
 int i = 42;
-int& ref = i;
-int* ptr = &i;
+int& ref = i; // int& - references are NOT re-bindable, unlike ptrs
+ref = x;      // this is not a rebind, it will assign value `i = x`
+
+int* ptr = &i;  // int*
 
 // deref
 cout << ref
@@ -118,6 +173,12 @@ cout << *ptr
 
 // print ptr addr
 cout << ptr
+
+// 2. table
+int* p1;              // mut ptr   to mut data
+int* const p1;        // immut ptr to mut data
+const int* p1;        // mut ptr   to immut data
+const int* const p1;  // immut ptr to immut data
 ```
 </td>
 </tr>
@@ -216,6 +277,72 @@ int arr[3][2] = { {1,2}, {3,4}, {5,6} };
 </tr>
 
 
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Pair / Tuple </td>
+
+<td>
+
+```rust
+//// Pair/Tuple (No separate pair type in Rust, all tuples )
+// create
+let pair                = (42, "abc".to_string());
+let pair: (i32, String) = (42, "abc".to_string());
+
+// destruct
+let (x, s1) = &pair;     // x: &i32, s1: &String
+// let (x, s1) = pair;      // x: i32,  s1: String   // !! pair is moved
+let (x, ref s1) = pair;  // x: i32,  s1: &String  // ref keyword
+let (_, s1) = &pair;     // s1: &String
+let (.., last) = &pair;  // Get last element (works for longer tuples)
+
+// access/modify
+let mut pair = (42, "abc".to_string());
+pair.0 = 0;
+pair.1 = "www".to_string();
+let (x, _) = &mut pair;     // x: &mut i32
+*x = 99;
+let (_, ref mut s1) = pair;  // s1: &mut String  // ref keyword
+*s1 = "qq".to_string();
+```
+
+</td>
+
+<td>
+    
+```cpp
+//// 1. Pair 
+//    Note: std::pair is essentially a std::tuple with exactly 2 elements
+
+// create
+auto pair = std::make_pair(42, "hello");
+std::pair<int, string> pair = {42, "hello"};
+
+// destruct
+const auto& [i, str] = pair;   // C++17
+const auto& [_, str] = pair;   // C++17
+
+// access/modify
+auto x = pair.first;
+auto y = pair.second;
+
+//// 2. Tuple
+// create
+auto tuple = std::make_tuple(42, 3.14, "hello");
+std::tuple<int, double, string> tuple = {42, 3.14, "hello"};
+
+// destruct
+auto [i, d, str] = tuple;   // C++17
+
+// access/modify
+auto str = get<2>(tuple);
+auto str = get<string>(tuple); // C++14: Get by type, not index
+get<2>(tuple) = "abc";
+```
+</td>
+</tr>
+
+
 
 <!-- ----------------------------------------------------- -->
 <tr>
@@ -228,13 +355,11 @@ int arr[3][2] = { {1,2}, {3,4}, {5,6} };
 
 for e in vec { }
 for e in &vec { } // loop by reference 
-    // desugars into:
-    {
-        let mut iter = vec.iter_mut(); 
-            // iter: scoped mutable borrow
-        while let Some(e) = iter.next() {
-            *e *= 2;
-        }
+    // desugars into: (if vec is mut)
+    let mut iter = vec.iter_mut(); 
+        // iter: scoped mutable borrow
+    while let Some(e) = iter.next() {
+        *e *= 2;
     }
 
 
@@ -272,6 +397,12 @@ for (int i = 0; i < 6; i+=2) { }
 <td>
 
 ```rust
+// e.g. iter.next(): Option<&'a mut T>, e: &mut i32
+let mut iter = vec.iter_mut();
+while let Some(e) = iter.next() {
+    *e += 1;
+}
+
 loop {
     // body
     if condition {
@@ -615,7 +746,7 @@ T add(T a, T b) {
 
 // b. Before C++20 Concepts:
 template <typename T>
-T add(T a, T b) {   // w/o concept, this is duck typing
+T add(T a, T b) {   // w/o concepts, this is duck typing
     return a + b; 
 }
 
@@ -637,6 +768,75 @@ Pair<int,int> pair = Pair(1, 2);
 </td>
 </tr>
 
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Error Handling </td>
+
+<td>
+
+```rust
+let vec = vec![1,2,3];
+
+// 1
+if let Some(elem) = vec.get(10) {
+    dbg!(elem);
+} else { // optional 
+    println!("err: index out of bounds")
+}
+
+// 2
+match vec.get(10) {
+    Some(elem) => { dbg!(*elem); } ,
+    None => println!("err: index out of bounds")
+}
+
+// 3. Rarely used - not the same as exceptions
+let res = std::panic::catch_unwind(|| {
+    let elem = vec[10];
+    dbg!(elem);
+});
+
+match res {
+    Ok(_) => println!("No panic"),
+    Err(e) => {
+        println!("Caught a panic!");
+        if let Some(msg) = e.downcast_ref::<&str>() {
+            println!("msg: {msg}");
+        }
+    }
+}
+
+Cargo.toml:
+[profile.dev]
+panic = 'unwind' # default is 'abort'
+```
+
+</td>
+
+<td>
+    
+```cpp
+auto const vec = vector { 1,2,3 };
+
+// a. try/catch basic
+// E.18: Minimize the use of explicit try/catch.
+//       Favor RAII and structured error handling over manual try/catch.
+try {
+    vec.at(10);
+}
+catch(std::exception const& err) { // or std::out_of_range
+    cout << "err: " << err.what() << endl;
+        // err: invalid vector subscript
+}
+
+// b. catch all
+// only use  as a last resort, ideally with logging and re-throwing.
+catch(...)
+```
+</td>
+</tr>
 
 
 

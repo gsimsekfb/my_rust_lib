@@ -6,6 +6,7 @@
 <td> Topic </td> <td> Rust </td> <td> C++ </td>
 </tr>
 
+// todo: algos / iter map reduce filter
 
 // todo: refcell mutate
 
@@ -217,14 +218,38 @@ char str[4] = {'C','+','+','\0'};
 <td>
 
 ```rust
+//// create
 let v = vec![1,2,3];
 let v: Vec<i32> = Vec::new();
+let v: Vec<i32> = (0..5).collect();
+let v = Vec::from([1, 2, 3]);
+let v = [1, 2, 3].to_vec();
+    // Slicing
+    let slice = &vec[1..4];  // Elements at index 1, 2, 3
+    let slice = &vec[1..=4]; // Elements at index 1, 2, 3, 4
+    let slice = &vec[..3];  // First 3 elems (0,1,2)
+    let slice = &vec[vec.len()-2..vec.len()]; // Last 2 elems
+    let slice = &vec[2..];  // From index 2 to end
+    let slice = &vec[..];   // Entire vector as slice
 
-// access
-if let Some(value) = vec.get(1) { }
+//// iter
+for e in &vec { dbg!(e); };      // e: &i32
+for e in &mut vec { *e += 10; }; // e: &i32
+for e in vec { dbg!(e); };       // e: i32, !! vec moved/consumed
+for e in vec.iter().rev() { dbg!(e); }; // e: &i32
 
-// add element
+vec.iter();      // Immutable borrow iterator
+vec.iter_mut();  // Mutable borrow iterator
+vec.into_iter(); // Consuming/move iterator
+
+//// read
+if let Some(val) = vec.get(1) { }
+let val = vec.get(5).unwrap_or(&0); // Get with default, val: &i32
+let x = v[0];   // unsafe, panics out of bounds
+
+//// write
 v.push(42)
+v.pop() // remove last
 ```
 
 </td>
@@ -233,20 +258,144 @@ v.push(42)
 ```cpp
 vector v = {1, 2, 3};
 vector<int> v = {1, 2, 3};
+    // slicing, cpp20
+    std::span(vec).subspan(1, 3); // Indexes 1, 2, 3
+    std::span(vec).first(2);      // First 2
+    std::span(vec).last(2);       // Last 2
+    std::span(vec).subspan(2);    // From index 2 to end
+    std::span(vec);               // Entire vector
 
-// safe access: 
-// (note: use vec[] if fast access needed)
-try {
+//// iter
+for(int e : vec) { } // range-based for loop - cpp11
+// pre-cpp11
+for (auto iter = vec.begin(); iter != vec.end(); ++iter) {
+    *iter += 10;
+}
+for (size_t i = 0; i < vec.size(); ++i) { std::cout << vec[i] << " "; }
+
+// ranges, cpp20
+for(auto e : vec | std::views::reverse) { println(e); };
+for(auto& e : vec | std::views::reverse) { e +=10; };
+
+//// read 
+try {   // safe access
     int value = vec.at(0); // OK
 } catch (const out_of_range& err) {
     cerr << "err: " << err.what() << "\n";
 }
 
-// add element
+vec[5] // unsafe but use if fast access needed
+
+//// write
 v.push_back(42)
 ```
 </td>
 </tr>
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+
+<td> todo: Iterators/Algos </td>
+
+<td>
+
+```rust
+vec.iter();      // Immutable borrow iterator
+vec.iter_mut();  // Mutable borrow iterator
+vec.into_iter(); // Consuming/move iterator
+
+let doubled: Vec<_> = v.iter().map(|x| x * 2).collect();
+let filtered: Vec<_> = v.iter().filter(|&&x| x > 2).collect();
+...
+```
+
+</td>
+<td>
+    
+```cpp
+...
+```
+</td>
+</tr>
+
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Map/HashMap </td>
+
+<td>
+
+```rust
+//// create
+// Unsorted map
+let mut map = HashMap::from([ (1, "a"), (2, "b") ]);
+let map = vec![ (3,"c"), (4, "d") ].into_iter().collect::<HashMap<_,_>>();
+let map: HashMap<_,_> = vec![ (3,"c"), (4, "d") ].into_iter().collect();
+// Sorted map (ordered by keys)
+let mut bmap: BTreeMap<i32, String> = BTreeMap::new();
+
+//// iter
+for (key, val) in &map { dbg!(key, val); };
+for (key, val) in &mut map { *val = "++"; };
+for (key, val) in map.iter().rev() { dbg!(key); }; // !! only for BTreeMap 
+
+//// read
+// Using get - returns Option<&V>
+if let Some(value) = map.get(&1) { println!("{}", value); }
+let value = map[&2];    // panics if key doesn't exist
+
+//// write
+map.insert(1, "ww"); // insert or update
+if let Some(value_ref) = map.get_mut(&1) { *value_ref = "--"; }
+// Modify if exists, insert otherwise
+map.entry(1).and_modify(|val| *val = "--").or_insert("uu");
+
+// Remove by key - returns Option<V>
+let removed = map.remove(&1);
+// Remove and return key-value pair
+let removed = map.remove_entry(&1); // Returns Option<(K, V)>
+// Retain only matching entries
+map.retain(|_k, &mut val| val == "b");
+```
+
+</td>
+
+<td>
+    
+```cpp
+//// create
+std::map<int, string>           map= { {2, "bb" }, { 1, "aa"} };
+std::unordered_map<int, string> map= { {2, "bb" }, { 1, "aa"} };
+
+//// iter
+for (auto const& [kk, vv] : map) { print(vv); print(" "); };
+for (auto const& e : map) { print(e.first); print(e.second); };
+// Reverse iteration
+for (auto it = m.rbegin(); it != m.rend(); ++it) {
+    cout << it->first << ": " << it->second << "\n";
+}
+
+//// read
+if (auto it = map.find(20); it != map.end()) { // cpp17: if w/ initializer
+    // Use: it->first, it->second
+}
+auto elem = map.at(13); // access with bounds checking - throws
+map[13];       // !! !! force update/insert - dangerous for lookups
+
+//// write
+map[3] = "cc";          // !! force update/insert - dangerous for lookups
+map.insert({3, "--"});  // no effect - inserts only if key does not exist
+map.insert_or_assign(55, "ttt");    // cpp17, inserts or updates
+map.emplace(4, "dd");   // Constructs in-place if key doesn't exist
+
+map.erase(4);
+map.erase(map.begin()); // by iterator
+```
+</td>
+</tr>
+
 
 <!-- ----------------------------------------------------- -->
 <tr>
@@ -376,8 +525,8 @@ for (index, item) in items.iter().enumerate() {
 <td>
     
 ```cpp
-
-for(int e : vec) { } 
+// range-based for loop - c++11
+for(int e : vec) { } // see vector for pre-cpp11 options
 
 for (int i = 0; i < 5; ++i) { }
 

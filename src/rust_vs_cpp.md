@@ -288,6 +288,7 @@ vec[5] // unsafe but use if fast access needed
 
 //// write
 v.push_back(42)
+v.pop() // remove last
 ```
 </td>
 </tr>

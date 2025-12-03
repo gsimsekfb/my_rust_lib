@@ -15,7 +15,11 @@
 
 
 /* what is impl Trait ?
-impl Trait means "some *specific type* that implements MyTrait": When you write -> impl MyTrait, you're telling the compiler that the function will return *one specific*, concrete type that implements MyTrait. The caller doesn't know what that specific type is, but the function itself must consistently return the same type.
+impl Trait means "some *specific type* that implements MyTrait": When you write 
+-> impl MyTrait, you're telling the compiler that the function will return 
+*one specific*, concrete type that implements MyTrait. The caller doesn't know 
+what that specific type is, but the function itself must consistently return 
+the same type.
 
 // e.g.
 //

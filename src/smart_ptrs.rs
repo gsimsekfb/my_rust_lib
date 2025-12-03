@@ -13,6 +13,9 @@
 
 
 
+
+#![allow(clippy::toplevel_ref_arg)]
+
 // 0. Task-1
 #[test]
 fn ex0_task_1() {
@@ -23,6 +26,7 @@ fn ex0_task_1() {
     // &i32
     let ref1 = &foo.x;  // de-sugars-to/same-as `&(*foo).x` aka deref coercion
     let ref ref2 = foo.x;
+        // clippy: error: `ref` on an entire `let` pattern is discouraged
 
 
     // 2. mutating x
@@ -30,6 +34,7 @@ fn ex0_task_1() {
     *ref1 = 55;
 
     let ref mut ref2 = foo.x;   // &mut i32 
+        // clippy: error: `ref` on an entire `let` pattern is discouraged
     *ref2 = 77;
 
     let ref3 = foo.as_mut(); // &mut Foo

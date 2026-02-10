@@ -62,3 +62,5 @@ let string = String::from("test");
 string.len();  // Implicit: String → &str → calls &str::len()
 string.starts_with("te");  // String → &str → method call
 ```
+
+6. **.. see also `deref.rs`**

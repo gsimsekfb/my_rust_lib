@@ -1,10 +1,14 @@
-# Rust vs C++
+# Rust vs C++ 
+
+### !!! Do not include long topics like smart ptrs ?? 
 
 <table>
 
 <tr>
 <td> Topic </td> <td> Rust </td> <td> C++ </td>
 </tr>
+
+// todo: cfg.rs ifdef
 
 // todo: algos / iter map reduce filter
 
@@ -23,9 +27,6 @@ let (x, s1) = pair;      // x: i32,  s1: String   // !! pair is moved
 let (x, ref s1) = pair;  // x: i32,  s1: &String  // ref keyword
 
 // todo: .. keyword
-
-// todo: add to reference section
-const auto& [i, d, s] = tuple; // s is a const reference
 
 
 <!-- ----------------------------------------------------- -->
@@ -233,7 +234,7 @@ let v = [1, 2, 3].to_vec();
     let slice = &vec[..];   // Entire vector as slice
 
 //// iter
-for e in &vec { dbg!(e); };      // e: &i32
+ e in &vec { dbg!(e); };      // e: &i32
 for e in &mut vec { *e += 10; }; // e: &i32
 for e in vec { dbg!(e); };       // e: i32, !! vec moved/consumed
 for e in vec.iter().rev() { dbg!(e); }; // e: &i32
@@ -308,14 +309,14 @@ vec.into_iter(); // Consuming/move iterator
 
 let doubled: Vec<_> = v.iter().map(|x| x * 2).collect();
 let filtered: Vec<_> = v.iter().filter(|&&x| x > 2).collect();
-...
+
 ```
 
 </td>
 <td>
     
 ```cpp
-...
+
 ```
 </td>
 </tr>
@@ -469,8 +470,8 @@ auto pair = std::make_pair(42, "hello");
 std::pair<int, string> pair = {42, "hello"};
 
 // destruct
-const auto& [i, str] = pair;   // C++17
-const auto& [_, str] = pair;   // C++17
+const auto& [i, str] = pair;   // cpp17
+const auto& [_, str] = pair;   // cpp17
 
 // access/modify
 auto x = pair.first;
@@ -478,16 +479,46 @@ auto y = pair.second;
 
 //// 2. Tuple
 // create
+auto tuple = std::tuple {42, 3.14, "hello"};
 auto tuple = std::make_tuple(42, 3.14, "hello");
 std::tuple<int, double, string> tuple = {42, 3.14, "hello"};
 
 // destruct
-auto [i, d, str] = tuple;   // C++17
+auto [i, d, str] = tuple;   // cpp17
 
 // access/modify
 auto str = get<2>(tuple);
-auto str = get<string>(tuple); // C++14: Get by type, not index
+auto str = get<string>(tuple); // cpp14: Get by type, not index
 get<2>(tuple) = "abc";
+```
+</td>
+</tr>
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> if statement </td>
+
+<td>
+
+```rust
+
+```
+
+</td>
+
+<td>
+    
+```cpp
+// initializer in if statement (since cpp17):
+const vector v = {1,2,3};
+if (auto iter = ranges::find(v, 42); iter != v.end() ) { // cpp20 ranges
+    print("found elem: "); println(*iter);
+}
+// or
+if (auto iter = find(v.cbegin(), v.cend(), 2); iter != v.end()) {
+    // same
+}
 ```
 </td>
 </tr>
@@ -526,7 +557,7 @@ for (index, item) in items.iter().enumerate() {
 <td>
     
 ```cpp
-// range-based for loop - c++11
+// range-based for loop - cpp11
 for(int e : vec) { } // see vector for pre-cpp11 options
 
 for (int i = 0; i < 5; ++i) { }
@@ -883,7 +914,7 @@ let pair = Pair::<u8, u8> { first: 1, second: 2 };
     
 ```cpp
 //// 1. Generic fn
-// a. After C++20 Concepts:
+// a. After cpp20 Concepts:
 template <typename T>
 concept Addable = requires(T a, T b) {
     { a + b } -> std::same_as<T>;
@@ -894,7 +925,7 @@ T add(T a, T b) {
     return a + b;
 }
 
-// b. Before C++20 Concepts:
+// b. Before cpp20 Concepts:
 template <typename T>
 T add(T a, T b) {   // w/o concepts, this is duck typing
     return a + b; 
@@ -1097,7 +1128,7 @@ delete[] strs;
 
 ```rust
 fn main() {
-    // ...
+    // 
 }
 ```
 
@@ -1107,7 +1138,7 @@ fn main() {
     
 ```cpp
 int main() {
-  // ...
+  // 
   return 0;
 }
 ```
@@ -1271,7 +1302,7 @@ const Cat cat;
 speak(cat);
 
 // c. Inheritance
-... (see Inheritance section)
+ (see Inheritance section)
 ```
 </td>
 </tr>

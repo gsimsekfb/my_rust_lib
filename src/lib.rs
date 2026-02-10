@@ -31,6 +31,7 @@ mod concurrency;
 mod const_fn;
 mod conversions;
 mod default;
+mod deref;
 mod drop_aka_dtor;
 mod doc_test;
 mod r#dyn;

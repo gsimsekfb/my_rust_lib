@@ -9,6 +9,29 @@
 // ---------------------
 
 
+// "Rules of Thumb" for using unsafe:
+
+// 1. Can the fn crash if given "bad" input? If yes, mark the function unsafe fn.
+// 2. Doing something tricky (like manual memory management) but the outside 
+//    world can't possibly break it, use a safe fn with an internal unsafe block.
+//
+// Examples:
+//
+// 1. unsafe fn:
+// Safety: Callers should check if the ptr p is valid
+unsafe fn foo_unsafe(p: *const i32) -> i32 { *p }
+
+//
+// 2. safe fn "(but since it contains unsafe block, not the safest fn)
+//    Here we guarantee safety inside the function so the caller doesn't 
+//    have to worry about it
+fn foo_safe(p: *const i32) -> i32 {
+    if p.is_null() { return 0; /* Or handle the error */ }
+    
+    unsafe { *p } // We've done our checks, so we "hide" the unsafety
+}
+
+
 
 // https://doc.rust-lang.org/book/ch20-01-unsafe-rust.html
 //

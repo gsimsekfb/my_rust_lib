@@ -2,20 +2,20 @@
 
 //// Static dispatch vs Dynamic dispatch
 // 
-// trait Shape, fn area returns f64
+// a. trait Shape, fn area returns f64
 // struct Rect, h, w f64
 // impl Shape for Rect
 // struct Cir, radius f64
 // impl Shape for Cir
-// static dispatch:
+// b. static dispatch:
 // fn get_area, accepts an obj that impl Shape, returns area
 // Test it
-// dyn dispatch:
-// fn sum_areas_dyn_a takes vector of Shapes, returns sum of areas
-// fn sum_areas_static takes vector of Shapes, returns sum of areas
-// fn sum_areas_dyn_b takes &vector of &Shapes, returns sum of areas
-// fn sum_areas_dyn_b_sink takes vector of &Shapes, returns sum of areas
-// fn sum_areas_dyn_b_generic takes &vector of &Shapes, returns sum of areas
+// c. dyn vs static dispatch:
+// list 3 forms which dyn can exist in code, then check dyn.rs
+// fn sum_areas_static_ref takes series of Shapes, returns sum of areas
+// fn sum_areas_static_sink takes series of Shapes, returns sum of areas
+// fn sum_areas_dyn_ref takes series of Shapes, returns sum of areas
+// fn sum_areas_dyn_sink takes series of Shapes, returns sum of areas
 // Test them, see usage diff
 
 // Src:  
@@ -73,7 +73,7 @@ fn ex1_static_dispatch() {
 // a
 // With trait objects multiple different shapes can 
 // be contained in the vector.
-fn sum_areas_dyn_a(shapes: Vec<Box<dyn Shape>>) -> f64 { // todo: remove Box?
+fn sum_areas_dyn_sink(shapes: Vec<Box<dyn Shape>>) -> f64 {
     shapes.iter().map(|e| e.area()).sum()
     // or
     // shapes.iter().fold(0., |acc, shape| {
@@ -84,7 +84,7 @@ fn sum_areas_dyn_a(shapes: Vec<Box<dyn Shape>>) -> f64 { // todo: remove Box?
 // Static dispatch
 // This only works if every element in the vector is the same Shape type
 // A generic type param can only be substituted with ONE concrete type at a time
-fn sum_areas_static<S: Shape>(shapes: Vec<S>) -> f64 {
+fn sum_areas_static_sink<S: Shape>(shapes: Vec<S>) -> f64 {
     shapes.iter().map(|e| e.area()).sum()
 }
 // using generics and trait bounds - definitions will be monomorphized to 
@@ -99,43 +99,35 @@ fn sum_areas_static<S: Shape>(shapes: Vec<S>) -> f64 {
 // method you’re calling at compile time.
 
 // b 
-// without Box, vector of refs
-fn sum_areas_dyn_b_gen<S: Shape + ?Sized>(shapes: &[&S]) -> f64 {
-    shapes.iter().map(|e| e.area()).sum()
-}
-fn sum_areas_dyn_b(shapes: &[&dyn Shape]) -> f64 { 
+fn sum_areas_dyn_ref(shapes: &[&dyn Shape]) -> f64 { 
                             // clippy: &[&] instead of Vec<&S>
     shapes.iter().map(|e| e.area()).sum()
 }
-fn sum_areas_dyn_b_sink(shapes: Vec<&dyn Shape>) -> f64 { 
-                            // cannot use &[&] instead of Vec<&S>
+
+fn sum_areas_static_ref(shapes: &[&impl Shape]) -> f64 {
     shapes.iter().map(|e| e.area()).sum()
 }
 
+
 #[test] 
-fn ex2_dyn_dispatch() {
-    // a
+fn ex2_dyn_vs_static_dispatch() {
+
+    let rec1 = Rect { h: 2.0, w: 3.0 };
+    let rec2 = Rect { h: 2.0, w: 3.0 };
+    let cir1 = Circle { radius: 2.0 };
+
     // dyn
-    let rec: Box<dyn Shape> = Box::new(Rect { w: 4.0, h: 3.0});
-    let cir: Box<dyn Shape> = Box::new(Circle { radius: 3.0});
-    let vec = vec![rec, cir];
-    assert_eq!(sum_areas_dyn_a(vec), 40.27433388230814);
+    assert_eq!(sum_areas_dyn_ref(&[&rec1, &cir1]), 18.566370614359172);
+    let res = sum_areas_dyn_sink(vec![Box::new(rec1), Box::new(cir1)]);
+    assert_eq!(res, 18.566370614359172);
+
     // static
-    let rec = Rect { w: 4.0, h: 3.0 };
-    let cir = Circle { radius: 3.0 };
-    // sum_areas_static(vec![rec, cir]); // error
+    let rec1 = Rect { w: 4.0, h: 3.0 };
+    let cir1 = Circle { radius: 3.0 };
+    // sum_areas_static(vec![rec1, cir1]); // error
     let rec2 = Rect { w: 4.0, h: 3.0 };
-    sum_areas_static(vec![rec, rec2]); // Ok
-
-    // b
-    // dyn
-    let rec = Rect { w: 4.0, h: 3.0 };
-    let cir = Circle { radius: 3.0 };
-    let vec: Vec<&dyn Shape> = vec![&rec, &cir];
-    assert_eq!(sum_areas_dyn_b(&vec), 40.27433388230814);
-    assert_eq!(sum_areas_dyn_b_gen(&vec), 40.27433388230814);
-
-    assert_eq!(sum_areas_dyn_b_sink(vec), 40.27433388230814);
+    sum_areas_static_ref(&[&rec1, &rec2]); // Ok
+    sum_areas_static_sink(vec![rec1, rec2]); // Ok
 }
 
 

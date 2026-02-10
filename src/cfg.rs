@@ -32,8 +32,9 @@ fn ex_1_should_fail_with_feature_foo() {
     }
 }
 
-// Will fail with 
-// cargo t --features "foo aa" cfg_all
+// this test should fail: 
+// cargo t --features "foo aa" ex_3_cfg_all
+//
 // More:
 // https://doc.rust-lang.org/reference/conditional-compilation.html#conditional-compilation
 #[test] fn ex_3_cfg_all() {

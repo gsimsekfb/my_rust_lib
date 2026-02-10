@@ -83,13 +83,13 @@ fn max_height(node: &N) -> usize {
 fn max_height_impl(node: &N, h: usize, max_height: &mut usize) {
     // println!("{h}: {}", node.v);
     if h > *max_height { *max_height = h; }
-    if node.l.is_some() {
+    if let Some(l) = &node.l {
         if h+1 > *max_height { *max_height = h+1; }
-        max_height_impl(node.l.as_ref().unwrap(), h+1, max_height);
+        max_height_impl(l, h+1, max_height);
     }
-    if node.r.is_some() {
+    if let Some(r) = &node.r {
         if h+1 > *max_height { *max_height = h+1; }
-        max_height_impl(node.r.as_ref().unwrap(), h+1, max_height);
+        max_height_impl(r, h+1, max_height);
     }
 }
 

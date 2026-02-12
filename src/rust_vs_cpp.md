@@ -10,8 +10,6 @@
 
 // todo: cfg.rs ifdef
 
-// todo: algos / iter map reduce filter
-
 // todo: refcell mutate
 
     let p1 = Rc::new(RefCell::new(String::from("ab"))); // Rc<Refcell<T>>
@@ -234,10 +232,12 @@ let v = [1, 2, 3].to_vec();
     let slice = &vec[..];   // Entire vector as slice
 
 //// iter
- e in &vec { dbg!(e); };      // e: &i32
-for e in &mut vec { *e += 10; }; // e: &i32
-for e in vec { dbg!(e); };       // e: i32, !! vec moved/consumed
-for e in vec.iter().rev() { dbg!(e); }; // e: &i32
+for e in &vec { dbg!(e); };      // 1.immut ref, e: &i32
+for e in &mut vec { *e += 10; }; // 2.mut ref, e: &mut i32
+for e in vec { dbg!(e); };       // 3.move: e, i32, !! vec moved/consumed
+for e in vec.clone() { dbg!(e); };       // 4.copy: e: i32, !! vec copied
+for e in vec.iter().rev() { dbg!(e); };  // e: &i32
+    // see more for loops in section `For loop`
 
 vec.iter();      // Immutable borrow iterator
 vec.iter_mut();  // Mutable borrow iterator
@@ -267,14 +267,19 @@ vector<int> v = {1, 2, 3};
     std::span(vec);               // Entire vector
 
 //// iter
+for (auto const& e : vec) { println(e); } // 1. const ref, e: const int&
+for (auto& e : vec) { e += 10; }          // 2. mut ref, e: int&
+N/A                                       // 3. no direct equivalent
+for (auto e : vec) { println(e); }        // 4. copy
+
+// looping in cpp versions:
 for(int e : vec) { } // range-based for loop - cpp11
-// pre-cpp11
-for (auto iter = vec.begin(); iter != vec.end(); ++iter) {
+for (auto iter = vec.begin(); iter != vec.end(); ++iter) { // pre-cpp11
     *iter += 10;
 }
-for (size_t i = 0; i < vec.size(); ++i) { std::cout << vec[i] << " "; }
+for (size_t i = 0; i < vec.size(); ++i) { vec[i]; }
 
-// ranges, cpp20
+// looping using ranges, cpp20
 for(auto e : vec | std::views::reverse) { println(e); };
 for(auto& e : vec | std::views::reverse) { e +=10; };
 
@@ -298,7 +303,7 @@ v.pop() // remove last
 <!-- ----------------------------------------------------- -->
 <tr>
 
-<td> todo: Iterators/Algos </td>
+<td>Iterators/Algos </td>
 
 <td>
 
@@ -307,16 +312,69 @@ vec.iter();      // Immutable borrow iterator
 vec.iter_mut();  // Mutable borrow iterator
 vec.into_iter(); // Consuming/move iterator
 
-let doubled: Vec<_> = v.iter().map(|x| x * 2).collect();
-let filtered: Vec<_> = v.iter().filter(|&&x| x > 2).collect();
+//// map / filter / reduce
 
+// 1. map
+let doubled: Vec<i32> = vec.iter().map(|e| e*2).collect();
+
+// 2. filter
+let evens: Vec<&i32> = vec.iter().filter(|&&e| (e % 2) == 0).collect();
+let evens: Vec<i32> = vec.iter().filter(|&&e| (e % 2) == 0).copied().collect();
+let evens: Vec<i32> = vec.into_iter().filter(|e| (e % 2) == 0).collect();
+
+// 3. reduce
+let sum: i32 = vec.iter().sum();
+
+// 4. find
+let result = vec.iter().find(|&&e| e == 2); // Option<&i32>
 ```
 
 </td>
 <td>
     
 ```cpp
+//// map / filter / reduce
 
+/// 1. map
+// cpp23 (ranges), cpp20 (views) / rust-like
+vector<int> doubled = vec 
+    | std::views::transform([](int e) { return e * 2; })  // cpp20
+    | std::ranges::to<std::vector>();                     // cpp23
+
+// cpp11
+vector<int> doubled (vec.size());
+std::transform(
+    vec.cbegin(), vec.cend(), doubled.begin(), 
+    [](int e) { return e * 2; }
+);
+
+/// 2. filter
+vector<int> evens = vec 
+    | std::views::filter( [](int e) { return e % 2 == 0; } )  // cpp20
+    | std::ranges::to<vector>();                              // cpp23
+
+// cpp11
+vector<int> evens2; 
+std::copy_if(
+    vec.cbegin(), vec.cend(), std::back_inserter(evens2),
+    [](int e) { return e %2 == 0; }
+);    
+
+/// 3. reduce
+int sum = std::ranges::fold_left(vec, 0, std::plus()); // cpp23
+int sum = std::accumulate(vec.cbegin(), vec.cend(), 0);
+int sum = std::reduce(std::execution::par, vec.cbegin(), vec.cend()); // cpp17
+
+/// 4. find
+auto iter = std::ranges::find_if(vec, [](int e) { return e > 2; }); // cpp20
+auto iter = find_if(vec.cbegin(), vec.cend(), [](int e) { return e > 2; });
+    auto iter = std::ranges::find(vec, 2); // cpp20
+    auto iter = find(vec.cbegin(), vec.cend(), 2);
+
+// cpp17: if w/ initializer
+if (auto iter = ranges::find(vec, 2); iter != vec.cend()) { // cpp20
+    println(*iter);
+}
 ```
 </td>
 </tr>
@@ -533,16 +591,15 @@ if (auto iter = find(v.cbegin(), v.cend(), 2); iter != v.end()) {
 <td>
 
 ```rust
-
+// see more in section Vector
 for e in vec { }
 for e in &vec { } // loop by reference 
-    // desugars into: (if vec is mut)
+    // de-sugars into: (if vec is mut)
     let mut iter = vec.iter_mut(); 
         // iter: scoped mutable borrow
     while let Some(e) = iter.next() {
         *e *= 2;
     }
-
 
 for i in 0..=5 { }
 
@@ -551,6 +608,7 @@ for i in (0..6).step_by(2) { }
 for (index, item) in items.iter().enumerate() {
     println!("Item {index}: {item}");
 }
+// see more in section Vector
 ```
 
 </td>

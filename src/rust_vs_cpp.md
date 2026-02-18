@@ -232,10 +232,10 @@ let v = [1, 2, 3].to_vec();
     let slice = &vec[..];   // Entire vector as slice
 
 //// iter
-for e in &vec { dbg!(e); };      // 1.immut ref, e: &i32
-for e in &mut vec { *e += 10; }; // 2.mut ref, e: &mut i32
-for e in vec { dbg!(e); };       // 3.move: e, i32, !! vec moved/consumed
-for e in vec.clone() { dbg!(e); };       // 4.copy: e: i32, !! vec copied
+for e in &vec { dbg!(e); };         // 1.immut ref, e: &i32
+for e in &mut vec { *e += 10; };    // 2.mut ref, e: &mut i32
+for e in vec { dbg!(e); };          // 3.move: e, i32, !! vec consumed
+for e in vec.clone() { dbg!(e); };  // 4.copy: e: i32, !! vec copied
 for e in vec.iter().rev() { dbg!(e); };  // e: &i32
     // see more for loops in section `For loop`
 
@@ -318,15 +318,20 @@ vec.into_iter(); // Consuming/move iterator
 let doubled: Vec<i32> = vec.iter().map(|e| e*2).collect();
 
 // 2. filter
-let evens: Vec<&i32> = vec.iter().filter(|&&e| (e % 2) == 0).collect();
-let evens: Vec<i32> = vec.iter().filter(|&&e| (e % 2) == 0).copied().collect();
-let evens: Vec<i32> = vec.into_iter().filter(|e| (e % 2) == 0).collect();
+let evens = vec.iter().filter(|&&e| (e % 2) == 0).collect();
+    // Vec<&i32>
+let evens = vec.iter().filter(|&&e| (e % 2) == 0).copied().collect();
+    // Vec<i32>
+let evens = vec.into_iter().filter(|e| (e % 2) == 0).collect();
+    // Vec<i32>
 
 // 3. reduce
 let sum: i32 = vec.iter().sum();
 
 // 4. find
 let result = vec.iter().find(|&&e| e == 2); // Option<&i32>
+    // usage: for comparison
+    if let Some(val) = result { dbg!(val); };
 ```
 
 </td>
@@ -371,10 +376,11 @@ auto iter = find_if(vec.cbegin(), vec.cend(), [](int e) { return e > 2; });
     auto iter = std::ranges::find(vec, 2); // cpp20
     auto iter = find(vec.cbegin(), vec.cend(), 2);
 
-// cpp17: if w/ initializer
-if (auto iter = ranges::find(vec, 2); iter != vec.cend()) { // cpp20
-    println(*iter);
-}
+    // usage:
+    // cpp17: if w/ initializer
+    if (auto iter = ranges::find(vec, 2); iter != vec.cend()) { // cpp20
+        println(*iter);
+    }
 ```
 </td>
 </tr>
@@ -391,7 +397,7 @@ if (auto iter = ranges::find(vec, 2); iter != vec.cend()) { // cpp20
 //// create
 // Unsorted map
 let mut map = HashMap::from([ (1, "a"), (2, "b") ]);
-let map = vec![ (3,"c"), (4, "d") ].into_iter().collect::<HashMap<_,_>>();
+let map = vec![ (3,"c"), (4,"d") ].into_iter().collect::<HashMap<_,_>>();
 let map: HashMap<_,_> = vec![ (3,"c"), (4, "d") ].into_iter().collect();
 // Sorted map (ordered by keys)
 let mut bmap: BTreeMap<i32, String> = BTreeMap::new();
@@ -399,7 +405,8 @@ let mut bmap: BTreeMap<i32, String> = BTreeMap::new();
 //// iter
 for (key, val) in &map { dbg!(key, val); };
 for (key, val) in &mut map { *val = "++"; };
-for (key, val) in map.iter().rev() { dbg!(key); }; // !! only for BTreeMap 
+for (key, val) in map.iter().rev() { dbg!(key); };
+    // works for BTreeMap which is sorted, not for HashMap 
 
 //// read
 // Using get - returns Option<&V>
@@ -500,7 +507,7 @@ let pair: (i32, String) = (42, "abc".to_string());
 
 // destruct
 let (x, s1) = &pair;     // x: &i32, s1: &String
-// let (x, s1) = pair;      // x: i32,  s1: String   // !! pair is moved
+let (x, s1) = pair;      // x: i32,  s1: String   // !! pair is moved
 let (x, ref s1) = pair;  // x: i32,  s1: &String  // ref keyword
 let (_, s1) = &pair;     // s1: &String
 let (.., last) = &pair;  // Get last element (works for longer tuples)

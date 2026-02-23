@@ -1,7 +1,19 @@
 // interv-1
 
-// a. Write the equivalent fn w/o question mark ? operator:
-//
+// a. Write the equivalent fn w/o question mark ? operator
+//    you may use parse() str to int
+
+
+
+
+
+
+// --------------------------------------------------------
+
+
+
+
+
 use std::fs::File;
 use std::io::{self, Read};
                             // rustlib\src\rust\library\std\src\io\error.rs:

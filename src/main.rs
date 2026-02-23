@@ -14,7 +14,8 @@ mod random_file;
 fn main() {
 
     // -1) 
-    println!("random file: {}", random_file::random_file());
+    println!("rand: {}", random_file::random_my_rust_lib_file());
+    println!("rand: {}", random_file::random_tech_picture_file());
 
     
     // 0) Use runtime env. vars. See [env] in Cargo.toml

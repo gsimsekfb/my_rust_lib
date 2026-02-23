@@ -73,5 +73,23 @@ async fn tokio_pin_2_future_reuse_w_select() {
             println!("Second try: {result}");
         }
     };
-
 }
+
+// todo: add streams example
+//
+// https://tokio.rs/tokio/tutorial/streams -> search:
+// A Rust value is "pinned" when it can no longer be moved in memory. A key property of a pinned value is that pointers can be taken to the pinned data and the caller can be confident the pointer stays valid. This feature is used by async/await to support borrowing data across .await points.
+// 
+// async fn subscribe() -> mini_redis::Result<()> {
+//     let client = client::connect("127.0.0.1:6379").await?;
+//     let subscriber = client.subscribe(vec!["numbers".to_string()]).await?;
+//     let messages = subscriber.into_stream();
+
+//     tokio::pin!(messages);
+
+//     while let Some(msg) = messages.next().await {
+//         println!("got = {:?}", msg);
+//     }
+
+//     Ok(())
+// }

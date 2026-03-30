@@ -2,29 +2,17 @@
 
 ### !!! Do not include long topics like smart ptrs ?? 
 
+### !!! For easy read, only include fundamental/basic topics ?? 
+
 <table>
 
 <tr>
 <td> Topic </td> <td> Rust </td> <td> C++ </td>
 </tr>
 
-// todo: cfg.rs ifdef
-
-// todo: refcell mutate
-
-    let p1 = Rc::new(RefCell::new(String::from("ab"))); // Rc<Refcell<T>>
-    // mutate T
-    // !! p1 does not have to be "mut" to be mutated which is the point
-    //    RefCell and Cell smart ptrs - aka Interior(Runtime) Mutability
-    *p1.borrow_mut() = "cd".to_string();
-
-// move semantics
-let pair = (42, "abc".to_string());
-let (x, s1) = &pair;     // x: &i32, s1: &String
-let (x, s1) = pair;      // x: i32,  s1: String   // !! pair is moved
-let (x, ref s1) = pair;  // x: i32,  s1: &String  // ref keyword
-
-// todo: .. keyword
+// todos: 
+- String, str, char* char[], string
+- .. keyword
 
 
 <!-- ----------------------------------------------------- -->
@@ -48,6 +36,63 @@ let (x, ref s1) = pair;  // x: i32,  s1: &String  // ref keyword
 </tr>
 
 
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Mod/Namespace </td>
+
+<td>
+
+```rust
+mod Woo { pub const XX: i32 = 32; } // public access, usage: Woo::XX 
+mod Woo { let hidden: i32 = 32; }   // only this/sub modules can access 
+```
+
+</td>
+
+<td>
+    
+```cpp
+namespace Woo { const int XX = 42; } // public access, usage: Woo::XX
+namespace     { int hidden = 99; }   // Only visible in this .cpp file
+```
+</td>
+</tr>
+
+
+
+
+<!-- ----------------------------------------------------- -->
+<tr>
+<td> Using/Use/Typedef </td>
+
+<td>
+
+```rust
+// a. type alias
+type MyU8 = u8;
+
+// b. import
+use std::*;     // for prototyping
+```
+
+</td>
+
+<td>
+    
+```cpp
+// a. type alias
+using MyU8 = uint8_t;   // cpp11
+typedef uint8_t MyU8;   // cpp98
+
+// b. import
+using namespace std;    // for prototyping
+```
+</td>
+</tr>
+
+
+
 <!-- ----------------------------------------------------- -->
 <tr>
 
@@ -63,8 +108,8 @@ let res = if x < 0 { '-' } else { '+' };
 <td>
     
 ```cpp
-char ch = x < 0 ? '-' : '+';
-    // Warn: Use ?: for pure value selection, not with fn calls w/ side effects
+char ch = x < 0 ? '-' : '+'; // Warning: Use ?: for pure value selection, 
+                             // not with fn calls w/ side effects
 ```
 </td>
 </tr>
@@ -697,6 +742,15 @@ match color {
     _ => println!("Neither Red nor Green")
 }
 ```
+switch vs match:
+
+| Feature | C++ switch | Rust match |
+|---|---|---|
+| Expression | ❌ (statement) | ✅ |
+| Fallthrough | ✅ (default) | ❌ (no fallthrough) |
+| Exhaustiveness check | ❌ | ✅ (must cover all cases) |
+| Pattern matching | ❌ | ✅ (destructuring, guards, ranges) |
+| Allowed types | integers, enums | anything |
 
 </td>
 <td>
@@ -939,7 +993,7 @@ auto f = [s = move(s)]() { return s + "bb"; };
 
 <!-- ----------------------------------------------------- -->
 <tr>
-<td> Generics </td>
+<td> Generics/Templates </td>
 
 <td>
 

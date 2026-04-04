@@ -6,7 +6,8 @@
 mod mini_grep;
 use mini_grep::{SearchConfig, run_search};
 mod cacher;
-mod random_file;
+mod utils;
+use utils::*;
 
 // todos: 
 // - yml for macos
@@ -14,8 +15,10 @@ mod random_file;
 fn main() {
 
     // -1) 
-    println!("rand: {}", random_file::random_my_rust_lib_file());
-    println!("rand: {}", random_file::random_tech_picture_file());
+    // open_jpg(&random_tech_picture_file());
+    // open_jpg(&random_my_rust_lib_file());
+    // open_jpg(&random_tech_picture_cpp());
+    open_jpg(&random_tech_picture_cpp());
 
     
     // 0) Use runtime env. vars. See [env] in Cargo.toml

@@ -86,8 +86,9 @@ pub fn get_files_all_sub_folders(path: impl AsRef<Path>) -> Vec<String> {
 fn user_dir() -> String { std::env::var("USERPROFILE").unwrap() }
 
 pub fn open_jpg(file: &str) {
-    std::process::Command::new("C:\\Program Files\\XnViewMP\\xnviewmp.exe")
+    let _ = std::process::Command::new("C:\\Program Files\\XnViewMP\\xnviewmp.exe")
         .arg(file)
         .spawn()
-        .expect("Failed to open XnViewMP");
+        .expect("Failed to open XnViewMP")
+        .wait();
 }

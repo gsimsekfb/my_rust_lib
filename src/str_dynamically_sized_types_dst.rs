@@ -1,5 +1,9 @@
 // interv-1
-// &str vs &T - memory layout and size
+// - &str vs &T - memory layout and size
+// - see also sized.rs (same topic)
+
+
+// ---------------------------------------------------------
 
 
 //// 1. str is a special type: DST

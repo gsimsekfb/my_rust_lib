@@ -9,4 +9,4 @@
 
 @echo off
 echo.
-cargo t %1
+cargo t %1 -- --test-threads=1

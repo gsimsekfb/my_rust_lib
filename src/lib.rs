@@ -57,6 +57,7 @@ mod never_type_never_returns;
 mod opaque_types;
 mod option;
 mod question_operator;
+mod sized;
 mod struct_basics_enum_trait_player;
 mod range;
 mod re_export;

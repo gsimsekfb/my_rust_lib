@@ -12,6 +12,7 @@
 mod array_two_sum;
 mod bit_count_set_bits;
 mod graph;
+mod find_byte_pattern;
 mod list_del_nth_node;
 mod list_find_common_tail;
 mod matrix_set_bits_at_row_column;

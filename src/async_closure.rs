@@ -1,4 +1,19 @@
 
+// async block vs closure, in an example:
+// e.g. in tokio, async block used because it has to run one-shot immediately
+// and for actix web async closure because it has to be reusable
+/* 
+    // TOKIO — task runs ONCE, fire and forget
+    tokio::spawn(async {
+        fetch().await;  // spawned once, done
+    });
+
+    // ACTIX — handler runs for EVERY request (reused)
+    .route("/", get(|| async { "hello" }))
+    //          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    //          called again and again per request
+*/
+
 #[tokio::test(flavor = "multi_thread")]
 async fn async_closure_1() {
     // Async closure - returns Future that must be awaited

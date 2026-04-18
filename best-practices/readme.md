@@ -125,8 +125,8 @@ Other (non-deriveable) standard traits are covered in other Items, and so are no
 - `From and TryFrom`: Items implementing this trait can be automatically created from items of some other type, but with a possibility of failure in the latter case. See Item 6.
 - `Deref and DerefMut`: Items implementing this trait are pointer-like objects that can be dereferenced to get access to an inner item. See Item 9.
 - `Iterator and friends`: Items implementing this trait represent collections that can be iterated over. See Item 10.
-- `Send`: Items implementing this trait are safe to transfer between multiple threads. See Item 17.
-- `Sync`: Items implementing this trait are safe to be referenced by multiple threads. See Item 17. 
+- `Send`: safe to transfer ownership to another thread. See Item 17.
+- `Sync`: safe to be referenced by multiple threads. See Item 17. 
 
 
 ###  3.1. Use the type system to express your data structures  

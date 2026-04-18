@@ -1,3 +1,4 @@
+#![allow(private_interfaces)]
 
 // interv-1
 
@@ -43,3 +44,27 @@ type Meters = i32;
     let y: Meters = 2;
     assert_eq!(x+y, 5);
 }
+
+// 3. Use short Result<String> instead Result<String, actix_web::Error> 
+
+struct Error {}
+
+// from actix_web lib:
+    /// A convenience [`Result`](std::result::Result) for Actix Web operations.
+    ///
+    /// This type alias is generally used to avoid writing out `actix_http::Error` directly.
+    /// Meaning: Let's use Result<T, E> instead of std::result::Result<T, E>, 
+    /// and E type param will be actix_web::Error if user not specifies.
+    pub type Result<T, E = Error> = std::result::Result<T, E>;
+        // Error: actix_web::Error
+
+// e.g.
+// Result<String> is actually Result<String, actix_web::Error> here:
+/*     
+#[get("/")]
+async fn index_2() -> Result<String> {
+    let result = Err(MyError { name: "test error" });
+    result.map_err(|err| error::ErrorBadRequest(err.name))
+}
+ */
+

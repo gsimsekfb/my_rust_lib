@@ -78,7 +78,8 @@ fn tt() {
 
 //// Hint:
 
-// "Adjacency [List and Matrix] Representation"
+// Adjacency [List and Matrix] Representations:
+//
 // e.g.
 // Graph: vertices/nodes = 4, edges: 4 
 //
@@ -87,15 +88,21 @@ fn tt() {
 //    1---2
 //         \
 //          3
-// 
-// Adjacency Matrix Representation
+//
+
+// 1. Adjacency Matrix Representation
+//
 // 0 1 1 0 
 // 1 0 1 0 
 // 1 1 0 1 
 // 0 0 1 0 
-// 
-// Adjacency List Representation:
+
+
+// 2. Adjacency List Representation: much more commonly used.
+// The core reason: most real graphs are sparse. "sparse" graph means nodes 
+// have few connections relative to the total possible.
+//
 // 0: 1 2 
 // 1: 0 2 
 // 2: 0 1 3 
-// 3: 2 
+// 3: 2

@@ -5,18 +5,18 @@
 
 // 1. Read file bytes at Compile time - this will error at build time if MRB_PATH
 //    is not defined
-//
-// #[cfg(unix)]
-// const RLS_BUNDLE_BYTES: &[u8] = include_bytes!(concat!(env!("MRB_PATH"), "/head.mrb"));
-// #[cfg(windows)]
-// const RLS_BUNDLE_BYTES: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "\\head.mrb"));
-
-// static HEAD_RELEASE_BUNDLE: Lazy<ReleaseBundle> = Lazy::new(|| {
-//     bcs::from_bytes::<ReleaseBundle>(RLS_BUNDLE_BYTES).expect("bcs succeeds")
-// });
-// pub fn head_release_bundle() -> &'static ReleaseBundle {
-//     &HEAD_RELEASE_BUNDLE
-// }
+/* 
+#[cfg(unix)]
+const RLS_BUNDLE_BYTES: &[u8] = include_bytes!(concat!(env!("MRB_PATH"), "/head.mrb"));
+#[cfg(windows)]
+const RLS_BUNDLE_BYTES: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "\\head.mrb"));
+static HEAD_RELEASE_BUNDLE: Lazy<ReleaseBundle> = Lazy::new(|| {
+    bcs::from_bytes::<ReleaseBundle>(RLS_BUNDLE_BYTES).expect("bcs succeeds")
+});
+pub fn head_release_bundle() -> &'static ReleaseBundle {
+    &HEAD_RELEASE_BUNDLE
+}
+*/
 
 // 2. Same as 1, but at runtime
 #[test] #[should_panic] 

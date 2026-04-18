@@ -11,7 +11,7 @@
 </tr>
 
 // todos: 
-- String, str, char* char[], string
+- String, str, char* char[], string // next
 - .. keyword
 
 

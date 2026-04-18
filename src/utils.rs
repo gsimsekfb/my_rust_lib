@@ -44,18 +44,16 @@ pub fn random_my_rust_lib_file() -> String {
     files[index].clone()
 }
 
+// returns Vec of full path files for a given "path" param 
 pub fn get_files(path: impl AsRef<Path>) -> Vec<String> {
     let entries = fs::read_dir(path).unwrap();
 
     let files: Vec<String> = entries
         .filter_map(|entry| entry.ok())
         .filter(|entry| entry.path().is_file())
-        .filter_map(|entry| {
-            entry.path().file_name().and_then(|name| name.to_str())
-                .map(|s| s.to_string())
-        })
+        .map(|entry| entry.path().to_string_lossy().to_string())
         .collect();
-    
+
     files
 }
 
@@ -90,5 +88,13 @@ pub fn open_jpg(file: &str) {
         .arg(file)
         .spawn()
         .expect("Failed to open XnViewMP")
+        .wait();
+}
+
+pub fn open_vscode(file: &str) {
+    let _ = std::process::Command::new("C:\\Users\\gokha\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe")
+        .arg(file)
+        .spawn()
+        .expect("Failed to open vscode")
         .wait();
 }

@@ -84,6 +84,8 @@ pub fn get_files_all_sub_folders(path: impl AsRef<Path>) -> Vec<String> {
 fn user_dir() -> String { std::env::var("USERPROFILE").unwrap() }
 
 pub fn open_jpg(file: &str) {
+    let file_name = file.split_once("Pictures").unwrap().1;
+    println!("-- opening file {file_name} ...");
     let _ = std::process::Command::new("C:\\Program Files\\XnViewMP\\xnviewmp.exe")
         .arg(file)
         .spawn()
@@ -92,6 +94,8 @@ pub fn open_jpg(file: &str) {
 }
 
 pub fn open_vscode(file: &str) {
+    let file_name = file.split_once("code").unwrap().1;
+    println!("-- opening file {file_name} ...");
     let _ = std::process::Command::new("C:\\Users\\gokha\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe")
         .arg(file)
         .spawn()

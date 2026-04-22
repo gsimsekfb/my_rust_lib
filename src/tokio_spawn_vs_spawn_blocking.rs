@@ -61,7 +61,8 @@ async fn tokio_spawn_blocking() {
     // - Offloads a blocking or CPU-intensive synchronous operation to a 
     //   dedicated thread pool so it doesn't stall the main async runtime.
     // - opposite of spawn(), it will block the thread running on, meaning 
-    //   will NOT yield control back like spawn does at awaits.
+    //   will NOT yield control back like spawn does at awaits (runs to
+    //   completion).
     // - so we better use continuous work with spawn_blocking that we do not
     //   want to be interrupted
 
@@ -77,4 +78,3 @@ async fn tokio_spawn_blocking() {
         println!("spawn_blocking: res: {res}");
     }
 }
-

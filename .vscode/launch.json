@@ -16,6 +16,17 @@
             "cwd": "${workspaceFolder}"
         },
         {
+            "name": "main.rs",
+            "type": "lldb",
+            "request": "launch",
+            "cargo": {
+                "args": ["build", "--bin", "main"],
+            },
+            "args": [],
+            // "env":{"NODE_ENV": "test"},
+            "cwd": "${workspaceFolder}"
+        },
+        {
             "type": "lldb",
             "request": "launch",
             "name": "iota-cargo-b",
@@ -24,7 +35,7 @@
             },
             "args": ["start", "--force-regenesis"],
             "cwd": "${workspaceFolder}"
-        },        
+        },
         {
             "type": "lldb",
             "request": "launch",

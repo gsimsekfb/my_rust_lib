@@ -2,6 +2,7 @@
 use std::borrow::Cow;
 
 // Cow: copy on write
+//
 // src: 
 // https://dev.to/kgrech/6-things-you-can-do-with-the-cow-in-rust-4l55
 // https://dhghomon.github.io/easy_rust/Chapter_42.html
@@ -26,8 +27,26 @@ fn remove_zz_(s: &str) -> String {
 // -----------------------------------------------------------------
 
 
+//// Minimal summary of Cow:
+//// - A type that's either borrowed or owned.
+//// - Only clones when mutation is needed.
 
-// Most likely usage: Cow<str> or Cow<[u8]>
+// e.g.
+// this struct is auto-created by actix_web when "/allocation" query comes
+struct AllocationQuery { username: String }
+    //                   username: Cow<'static, str>,
+    // Use Cow ? - No 
+    // - Cow avoids allocation when you pass a &str, only allocates when you 
+    //   pass a String.
+    // - For this program, from HTTP requests — always String
+    //   (deserialized from JSON/query params). So Cow brings no benefit here,
+    //   String is fine.
+    // - And ToString will make the API more flexible.
+    //   Callers can pass either &str or String
+
+
+
+//// Most likely usage: Cow<str> or Cow<[u8]>
 
 
 // 1

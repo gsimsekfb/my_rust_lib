@@ -8,6 +8,7 @@
 // 2.
 // - it pins futures to the stack (no heap allocation)
 // - Required for operations that need &mut Future:
+//    polled multiple times
 //    timeout
 //    select!
 //    race

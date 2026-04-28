@@ -35,5 +35,9 @@ fn create_opaque() -> impl MyTrait { "12" }
 #[test]
 fn ex2() {
     let obj = create_opaque(); // user does not know the underlying type (&str)
+        // compiler's internal type is &'static str, 
+        // but the user-visible type is an anonymous opaque type that only
+        // exposes MyTrait. 
+        // !! There's no syntax to write it explicitly.
     assert_eq!(obj.val(), 12);
 }

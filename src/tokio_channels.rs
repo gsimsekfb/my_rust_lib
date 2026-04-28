@@ -3,7 +3,7 @@
 async fn tokio_channels_mpsc() {
     use tokio::sync::mpsc;
 
-    //// 1 producer, 1 consumer
+    //// a. 1 producer, 1 consumer
     let (tx, mut rx) = mpsc::channel(32);
     tokio::spawn(async move {
         for i in 0..2 {
@@ -13,7 +13,7 @@ async fn tokio_channels_mpsc() {
             }
         }
     });
-    // no need to drop(tx) like the next Multiple producer section
+    // !! no need to drop(tx) like the next Multiple producer section
     // because, tx is moved into the spawned task and
     // Once the task ends and tx is automatically dropped and thus channel will
     // be closed
@@ -22,7 +22,7 @@ async fn tokio_channels_mpsc() {
         println!("got = {i}");
     }
 
-    //// Multiple producer, 1 consumer
+    //// b. Multiple producer, 1 consumer
     let (tx, mut rx) = mpsc::channel(2);
 
     for i in 0..2 { // spawned producers (2)
@@ -116,6 +116,8 @@ async fn tokio_channels_oneshot() {
         println!("-- response: {response:?}");
     }
 }
+
+
 
 use tokio::time::{timeout, Duration};
 

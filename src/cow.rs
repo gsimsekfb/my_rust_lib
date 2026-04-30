@@ -41,8 +41,11 @@ struct AllocationQuery { username: String }
     // - For this program, from HTTP requests — always String
     //   (deserialized from JSON/query params). So Cow brings no benefit here,
     //   String is fine.
-    // - And ToString will make the API more flexible.
-    //   Callers can pass either &str or String
+    // - And these will make the API more flexible:
+    // - impl Into<String> — caller can pass &str or String, use w/ ctors,
+    //   allocation happens inside the ctor
+    // - impl AsRef<str> — caller can pass &str or String, no allocation, 
+    //   just borrows
 
 
 

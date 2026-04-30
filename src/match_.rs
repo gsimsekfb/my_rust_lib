@@ -46,9 +46,10 @@ fn ex_1() {
     // Match above, can be written:
     let Some(x) = result else {
         return;
-        // error[E0308]: `else` clause of `let...else` does not diverge
-        // println!("err");
-        // help: try a diverging expression, e.g. `return` or `panic!()`
+        // the err w/o a diverging expression (like return or panic):
+            // error[E0308]: `else` clause of `let...else` does not diverge
+            // println!("err");
+            // help: try a diverging expression, e.g. `return` or `panic!()`
     };
     assert_eq!(x, 42); // !! x is still in scope here
 }
@@ -275,7 +276,7 @@ fn ex_6() {
         Message::Hello { id: id_ @ 3..=7 } => {
             println!("Found an id in a range, id: {id_}")
         }
-        // why to use @
+        // why use @
         Message::Hello { id: 10..=12 } => {
             // println!("Found an id in another range, id: {}", id);
             // Err: not found in this scope

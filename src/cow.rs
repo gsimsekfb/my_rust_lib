@@ -28,8 +28,17 @@ fn remove_zz_(s: &str) -> String {
 
 
 //// Minimal summary of Cow:
-//// - A type that's either borrowed or owned.
-//// - Only clones when mutation is needed.
+//// 1. A type that's either borrowed or owned.
+//// 2. Only clones when mutation is needed.
+//// also see examples below
+////
+fn remove_zz_with_cow(s: &str) -> Cow<'_, str> {
+    if s.contains("zz") {
+        Cow::Owned(s.to_string().replace("zz", "**")) // String
+    } else { // no allocation
+        Cow::Borrowed(s) // &str
+    }
+}
 
 // e.g.
 // this struct is auto-created by actix_web when "/allocation" query comes
@@ -41,7 +50,7 @@ struct AllocationQuery { username: String }
     // - For this program, from HTTP requests — always String
     //   (deserialized from JSON/query params). So Cow brings no benefit here,
     //   String is fine.
-    // - And these will make the API more flexible:
+    // - Extra Note: these will make the API more flexible:
     // - impl Into<String> — caller can pass &str or String, use w/ ctors,
     //   allocation happens inside the ctor
     // - impl AsRef<str> — caller can pass &str or String, no allocation, 
@@ -126,7 +135,7 @@ fn append() {
 }
 
 
-// 3. Struct optionally owning the data
+// 3. Struct "optionally" owning the data
 
 // We have both owned and borrowed version of the User struct. Also see ctors.
 struct User<'a> {

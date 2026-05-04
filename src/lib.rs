@@ -92,6 +92,7 @@ mod unpack;
 mod unsafe_;
 mod utils;
 mod variadic;
+mod vec_mutate_while_iterating;
 #[cfg(not(target_os = "windows"))]
 mod zk_facebook_winterfell;
 

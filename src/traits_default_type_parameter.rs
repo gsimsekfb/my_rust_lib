@@ -19,7 +19,7 @@
 #[derive(Debug, PartialEq)]
 struct Point { x: i32, y: i32 }
 
-// FYI: Add trait from std
+// Note: this is std::Add trait
 pub trait std_Add_<Rhs = Self> { // <Rhs = Self>: default type parameter
     type Output;
     fn add(self, rhs: Rhs) -> Self::Output;

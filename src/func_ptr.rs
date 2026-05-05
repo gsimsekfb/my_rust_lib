@@ -57,11 +57,11 @@ fn ex_2() {
 
 #[derive(Debug, PartialEq)]
 enum Status {
-    Value(u32),
+    Value(u32), // (u32) is a tuple with 1 elem
+        // !! In Rust, tuple enum variants automatically have a ctor function
+        //    generated for them
     Stop,
 }
-// Without PartialEq:
-// error[E0369]: binary operation `==` cannot be applied to type `Vec<Status>`
 
 // (this is also a task in iter*algo*.rs)
 #[test]
@@ -70,6 +70,10 @@ fn ex_3() {
         .map(Status::Value) // initializer function
         .collect();
     assert_eq!(res, [Status::Value(1), Status::Value(2)]);
+        // Without PartialEq:
+        // error[E0369]: binary operation `==` cannot be applied to type
+        // `Vec<Status>`
+
 }
 
 

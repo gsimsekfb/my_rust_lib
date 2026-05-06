@@ -95,7 +95,7 @@ pub fn open_jpg(file: &str) {
 
 pub fn open_vscode(file: &str) {
     let file_name = file.split_once("code").unwrap().1;
-    println!("-- opening file {file_name} ...");
+    println!("\n-- opening file {file_name} ...");
     let _ = std::process::Command::new("C:\\Users\\gokha\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe")
         .arg(file)
         .spawn()

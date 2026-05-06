@@ -30,7 +30,8 @@ fn ex0_most_real_life_usage() {
 
 
     // - Showing how to create/solve deadlock
-    {   // !!! deadlock: w/o this braces it will be deadlock,
+    {   // !!! deadlock: w/o this scope braces it will be deadlock
+        // if later another line tries to get a lock to data.
         // because MutexGuard created by the next line &*data.lock().unwrap() 
         // will release the lock only after the end of main
         assert!(!data.is_poisoned());
@@ -39,6 +40,7 @@ fn ex0_most_real_life_usage() {
             // - until the end of its block
         assert_eq!(vec[0].x, 22);
     } // Lock released here, good, there will not be deadlock
+    // or drop(data) as an alternative
 
     // ====
 

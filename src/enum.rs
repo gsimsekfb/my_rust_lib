@@ -4,6 +4,20 @@
 
 
 
+//// 0
+// You almost always want all four on a simple enum like this.
+
+#[derive(Debug, Clone, Copy, PartialEq)]
+enum Color {
+    Red,
+    Green,
+}
+    // Clone — required by vec![Color::Red; 5]
+    // Copy — lets you use it without moving
+    // PartialEq — lets you compare with ==
+    // Debug — lets you print with {:?}
+
+
 
 // 1 Defining enums
 

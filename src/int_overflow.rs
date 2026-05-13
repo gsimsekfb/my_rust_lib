@@ -22,5 +22,5 @@
 #[test] fn ex_2_panics_w_arithmetic_overflow_signed() {
     let (a, b) = (100, 100);
     let c: i8 = a + b;
-    println!("200 + 200 = {c}");    
+    println!("100 + 100 = {c}");    
 }

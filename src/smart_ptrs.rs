@@ -49,41 +49,41 @@ fn ex0_task_1() {
 #[test]
 fn ex1_box() {
     // a. With non-copy type String
-    let p = Box::new("ab".to_string());
+    let ptr = Box::new("ab".to_string());
     // move
-    let val = *p; // String - p's box dropped and inner obj. moved
+    let val = *ptr; // String - p's box dropped and inner obj. moved
         // let val = p.deref(); // &String
         // error[E0382]: borrow of moved value: `p`
 
     // read
-    let p = Box::new("ab".to_string());
-    let immut_ref: &String = &p; // &String aka Deref coercion (auto deref)
+    let ptr = Box::new("ab".to_string());
+    let immut_ref: &String = &ptr; // &String aka Deref coercion (auto deref)
         // same as:
-        let immut_ref = &p as &String;
-    let immut_ref = p.deref(); // &String
-    let immut_ref = p.as_ref(); // &String
-    let immut_ref = &*p; // &String  - chose this? inline with mut vers.
+        let immut_ref = &ptr as &String;
+    let immut_ref = ptr.deref(); // &String
+    let immut_ref = ptr.as_ref(); // &String
+    let immut_ref = &*ptr; // &String  - chose this? inline with mut vers.
     assert_eq!(immut_ref, "ab");
 
     // mutate
-    let mut p = Box::new("ab".to_string());
+    let mut ptr = Box::new("ab".to_string());
     // a.1 choose this ?
-    *p = "ff".to_string();
-    assert_eq!(p.deref(), "ff");
+    *ptr = "ff".to_string();
+    assert_eq!(ptr.deref(), "ff");
     // a.2 or:
-    let mut_ref = p.deref_mut(); // &mut String
+    let mut_ref = ptr.deref_mut(); // &mut String
     *mut_ref = "cd".to_string();
     assert_eq!(mut_ref, "cd"); // to &String
 
     // b. With copy type i32
-    let mut p = Box::new(42);
+    let mut ptr = Box::new(42);
     // read
-    let immut_ref = p.as_ref(); // &i32
+    let immut_ref = ptr.as_ref(); // &i32
     assert_eq!(immut_ref, &42);
-    assert_eq!(*p, 42); // i32 - !! copied not moved
+    assert_eq!(*ptr, 42); // i32 - !! copied not moved
                         // mutate
-    *p = 44; // !! p is not consumed/moved since inner type is copy type
-    assert_eq!(*p, 44);
+    *ptr = 44; // !! p is not consumed/moved since inner type is copy type
+    assert_eq!(*ptr, 44);
 }
 
 

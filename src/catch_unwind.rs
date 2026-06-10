@@ -14,8 +14,9 @@
 //
 // In short, 
 // (a) if this program was run in dev mode (with the DEV setting above), 
-// program would abort immediately after catching the "panic!("caught a panic");"
-// So the following match line would not be run.
+//     program would abort immediately after catching the 
+//     "panic!("caught a panic");". So the match below would not be run.
+//
 // (b) w/o Cargo.toml "panic on abort" setting, the match line would be run.
 //
 #[test]

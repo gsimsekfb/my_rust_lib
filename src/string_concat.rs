@@ -11,6 +11,7 @@
     assert_eq!(string, "W.Z-");
 }
 
+
 // 1. String from &str and &str
 #[test] fn ex_1_string_from_strs() {
     let (str_1, str_2, str_3) = ("a", "b", "c");
@@ -24,6 +25,7 @@
     println!("_string: {_string:?}");
     assert_eq!(_string, "ab");
 }
+
 
 // 2. String from Strings
 #[test] fn ex_2_string_from_strings() {
@@ -39,6 +41,7 @@
     let _string = format!("{s1}-{s2}");
     assert_eq!(_string, "a-b");
 }
+
 
 // 3. Misc
 #[test] fn ex_3_misc() {

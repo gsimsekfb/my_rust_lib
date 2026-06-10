@@ -6,7 +6,7 @@ let v: Vec<_> = some_iter.collect(); // let compiler fill in the element type
 let map: HashMap<_, _> = pairs.collect();
 ```
 
-### 2. Ignore in patterns (your example)
+### 2. Ignore in patterns
 ```rust
 let [_, _, third, _, _, _] = arr;  // ignore specific positions
 let (_, y) = some_tuple;

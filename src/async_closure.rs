@@ -36,7 +36,7 @@ async fn async_closure_1() {
     // For comparison: 
     // Async fn
     async fn f1() -> u8 { 5 }
-    let future = f1();      // impl Future<Output = i32>
+    let future = f1();      // future: impl Future<Output = i32>
     let res = future.await;
 
     assert_eq!(res, 5); 

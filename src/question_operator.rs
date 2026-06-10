@@ -28,19 +28,15 @@ fn read_file_contents(path: &str) -> io::Result<String> {
 
 // b. see question mark jpg
 
-
-
 // Equivalent Code Without Question Mark Operator:
 //
 // The ? operator:
-// - Unwraps (not returns) the Ok value if the result is Ok
-// - "Returns" the Err early if the result is Err
 
 fn read_file_contents_(path: &str) -> io::Result<String> {
     #[allow(clippy::question_mark)]
     let mut file = match File::open(path) {
-        Ok(f) => f,
-        Err(e) => return Err(e),  // Early return on error
+        Ok(f) => f, // Unwraps (not returns) the Ok value if the result is Ok
+        Err(e) => return Err(e),  // Early return the error on error
     };
     
     let mut contents = String::new();

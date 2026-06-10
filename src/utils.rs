@@ -28,20 +28,26 @@ pub fn random_tech_picture_file() -> String {
 }
 
 pub fn random_tech_picture_cpp() -> String {
-    let files = [
+    let mut files = [
         get_files_all_sub_folders(user_dir() + "/My Drive/Tech - Pictures/C++"),
         get_files_all_sub_folders(user_dir() + "/My Drive/Tech - Pictures/Performance"),
         get_files_all_sub_folders(user_dir() + "/My Drive/Tech - Pictures/Python"),
         get_files_all_sub_folders(user_dir() + "/My Drive/Tech - Pictures/Quantum"),
     ].concat();
-    let index = rand::rng().random_range(0..files.len());
-    files[index].clone()
+    let mut rng = rand::rng();
+    // Shuffling ensures a much better distribution across multiple runs
+    use rand::seq::SliceRandom;
+    files.shuffle(&mut rng); 
+    files.first().cloned().unwrap_or_default()
 }
 
 pub fn random_my_rust_lib_file() -> String {
-    let files = get_files("C:/code/my_rust_lib/src/");
-    let index = rand::rng().random_range(0..files.len());
-    files[index].clone()
+    let mut files = get_files("C:/code/my_rust_lib/src/");
+    let mut rng = rand::rng();
+    // Shuffling ensures a much better distribution across multiple runs
+    use rand::seq::SliceRandom;
+    files.shuffle(&mut rng); 
+    files.first().cloned().unwrap_or_default()
 }
 
 // returns Vec of full path files for a given "path" param 

@@ -10,15 +10,31 @@
 
 
 
-// const fn:
+//// const fn:
 // https://rust-lang.github.io/rfcs/0911-const-fn.html
-// Allow marking free functions and inherent methods as const, enabling them to
+// - Allow marking free functions and inherent methods as const, enabling them to
 // be called in constants contexts, with constant arguments.
 
-// Constant expressions
+
+/// constant contexts 
+// - are places where the compiler "must" evaluate an expression at compile time 
+//   rather than runtime:
+#[test] fn ex0() {
+    const TWO: usize = 2;           // const item
+    static MSG: &str = "hi";        // static item
+    let arr: [i32; 2 + 2];          // array length
+    enum Foo { A = 1 + 1 }          // enum discriminant
+    fn foo<const N: usize>() {}     // generic const param
+    foo::<{ 2 + 2 }>();
+}
+
+
+/// Constant expressions
 // https://doc.rust-lang.org/reference/const_eval.html
 // Constant expressions, can be evaluated at compile time
 
+
+/// Example:
 const fn add_one(n: usize) -> usize {
     n + 1
 }

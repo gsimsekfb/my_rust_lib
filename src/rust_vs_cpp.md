@@ -55,6 +55,8 @@ mod Woo { let hidden: i32 = 32; }   // only this/sub modules can access
 ```cpp
 namespace Woo { const int XX = 42; } // public access, usage: Woo::XX
 namespace     { int hidden = 99; }   // Only visible in this .cpp file
+
+namespace views = std::views;  // namespace alias
 ```
 </td>
 </tr>
@@ -84,6 +86,8 @@ use std::*;     // for prototyping
 // a. type alias
 using MyU8 = uint8_t;   // cpp11
 typedef uint8_t MyU8;   // cpp98
+
+namespace views = std::views; // note: namespace alias
 
 // b. import
 using namespace std;    // for prototyping

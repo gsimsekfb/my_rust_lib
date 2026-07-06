@@ -14,7 +14,7 @@ pub fn print_type_of<T>(name: &str, _: &T) {
 }
 
 pub fn random_tech_picture_file() -> String {
-    let files = [
+    let mut files = [
         get_files_all_sub_folders(user_dir() + "/My Drive/Tech - Pictures/Rust"),
         get_files_all_sub_folders(user_dir() + "/My Drive/Tech - Pictures/Concurrency"),
         get_files_all_sub_folders(user_dir() + "/My Drive/Tech - Pictures/Blockchain"),
@@ -23,8 +23,11 @@ pub fn random_tech_picture_file() -> String {
         get_files_all_sub_folders(user_dir() + "/My Drive/Tech - Pictures/Functional Programming"),
         get_files_all_sub_folders(user_dir() + "/My Drive/Tech - Pictures/Testing"),
     ].concat();
-    let index = rand::rng().random_range(0..files.len());
-    files[index].clone()
+    // StdRng::from_os_rng() ensures high-quality, OS-backed randomness
+    use rand::{seq::SliceRandom, SeedableRng, rngs::StdRng};
+    let mut rng = StdRng::from_os_rng();
+    files.shuffle(&mut rng); 
+    files.first().cloned().unwrap_or_default()
 }
 
 pub fn random_tech_picture_cpp() -> String {
@@ -34,18 +37,18 @@ pub fn random_tech_picture_cpp() -> String {
         get_files_all_sub_folders(user_dir() + "/My Drive/Tech - Pictures/Python"),
         get_files_all_sub_folders(user_dir() + "/My Drive/Tech - Pictures/Quantum"),
     ].concat();
-    let mut rng = rand::rng();
-    // Shuffling ensures a much better distribution across multiple runs
-    use rand::seq::SliceRandom;
+    // StdRng::from_os_rng() ensures high-quality, OS-backed randomness
+    use rand::{seq::SliceRandom, SeedableRng, rngs::StdRng};
+    let mut rng = StdRng::from_os_rng();
     files.shuffle(&mut rng); 
     files.first().cloned().unwrap_or_default()
 }
 
 pub fn random_my_rust_lib_file() -> String {
     let mut files = get_files("C:/code/my_rust_lib/src/");
-    let mut rng = rand::rng();
-    // Shuffling ensures a much better distribution across multiple runs
-    use rand::seq::SliceRandom;
+    // StdRng::from_os_rng() ensures high-quality, OS-backed randomness
+    use rand::{seq::SliceRandom, SeedableRng, rngs::StdRng};
+    let mut rng = StdRng::from_os_rng();
     files.shuffle(&mut rng); 
     files.first().cloned().unwrap_or_default()
 }

@@ -82,7 +82,7 @@ pub fn examples() {
     let mut inc = || {
         count += 3;
         println!("`count`: {count}");
-    }; 
+    };
 
     // Call the closure using a mutable borrow.
     inc();
@@ -92,6 +92,8 @@ pub fn examples() {
     // let _reborrow = &count;
     // ^ TODO: try uncommenting this line.
     inc();
+
+    assert_eq!(count, 6);
 
     // inc closure no longer called. Therefore, it is
     // possible to reborrow without an error
@@ -117,24 +119,25 @@ pub fn examples() {
     // consume();
     // ^ TODO: Try uncommenting this line.
 
+
     // 4. move capture - non-copy type: Vec
-    //
+    
     // `Vec` has non-copy semantics.
     #[allow(clippy::useless_vec)]
     let vec = vec![1, 2, 3];
-    let contains = |elem| vec.contains(elem);
+    let contains = move |elem| vec.contains(elem);
 
     assert!(contains(&1));
     assert!(!contains(&4));
 
-    println!("There're {} elements in vec", vec.len());
+    // println!("There're {} elements in vec", vec.len());
+        // error: vec moved
 
-    
     // x. move capture - copy type: i32
     let num = 42;
     let is_even = move |e| { e % 2 == 0 };
     assert!(is_even(num));
-    dbg!(num); // ! num is not moved
+    dbg!(num); // ! Ok, num is still valid, not moved
 
 
     // 5. When "move" word is required? 

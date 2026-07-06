@@ -31,8 +31,11 @@
     assert_eq!(std::mem::size_of::<&i32>(),  8); // size of  &T : ptr !!
 }
 
+/// &T vs &str
+//
 // So although a &T is a single value that stores the memory address of 
-// where the T is located, &str is two values: the addr of the str and its length. 
+// where the T is located, &str is two values: the addr of the str and its 
+// length (aka fat ptr). 
 // As such, we can know the size of a &str value at compile time: 
 // it’s twice the length of a usize
 // That is, we always know the size of a &str
@@ -40,12 +43,12 @@
 // they have an extra bit of metadata that stores the size of the dynamic info.
 // The golden rule of dynamically sized types is that we must always put values
 // of dynamically sized types behind a pointer of some kind.
-// Every trait is a dynamically sized type.
 
 
-// 2
+// 2. Sized and ?Sized
+
 fn generic<T>(t: T) { }
-// is actually treated as though we had written this:
+    // is actually treated as though we had written this:
 fn generic_<T: Sized>(t: T) {
     // Rust implicitly adds a bound on Sized to every generic function. 
 }

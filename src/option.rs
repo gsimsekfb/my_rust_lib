@@ -34,6 +34,8 @@ fn ex2_nested_option_and_enum() {
     let inner = Num::One;
     let outer = Some(inner);
 
+    //// Convert outer: Option<Num> into num_raw: Option<u8> 
+
     let num_raw: Option<u8> = outer.and_then(|inner| {
         match inner {
             Num::One => Some(Num::One as u8),

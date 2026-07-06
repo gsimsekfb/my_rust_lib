@@ -95,7 +95,11 @@ fn variadic_dyn_w_any(args: &[&dyn MyTrait_2]) {
 }
 
 #[test]
-fn ex1() {
+fn ex19() {
+    /* 
+    // same Enum types but under the Enum actually different types
+    fn variadic_static(args: &[Color]) {
+    */
     variadic_static(&[ 
         Color::Num( Number{ n: 42 } ),
         Color::Txt( Text{ t:"green".to_string() } ) 
@@ -105,20 +109,28 @@ fn ex1() {
         Color::Num( Number{ n: 42 } ),
     ]);    
 
+    /*
+    // not variadic, array elems have to be the same type
+    fn not_variadic_generic(args: &[impl Debug]) { 
+    */
     not_variadic_generic(&[1, 2, 3]);
     not_variadic_generic(&['a', 'b']);
+    // not_variadic_generic(&['a', 'b', 3]); // err
 
     let text = Text { t: "aa".to_string() };
     let text = &text as &dyn MyTrait;
     let num = Number { n: 42 };
     let num = &num as &dyn MyTrait;
     variadic_dyn( &[text, num] );
+        // fn variadic_dyn(args: &[&dyn MyTrait]) {
+
 
     let text = Text { t: "aa".to_string() };
     let text = &text as &dyn MyTrait_2;
     let num = Number { n: 42 };
     let num = &num as &dyn MyTrait_2;
     variadic_dyn_w_any( &[text, num] );
+        // fn variadic_dyn_w_any(args: &[&dyn MyTrait_2]) {
 
     assert_eq!(32, 32);
 }

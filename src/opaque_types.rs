@@ -3,7 +3,7 @@
 mod aa {
     pub struct OpaqueType {
         hidden_data: i32 // Opaque type hence not public
-            // Users of OpaqueYtpe cannot directly access hidden_data, 
+            // Users of Opaque type cannot directly access hidden_data, 
             // only interact via methods.
     }
 

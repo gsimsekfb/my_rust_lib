@@ -4,6 +4,9 @@
 #![allow(non_camel_case_types)]
 #![allow(clippy::four_forward_slashes)]
 #![allow(clippy::empty_line_after_doc_comments)]
+#![allow(nonstandard_style)]
+#![allow(unused_doc_comments)]
+#![allow(clippy::println_empty_string)]
 
 // mod doc_test; 
   // todo: failed to resolve: use of undeclared crate or module `doc_test`
@@ -47,6 +50,7 @@ mod interior_mutability;
 mod iterators_aka_algorithms;
 mod let_else;
 mod lifetimes;
+mod lock_free_programming;
 mod loop_multi;
 mod match_;
 mod memory_leak;

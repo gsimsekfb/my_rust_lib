@@ -1,5 +1,3 @@
-// skip
-
 // Slightly modified version from book:
 // Rust in Action 1st Edition by Tim McNamara - 2021
 // Ch 7, pg 215

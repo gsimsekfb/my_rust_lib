@@ -66,7 +66,7 @@ fn foo() {
     assert_eq!(state.supply, 5002);
 
 
-    // Option-3: v2: using filter_map, one line bids_to_remove creation
+    // Option-3: v2: one line bids_to_remove creation using filter_map. 
     //           !! Note: Must "reverse iter" the bids_to_remove vector
     let mut state = AppState { bids: vec![1,20,3,40,5], supply: 5000 };
 

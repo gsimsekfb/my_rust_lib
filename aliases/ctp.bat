@@ -9,4 +9,4 @@
 
 @echo off
 echo.
-cargo t -- %1 --nocapture --test-threads=1
+cargo t -- %* --nocapture --test-threads=1

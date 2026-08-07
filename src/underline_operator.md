@@ -20,7 +20,7 @@ match val {
 ```rust
 let _ = some_result; // evaluate but drop immediately, no move
 ```
-This is subtly different from `_name` — `_` **never binds** and drops the value instantly, while `_name` still binds and moves:
+!! This is subtly different from `_name` — `_` **never binds** and drops the value instantly, while `_name` still binds and moves:
 ```rust
 let _guard = mutex.lock();  // ⚠️ stays alive, dropped at end of scope
 let _ = mutex.lock();       // ⚠️ dropped IMMEDIATELY, lock released at once

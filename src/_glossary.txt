@@ -1,0 +1,3 @@
+
+// Data Race vs. Race Condition
+Yes, they are different: a data race occurs when multiple threads access the same memory location concurrently without synchronization and at least one access is a write (which is undefined behavior), whereas a race condition is a flaw in the execution timing/order that leads to an incorrect program state despite using valid atomic or synchronized operations.

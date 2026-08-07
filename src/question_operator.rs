@@ -12,21 +12,21 @@
 
 
 
+//// `?` works with both `Option` and `Result`:
 
-
-use std::fs::File;
-use std::io::{self, Read};
-                            // rustlib\src\rust\library\std\src\io\error.rs:
-                            // pub type Result<T> = result::Result<T, Error>;
-                            //             |
-fn read_file_contents(path: &str) -> io::Result<String> {
-    let mut file = File::open(path)?;  // ? operator
-    let mut contents = String::new();
-    file.read_to_string(&mut contents)?;  // ? operator
-    Ok(contents)
+fn might_be_none(x: i32) -> Option<i32> {
+    if x < 0 { return None }
+    Some(42)
 }
 
-// b. see question mark jpg
+// Option
+fn bar() -> Option<i32> {
+    let x = might_be_none(2)?; // returns None early
+    Some(x)
+}
+
+
+//// b. see question mark jpg
 
 // Equivalent Code Without Question Mark Operator:
 //
@@ -45,3 +45,20 @@ fn read_file_contents_(path: &str) -> io::Result<String> {
         Err(e) => Err(e),  // Return error (!! implicit return here)
     }
 }
+
+
+
+//// pub type Result<T> = result::Result<T, Error>;
+ 
+use std::fs::File;
+use std::io::{self, Read};
+                            // rustlib\src\rust\library\std\src\io\error.rs:
+                            // pub type Result<T> = result::Result<T, Error>;
+                            //             |
+fn read_file_contents(path: &str) -> io::Result<String> {
+    let mut file = File::open(path)?;  // ? operator
+    let mut contents = String::new();
+    file.read_to_string(&mut contents)?;  // ? operator
+    Ok(contents)
+}
+

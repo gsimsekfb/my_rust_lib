@@ -50,7 +50,7 @@ fn unsafe_() {
     let mut num = 5;
 
     let ptr1 = num as *const i32; // *const i32
-    let ptr1 = &raw const num;    // *const i32
+    let ptr1 = &raw const num;    // *const i32 - ! raw is a keyword
 
     let ptr2 = num as *mut i32;   // *mut i32
     let ptr2 = &raw mut num;      // *mut i32
@@ -67,6 +67,8 @@ fn unsafe_() {
 
     // 2. Call an unsafe function or method
     // rustc: an unsafe fn restricts its caller, but its body is safe by default
+
+    // - define an unsafe fn
     unsafe fn unsafe_foo(ptr: *const i32) -> i32 {
         unsafe { *ptr }
     }
@@ -76,6 +78,7 @@ fn unsafe_() {
         //     unsafe { *ptr }
         // }
     
+    // - call the defined unsafe fn
     unsafe { unsafe_foo(ptr1); }
     unsafe { unsafe_foo(ptr1); } 
         // ok: Raw pointer does not impl Rust’s ownership/move semantics

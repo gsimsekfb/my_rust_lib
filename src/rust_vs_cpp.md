@@ -123,7 +123,8 @@ char ch = x < 0 ? '-' : '+'; // Warning: Use ?: for pure value selection,
 <!-- ----------------------------------------------------- -->
 <tr>
 
-<td> Borrowing vs C++ mut/const ref </td>
+<td> Borrowing vs  <br>
+     C++ mut/const ref </td>
 
 <td>
 
@@ -446,8 +447,10 @@ auto iter = find_if(vec.cbegin(), vec.cend(), [](int e) { return e > 2; });
 //// create
 // Unsorted map
 let mut map = HashMap::from([ (1, "a"), (2, "b") ]);
-let map = vec![ (3,"c"), (4,"d") ].into_iter().collect::<HashMap<_,_>>();
-let map: HashMap<_,_> = vec![ (3,"c"), (4, "d") ].into_iter().collect();
+let map = vec![ (3,"c"), (4,"d") ]
+    .into_iter().collect::<HashMap<_,_>>();
+let map: HashMap<_,_> = vec![ (3,"c"), (4, "d") ]
+    .into_iter().collect();
 // Sorted map (ordered by keys)
 let mut bmap: BTreeMap<i32, String> = BTreeMap::new();
 

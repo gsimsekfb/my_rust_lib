@@ -4,8 +4,8 @@
 // https://blog.rust-lang.org/2018/05/10/Rust-1.26.html#impl-trait
 
 // 1
-// fn get_closure which returns (types which impl Fn trait that takes i32 
-// and returns i32)
+// fn get_closure which returns types which impl Fn trait that takes i32 
+// and returns i32
 // and in body it returns a closure that increments closure param with 1
 // same with - get_closure_box with Box syntax
 // Test these fns
@@ -32,6 +32,12 @@ the same type.
 //     if cond { Wii { } }
 //     else    { Foo { } }
 // }
+//
+// !!! "return impl" is generic?
+// No, only in argument position impl Trait create a generic parameter; 
+// in return position it's an opaque, concrete type fixed by the 
+// implementation, NOT generic.
+
 */
 
 
@@ -109,47 +115,3 @@ fn get_foo_box() -> Box<dyn MyTrait> {
     // err:
     // expected type parameter `T`, found `Foo`
 // 
-struct Wii { x: i32 }
-impl MyTrait for Wii { fn name_(&self) -> &'static str { "Wii"} }
-// error[E0308]: `if` and `else` have incompatible types
-// expected `Wii`, found `Foo`
-// fn get_wii_or_foo(a: bool) -> impl MyTrait {
-//     if a { Wii { x: 42 } }
-//     else { Foo { x: 33 } }
-// }
-// Ok
-fn get_wii_or_foo_box(a: bool) -> Box<dyn MyTrait> {
-    if a { Box::new( Wii { x: 44 } ) }
-    else { Box::new( Foo { x: 33 } ) }
-}
-
-#[test] fn ww() {
-
-    // 1
-    let f = get_closure();
-    assert_eq!(f(1), 2);
-    let f = get_closure_box();
-    assert_eq!(f(1), 2);
-
-    // 2
-    // Only MyTrait is accessible
-    let foo_as_my_trait = get_foo();
-    assert_eq!(foo_as_my_trait.name_(), "Foo");
-    //
-    // No access to Foo or MyTrait_2 
-    // error[E0599]: no method named `get_x` found for opaque type `impl MyTrait`
-    // let xx = foo_as_my_trait.get_x();
-    // let xx = foo_as_my_trait.age_(); // same error
-    //
-    // As expected, with Foo obj, we have access to all
-    let foo = Foo { x: 10 };
-    assert_eq!(foo.name_(), "Foo");
-    assert_eq!(foo.get_x(), 10);
-    assert_eq!(foo.age_(), 42);
-    //
-    let foo_as_my_trait = get_foo_box();
-    assert_eq!(foo_as_my_trait.name_(), "Foo");
-    //
-    let wii = get_wii_or_foo_box(true); // Only MyTrait accessible thru wii
-    assert_eq!(wii.name_(), "Wii");
-}

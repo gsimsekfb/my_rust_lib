@@ -1,4 +1,8 @@
 // last: 10/24 ?
+// Difficulty: Medium
+// Topics: Array, Matrix
+// Common: Mid-level interviews, product company interviews
+
 
 // Problem Description
 // Given a boolean matrix mat[M][N] of size M X N, modify it such
@@ -10,10 +14,15 @@
     // 0 0 0              0 -1 0              0 -1 -1
     // 0 1 1  @[1][1] -> -1  1 1  @[1][2] -> -1  1  1  
     // 0 0 0              0 -1 0              0 -1 -1
-    // let mut mat = [[0,0,0],[0,1,1],[0,0,0]];
-    // let res     = [[0,1,1],[1,1,1],[0,1,1]];
 //
 // https://www.geeksforgeeks.org/a-boolean-matrix-question/
+
+
+
+
+
+
+
 
 // todo
 // sol-2

@@ -11,9 +11,6 @@
 // mod doc_test; 
   // todo: failed to resolve: use of undeclared crate or module `doc_test`
 
-#[cfg(test)]
-mod integration_tests;
-
 mod api;
 mod array;
 mod array_slice_unpack;
@@ -80,7 +77,7 @@ mod tokio_spawn_vs_spawn_blocking;
 mod trait_simple_vs_enum;
 mod trait_vs_enum_polymorphism;
 mod traits_and_generics;
-mod traits_conditionally_impl_methods;
+mod traits_trait_gated_methods;
 mod traits_dynamically_sized_types_dst;
 mod traits_static_vs_dyn_dispatch;
 mod traits_associated_constants;

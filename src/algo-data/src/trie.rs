@@ -67,7 +67,7 @@ impl Trie {
     }
 
     fn print(&self, prefix: &str) {
-        println!("{}{}", prefix, &self.key);
+        println!("{}{}", prefix, self.key);
         for leaf in &self.leaves {
             leaf.print(&[prefix, "- "].join(""));
         }

@@ -37,7 +37,7 @@ impl Pilot for Human {
     // option-a: leave body empty to use default Pilot:fly impl.
     // or
     // option-b: override default impl.
-    // fn fly(&self) -> &str { "Human as Pilot.fly" }
+    fn fly(&self) -> &str { "Human as Pilot.fly" }
 }
 impl Wizard for Human {
     fn fly(&self) -> &str { "Human as Wizard.fly" }
@@ -46,13 +46,8 @@ impl Wizard for Human {
 #[test] fn ex1() {
     let human = Human;
     assert_eq!(human.fly(), "Human.fly");
-    
-    // option-a
-    assert_eq!(Pilot::fly(&human), "Pilot.fly");
-            // or <Human as Pilot>::fly(&human)
-    // option-b
-    // assert_eq!(Pilot::fly(&human), "Human as Pilot.fly");
-    
+
+    assert_eq!(Pilot::fly(&human), "Human as Pilot.fly");
     assert_eq!(Wizard::fly(&human), "Human as Wizard.fly");
 }
 
@@ -86,6 +81,7 @@ impl Animal for Dog {
 
 #[test] fn ex2() {
     assert_eq!(Dog::name(), "Dog");
+
     // assert_eq!(Animal::name(), "Animal");
         // error[E0790]: cannot call associated function on trait without 
         // specifying the corresponding `impl` type

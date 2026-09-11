@@ -13,7 +13,7 @@
 
 
 
-//// Traits to Conditionally Implement Methods
+//// Trait-Gated Methods aka Traits to Conditionally Implement Methods
 //// https://doc.rust-lang.org/book/ch10-02-traits.html#using-trait-bounds-to-conditionally-implement-methods
 
 struct Val<T> { val: T }
@@ -22,7 +22,8 @@ impl<T> Val<T> {
     fn new(val: T) -> Self { Self { val } }
 }
 
-// Compiler to auto-impl to_str method only for Ts that impl Display trait
+// Trait gated method:
+// Enable `to_str` impl./body for a Val<T> instance, only when `T` is `Display`
 impl<T: std::fmt::Display> Val<T> {
     fn to_str(&self) -> String { self.val.to_string() }
 }
@@ -34,7 +35,11 @@ struct A { }
     assert_eq!(v.to_str(), "42");
 
     let v = Val::new(A {});
-    // assert_eq!(v.to_str(), "A"); // err since A does not impl Display
+    /*
+    // Err since A does not impl Display, so to_str fn is gated/forbidden
+    // for Val<A> instance v.
+    assert_eq!(v.to_str(), "A");
         // error[E0599]: the method `to_str` exists for struct `Val<A>`, 
         // but its trait bounds were not satisfied
+    */
 }

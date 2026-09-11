@@ -131,24 +131,34 @@ fn ex2_dyn_vs_static_dispatch() {
 }
 
 
-// ----------------------------- Object Safety ---------------------------------
-
-// You can only make object-safe traits into trait objects. Some complex rules
-// govern all the properties that make a trait object safe, but in practice, only
-// two rules are relevant. A trait is object safe if all the methods defined in the
-// trait have the following properties:
+// --------------------- Trait Object Safety ---------------------------------
+// Short: 
+// whether a trait is "safe" to use as a trait object (dyn Trait) — i.e., 
+// whether the compiler can build a valid vtable for it at runtime.
+// 
+// A trait is object safe if all the methods defined in the trait have 
+// the following properties:
 //   • The return type isn't Self.
 //   • There are no generic type parameters.
-// An example of a trait whose methods are not object safe is the standard
-// library’s Clone trait:
+//
+
+// Example: 
+// NOT trait object-safe: generic method
+trait NotSafe {
+    fn make<T>(&self) -> T; // generic -> breaks object safety
+}
+// let x: &dyn NotSafe; // ❌ compile error: cannot create trait object
+
+// Another example of a trait whose methods are not object safe is the 
+// standard library’s Clone trait:
 pub struct Screen2 {
     // pub components: Vec<Box<dyn Clone>>,
-      // Err: Clone` cannot be made into an object
-      // = note: the trait cannot be made into an object because it requires 
-      // `Self: Sized`
-      // = note: for a trait to be "object safe" it needs to allow building
-      // a vtable to allow the call to be resolvable dynamically; for more 
-      // information visit
-      // <https://doc.rust-lang.org/reference/items/traits.html#object-safety>  
+        // Err: Clone` cannot be made into an object
+        // = note: the trait cannot be made into an object because it requires 
+        // `Self: Sized`
+        // = note: for a trait to be "object safe" it needs to allow building
+        // a vtable to allow the call to be resolvable dynamically; for more 
+        // information visit
+        // <https://doc.rust-lang.org/reference/items/traits.html#object-safety>  
 }
 

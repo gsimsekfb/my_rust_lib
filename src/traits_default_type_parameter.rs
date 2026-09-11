@@ -19,7 +19,7 @@
 #[derive(Debug, PartialEq)]
 struct Point { x: i32, y: i32 }
 
-// Note: this is std::Add trait
+// Note: this is eq. of std::Add trait
 pub trait std_Add_<Rhs = Self> { // <Rhs = Self>: default type parameter
     type Output;
     fn add(self, rhs: Rhs) -> Self::Output;
@@ -64,7 +64,7 @@ impl std::ops::Add for Point { // 222 Add is gen trait but no need to specify ty
 #[derive(Debug, PartialEq)] struct Millimeters(u32);
 #[derive(Debug, PartialEq)] struct Meters(u32);
 
-// For info: Add trait from std
+// Info: Add trait from std
 trait std_Add<Rhs=Self> {
     type Output;
     fn add(self, rhs: Rhs) -> Self::Output;

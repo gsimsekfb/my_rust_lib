@@ -14,13 +14,17 @@ fn ex1_ww() {
 */
 
 
+
 #[test]
 fn ex1_ww() {
+    println!("\n");
 
     let xx = 55;
-    println!("xx: {xx:?}");
+    println!("-- xx: {xx:?}");
     assert_eq!(32, 32);
 
+
+    println!("");
 }
 
 

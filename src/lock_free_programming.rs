@@ -41,6 +41,13 @@ fn ex1_() {
     /// !! instead of blocking other threads like a mutex, CAS lets all threads
     ///    try simultaneously and only one succeeds, while the others retry 
     ///    in the loop.
+    /// CAS: compare_exchange is a single atomic hardware instruction 
+    /// (like x86's CMPXCHG) that checks-and-swaps in one uninterruptible step, 
+    /// so no other thread can sneak in between the read and the write. 
+    ///
+    /// In short, CAS tries to make this "separate load-then-store aka 
+    /// read-then-write steps" in one atomic step 
+    ///
     let counter = AtomicU64::new(5);
     // Step-1: Load
     let mut current = counter.load(Ordering::Acquire);

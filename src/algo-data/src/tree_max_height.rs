@@ -1,5 +1,6 @@
 // interv-2
-// last: 7/25
+// difficulty: easy
+// last: 9/26
 
 // Prob:
 // Find the Maximum Depth or Height of given Binary Tree
@@ -11,33 +12,116 @@
 // https://www.geeksforgeeks.org/find-the-maximum-depth-or-height-of-a-tree/
 // https://medium.com/go-rust/rust-day-10-lc-maximum-depth-of-binary-tree-872b39537716
 
+use std::collections::VecDeque;
+
 
 #[derive(Debug)]
-pub struct N {
+pub struct Node {
     pub v: i32,
-    pub l: Option<Box<N>>,
-    pub r: Option<Box<N>>
+    pub l: Option<Box<Node>>,
+    pub r: Option<Box<Node>>
 }
 
-// type Tree = Option<Box<N>>;
+type Tree = Option<Box<Node>>;
 
-pub fn new_node(v: i32, l: Option<Box<N>>, r: Option<Box<N>>) -> Option<Box<N>> {
-    Some(Box::new(N { v, l, r }))
+impl Node {
+    fn new_leaf(v: i32) -> Tree {
+        Self::new(v, None, None)
+    }
+
+    fn new(v: i32, l: Tree, r: Tree) -> Tree {
+        Some(Box::new( Self { v, l , r } ) )
+    }
 }
 
-pub fn new_node_leaf(v: i32) -> Option<Box<N>> {
-    Some(Box::new(N { v, l: None, r: None }))
+// Iterative BFS version
+// 
+// !! This version avoids recursion-depth/stack-overflow risk of recursive ver.
+//
+// - This iterative *BFS version works level by level, 
+//   unlike DFS/recursive version which goes deep and then backtracks.
+// - *Breadth-first search (BFS) is a graph and tree traversal algorithm 
+//   that explores nodes level by level, visiting all neighbors of a node 
+//   before moving deeper.
+//
+//        1        ← level 1
+//       / \
+//      2   3      ← level 2
+//     / \
+//    4   5        ← level 3
+//
+// queue = [1]
+// height = 0
+// 
+// while queue is not empty:
+//   >> process queue = [1] // all nodes at this level
+//   new queue = [2, 3]     // all nodes at next level
+//   height = 1
+//   
+//   >> process queue = [2, 3]
+//   new queue = [4, 5]
+//   height = 2
+//   
+//   >> process queue = [4, 5]
+//   new queue = []  // signal to finish the fn
+//   height = 3
+// 
+// just before processing the queue for a level : [2,3]  
+// just after processing the queue for a level : [4,5]  
+//
+// Time Complexity: O(n)
+// Space: due to queue having all nodes of a level
+//   - Normally: O(w) - w, width of the tree
+//   - Worst case: O(n) - at some level, the queue can contain almost all 
+//     n nodes, so O(w) → O(n) worst-case space.
+fn height_iter(root: &Tree) -> usize {
+
+    if root.is_none() { return 0 };
+
+    // contains total nodes in a level - refilled after each while
+    let mut queue = VecDeque::from([root.as_ref().unwrap()]);
+
+    let mut height = 0;
+
+    // process each level - until no queue/children left for a level
+    while !queue.is_empty() {
+        // process each node in this level, 
+        // add (children of each node) into queue for next level processing
+        // queue - before for: all nodes in this level 
+        //       - after for : all children nodes, next level
+        for _ in 0..queue.len() { // Ok: queue.len() evaluated once up front 
+                                  // to produce a Range
+            // process a node and the queue
+            // remove node to be processed now, add children to be processed
+            // in following while loop                                 
+            let node = queue.pop_front().unwrap(); // ! from front
+
+            if let Some(left) = &node.l {
+                queue.push_back(left);                // ! into back
+            }
+            if let Some(right) = &node.r {
+                queue.push_back(right);                 // ! into back
+            }
+        }
+
+        height += 1;
+    }
+
+    height
 }
 
-// 2nd (better) attempt
-// Time Complexity: O(N)
-// Space: O(h), h: height of the tree.
-//   (Due to recursion stack; worst case is O(n) for a skewed tree, O(log n) 
-//    for a balanced tree.)
-pub fn height_2(tree: &Option<Box<N>>) -> usize {
-    use std::cmp::max;
+// Recursive version
+//
+// !! This version has recursion-depth/stack-overflow risk.
+// 
+// Time Complexity: O(n)
+// Space: due to recursion
+//   - Normally: O(h) - h, height of the tree ( or O(log n) which is == O(h) )
+//   - Worst case: O(n) - due to recursion stack; for a skewed tree
+//     (e.g. all nodes on the right side) 
+pub fn height(tree: &Tree) -> usize {
     match tree {
-        Some(val) => max(height_2(&val.l), height_2(&val.r)) + 1,
+        Some(n) => height(&n.l).max(height(&n.r)) + 1,
         None => 0
     }
 }
@@ -65,94 +149,143 @@ pub fn height_2(tree: &Option<Box<N>>) -> usize {
   return max: 2
 */
 // or less idiomatic version:
-fn he(t: &Option<Box<N>>) -> usize {
+fn he(t: &Tree) -> usize {
     if t.is_none() { return 0 };
     let l_h = he(&t.as_ref().unwrap().l) + 1;
     let r_h = he(&t.as_ref().unwrap().r) + 1;
     std::cmp::max(l_h, r_h)
 }
 
-
-// 1st attempt
-fn max_height(node: &N) -> usize {
-    let mut h: usize = 0;
-    max_height_impl(node, h + 1, &mut h);
-    h
-}
-
-fn max_height_impl(node: &N, h: usize, max_height: &mut usize) {
-    // println!("{h}: {}", node.v);
-    if h > *max_height { *max_height = h; }
-    if let Some(l) = &node.l {
-        if h+1 > *max_height { *max_height = h+1; }
-        max_height_impl(l, h+1, max_height);
-    }
-    if let Some(r) = &node.r {
-        if h+1 > *max_height { *max_height = h+1; }
-        max_height_impl(r, h+1, max_height);
-    }
-}
-
 #[test]
 fn t1() {
     //  - empty tree
-    assert_eq!(height_2(&None), 0);
+    assert_eq!(height(&None), 0);
+    assert_eq!(height_iter(&None), 0);
 
     //  1
-    let node = new_node_leaf(1);
-    assert_eq!(max_height(node.as_deref().unwrap()), 1);
-    assert_eq!(height_2(&node), 1);
+    let node = Node::new_leaf(1);
+    assert_eq!(height(&node), 1);
+    assert_eq!(height_iter(&node), 1);
 
-    //    1
-    // 22
-    let node = N { v: 1,  l: new_node_leaf(22), r: None };
-    assert_eq!(max_height(&node), 2);
-    assert_eq!(height_2( &Some(Box::new(node)) ), 2);
+    //     1
+    //   1 
+    let node = Node::new(1, node, None);
+    assert_eq!(height(&node), 2);
+    assert_eq!(height_iter(&node), 2);
 
     //    1
     //       33
-    let node = N { v: 1, l: None, r: new_node_leaf(33) };
-    assert_eq!(max_height(&node), 2);
-    assert_eq!(height_2( &Some(Box::new(node)) ), 2);
+    let t = Node::new(1, None, Node::new_leaf(33));
+    assert_eq!(height( &t ), 2);
+    assert_eq!(height_iter(&t), 2);
 
     //    1
     //       22
     //           333
-    let node = N {
-        v: 1,
-        l: None,
-        r: new_node(22, None, new_node_leaf(333)),
-    };
-    assert_eq!(max_height(&node), 3);
-    assert_eq!(height_2( &Some(Box::new(node)) ), 3);
+    let node = Node::new(
+        1,
+        None,
+        Node::new(22, None, Node::new_leaf(333)),
+    );
+    assert_eq!(height( &node ), 3);
+    assert_eq!(height_iter(&node), 3);
 
     //             1
     //       22          33
     //   333
     //
-    let node = N {
-        v: 1, 
-        l: new_node(22, new_node_leaf(33), None),
-        r: new_node_leaf(333)
-    };
-    assert_eq!(max_height(&node), 3);
-    assert_eq!(height_2( &Some(Box::new(node)) ), 3);
+    let node = Node::new(
+        1, 
+        Node::new(22, Node::new_leaf(33), None),
+        Node::new_leaf(333)
+    );
+    assert_eq!(height(&node), 3);
+    assert_eq!(height_iter(&node), 3);
 
     //                  1
     //       11                   22
     //   111     222
     //               4444
     //
-    let node = N {
-        v: 1, 
-        l: new_node(
+    let node = Node::new (
+        1, 
+        Node::new(
             11, 
-            new_node_leaf(111), 
-            new_node(222, None, new_node_leaf(4444))
+            Node::new_leaf(111), 
+            Node::new(222, None, Node::new_leaf(4444))
         ),
-        r: new_node_leaf(22)
-    };
-    assert_eq!(max_height(&node), 4);
-    assert_eq!(height_2( &Some(Box::new(node)) ), 4);
+        Node::new_leaf(22)
+    );
+    assert_eq!(height(&node), 4);
+    assert_eq!(height_iter(&node), 4);
+
+    //     1
+    //    / \
+    //   2   3
+    //      / \
+    //     4   5
+    let t = Node::new(
+        1,
+        Node::new_leaf(2),
+        Node::new(
+            3,
+            Node::new_leaf(4),
+            Node::new_leaf(5),
+        ),
+    );
+    assert_eq!(height(&t), 3);
+    assert_eq!(height_iter(&t), 3);
+
+
+    //     1
+    //    / \
+    //   2   3
+    //        \
+    //         4
+    //          \
+    //           5
+    let t = Node::new(
+        1,
+        Node::new_leaf(2),
+        Node::new(
+            3,
+            None,
+            Node::new(
+                4,
+                None,
+                Node::new_leaf(5),
+            ),
+        ),
+    );
+    assert_eq!(height(&t), 4);
+    assert_eq!(height_iter(&t), 4);
+
+
+    // --------- AI
+
+    // Empty tree
+    assert_eq!(height(&None), 0);
+    assert_eq!(height_iter(&None), 0);
+
+    // Balanced tree:
+    //
+    //        1
+    //       / \
+    //      2   3
+    //     / \
+    //    4   5
+
+    let t = Node::new(
+        1,
+        Node::new(
+            2,
+            Node::new_leaf(4),
+            Node::new_leaf(5),
+        ),
+        Node::new_leaf(3),
+    );
+
+    assert_eq!(height(&t), 3);
+    assert_eq!(height_iter(&t), 3);
 
 }

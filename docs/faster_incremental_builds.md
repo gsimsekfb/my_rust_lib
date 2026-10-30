@@ -1,7 +1,47 @@
 
 <a name="1"/>
 
-## Faster incremental builds (6s instead of 40s)
+## Summary
+
+### 1
+// w/ this change incr build was down to 3 secs from 30 secs in actix-web repo  
+// note: this should be the default setting; something might be overriding it e.g. sccache    
+
+cargo.toml
+```
+[profile.dev]
+incremental
+```
+
+### 2
+// w/ this change incr build was down to 6 secs from 40 secs in openlibra repo  
+
+.cargo/config.toml  
+```
+[target.'cfg(target_os = "linux")']
+# Dramatically increases the link performance for the eventbus
+rustflags = ["-C", "link-arg=-fuse-ld=lld"] # sudo apt -y install lld
+```
+
+To check if lld is used:  
+
+```
+readelf -p .comment target/debug/twn
+    String dump of section '.comment':
+      [     0]  Linker: LLD 22.1.8 (/checkout/src/llvm-project/llvm 52ed14fcd56afc30f9cccd8ca8ce237c2eef7e04)
+      [    5f]  rustc version 1.98.0 (88d9e12ae 2026-08-18)
+      [    8b]  GCC: (Ubuntu 11.4.0-1ubuntu1~22.04.3) 11.4.0
+```
+
+```
+ld.lld --version
+    Ubuntu LLD 14.0.0 (compatible with GNU linkers)
+```
+
+Note: So, it looks like toolchain lld is being used instead of Ubuntu's lld.
+
+
+## Experiments: Faster incremental builds (6s instead of 40s)
 
 Here are some configs and experiment results for Ubuntu and macOS faster build times.  
 Hint: Search for "FASTEST"
@@ -101,19 +141,5 @@ cargo b tower
     https://github.com/michaeleisel/zld
 ```
 
-#### Related Configs: 
-```
-.cargo/config
-[build] 
-rustflags = ["-C", "link-arg=-fuse-ld=/usr/local/bin/zld"]
 
-root cargo.toml 
-[profile.dev]
-split-debuginfo = "unpacked" # Requires rustc 1.51
-
-root cargo.toml 
-[profile.dev.package."*"]
-# disable debug symbols for all packages except this one
-debug = false
-```
 
